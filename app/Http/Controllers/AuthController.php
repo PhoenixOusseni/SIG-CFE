@@ -16,16 +16,16 @@ class AuthController extends Controller
             }
              else {
                 emotify('error', 'Login ou mot de passe incorrect !');
-                return redirect()->route('authentification')->with('status', 'Login ou mot de passe incorrect !');
+                return redirect()->route('login')->with('status', 'Login ou mot de passe incorrect !');
             }
         }
 
         emotify('error', 'Login ou mot de passe incorrect !');
-        return redirect()->route('authentification')->with('status', 'Login ou mot de passe incorrect !');
+        return redirect()->route('login')->with('status', 'Login ou mot de passe incorrect !');
     }
 
     public function logout () {
         Auth::logout();
-        return redirect()->route('authentification');
+        return redirect()->route('login');
     }
 }
