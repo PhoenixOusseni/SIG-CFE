@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('title')
-    <title>SIG - CFE | Ordre de recette</title>
+    <title>SIG - CFE | Facturation</title>
 @endsection
 
 @section('style')
@@ -17,7 +17,7 @@
                         <div class="col-auto mt-4">
                             <h1 class="page-header-title">
                                 <div class="page-header-icon"><i data-feather="filter"></i></div>
-                                Liste des ordre de recette
+                                Liste des factures
                             </h1>
                         </div>
                     </div>
@@ -33,19 +33,19 @@
                     <div class="card mb-4">
                         <div class="card-header">
                             <a href="{{ route('all_recette') }}" class="btn btn-primary">
-                                Tous les recette
+                                Toutes les factures
                             </a>
                             <a href="{{ route('entente_recette') }}" class="btn btn-warning">
-                                Recette en attente
+                                Factures en attente
                             </a>
                             <a href="{{ route('valide_rectte') }}" class="btn btn-secondary">
-                                Recette validé
+                                Factures validées
                             </a>
                             <a href="{{ route('reglement_rectte') }}" class="btn btn-1">
-                                Recette mis en reglement
+                                Factures mises en règlement
                             </a>
                             <a href="{{ route('regle_recette') }}" class="btn btn-danger">
-                                Recette reglés
+                                Facture reglés
                             </a>
                         </div>
                         <div class="card-body">
@@ -61,8 +61,7 @@
                                                             <th>Code</th>
                                                             <th>Designation</th>
                                                             <th>Date</th>
-                                                            <th>Budget</th>
-                                                            <th>Contribuable</th>
+                                                            <th>Client</th>
                                                             <th>Echeance</th>
                                                             <th>Statut</th>
                                                             <th>Action</th>
@@ -74,7 +73,6 @@
                                                                 <td>{{ $recette->id }}</td>
                                                                 <td>{{ $recette->objet }}</td>
                                                                 <td>{{ $recette->date }}</td>
-                                                                <td>{{ $recette->Budget->libelle }}</td>
                                                                 <td>{{ $recette->Contribuable->assujeti }}</td>
                                                                 <td>{{ $recette->echeance }}</td>
                                                                 <td>{{ $recette->statut }}</td>

@@ -3,7 +3,7 @@
 
 <head>
     @include('partials.meta')
-    <title>SIG-CFE| Print ordre de recette</title>
+    <title>SIG-CFE| Print facture</title>
     @yield('style')
     @include('partials.style')
     <style>
@@ -45,12 +45,12 @@
         </div>
 
         <div class="text-center mt-3 mb-5">
-            <h4>ORDRE DE RECETTE N° FAC0{{ $recette->id }}</h4>
+            <h4>FACTURE N° FAC0{{ $recette->id }}</h4>
         </div>
 
         <div class="d-flex justify-content-between m-3">
             <div class="col-6" style="border: 1px solid black; padding: 5px;">
-                <h5>Contribuable : <strong>{{ $recette->Contribuable->assujeti }}</strong></h5>
+                <h5>Client : <strong>{{ $recette->Contribuable->assujeti }}</strong></h5>
                 <h5>Adresse : <strong>{{ $recette->Contribuable->adresse }}</strong></h5>
                 <h5>Téléphone : <strong>{{ $recette->Contribuable->telephone }}</strong></h5>
                 <h5>N° IFU : <strong>{{ $recette->Contribuable->ifu }}</strong></h5>
@@ -72,7 +72,6 @@
                 <thead>
                     <tr style="background-color: rgb(193, 198, 203)">
                         <th>Designation</th>
-                        <th>Source prelevement</th>
                         <th>Unité</th>
                         <th>Qte</th>
                         <th>P.Unitaire</th>
@@ -83,7 +82,6 @@
                     @foreach ($elements as $elmnt)
                         <tr>
                             <td>{{ $elmnt->Base->libelle }}</td>
-                            <td>{{ $elmnt->Source->libelle }}</td>
                             <td>{{ $elmnt->unite }}</td>
                             <td>{{ $elmnt->quantite }}</td>
                             <td>{{ $elmnt->prix_unitaire }}</td>
@@ -102,7 +100,7 @@
                     </tr>
                 </thead>
             </table>
-            <p>Arreté le présent ordre de recette à la somme de
+            <p>Arreté le présent facture à la somme de
                 <strong>({{ number_format($montant_total, 0, ',', ' ') }}) FRANCS CFA</strong>
             </p>
         </div>

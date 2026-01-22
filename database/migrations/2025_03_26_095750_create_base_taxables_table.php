@@ -19,6 +19,7 @@ class CreateBaseTaxablesTable extends Migration
             $table->string('reference')->nullable();
             $table->integer('prix');
             $table->foreignId('familles_id')->constrained('familles')->onUpdate('cascade')->onDelete('cascade');
+            $table->string('code')->nullable();
             $table->timestamps();
         });
     }

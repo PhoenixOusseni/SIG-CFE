@@ -34,6 +34,7 @@ class CritereController extends Controller
     public function store(Request $request)
     {
         $critere = new Critere();
+        $critere->code = $request->code;
         $critere->designation = $request->designation;
         $critere->taux = $request->taux;
         $critere->appreciation = $request->appreciation;

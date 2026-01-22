@@ -40,7 +40,12 @@
                         <form action="{{ route('gestion_diligence.store') }}" method="POST" enctype="multipart/form-data">
                             @csrf
                             <div class="row mb-3">
-                                <div class="col-md-6">
+                                <div class="col-md-2">
+                                    <label class="small">Code</label>
+                                    <input type="text" name="code" class="form-control" required>
+                                    <div class="invalid-feedback">Ce champ est requis</div>
+                                </div>
+                                <div class="col-md-5">
                                     <label class="small">Personnel</label>
                                     <select name="personnel_id" id="personnel_id" class="form-select" required>
                                         <option selected disabled>Sélectionner un personnel...</option>
@@ -49,7 +54,7 @@
                                         @endforeach
                                     </select>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-5">
                                     <label class="small">Service</label>
                                     <select name="service_id" id="service_id" class="form-select" required>
                                         <option selected disabled>Sélectionner un service...</option>

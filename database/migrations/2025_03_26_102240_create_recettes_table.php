@@ -23,9 +23,8 @@ class CreateRecettesTable extends Migration
             $table->date('echeance')->nullable();
 
             $table->foreignId('users_id')->constrained('users')->onUpdate('cascade')->onDelete('cascade');
-            $table->foreignId('budgets_id')->constrained('budgets')->onUpdate('cascade')->onDelete('cascade');
             $table->foreignId('contribuables_id')->constrained('contribuables')->onUpdate('cascade')->onDelete('cascade');
-            $table->foreignId('signataires_id')->constrained('signataires')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignId('signataires_id')->nullable()->constrained('signataires')->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();
         });
     }

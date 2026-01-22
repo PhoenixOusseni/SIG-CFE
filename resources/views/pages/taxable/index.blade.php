@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('title')
-    <title>SIG - CFE | Base taxable</title>
+    <title>SIG - CFE | Prestation</title>
 @endsection
 
 @section('style')
@@ -17,7 +17,7 @@
                         <div class="col-auto mt-4">
                             <h1 class="page-header-title">
                                 <div class="page-header-icon"><i data-feather="filter"></i></div>
-                                Liste des bases taxable
+                                Liste des prestations
                             </h1>
                         </div>
                     </div>
@@ -29,7 +29,7 @@
         <div class="container-xl px-4 mt-n10" style="margin-bottom: 8rem;">
             <!-- Account details card-->
             <div class="card mb-4">
-                <div class="card-header">Ajouter une nouvelle base taxable</div>
+                <div class="card-header">Ajouter une nouvelle prestation</div>
                 <div class="card-body">
                     @if ($errors->any())
                         <div class="alert alert-danger">
@@ -45,24 +45,28 @@
                         @csrf
                         <!-- Form Group (username)-->
                         <div class="row gx-3 mb-3">
-                            <div class="col-md-6">
-                                <label class="small mb-1">Nom de la base</label>
-                                <input class="form-control" name="libelle" type="text" value="{{ Request::old('libelle') }}" required />
+                            <div class="col-md-3">
+                                <label class="small mb-1">Code prestation</label>
+                                <input class="form-control" name="code" type="text" value="{{ Request::old('code') }}" required />
                             </div>
                             <div class="col-md-6">
+                                <label class="small mb-1">Nom de la prestation</label>
+                                <input class="form-control" name="libelle" type="text" value="{{ Request::old('libelle') }}" required />
+                            </div>
+                            <div class="col-md-3">
                                 <label class="small mb-1">Réference</label>
                                 <input class="form-control" name="reference" type="text" value="{{ Request::old('reference') }}" required />
                             </div>
                         </div>
                         <div class="row gx-3 mb-3">
                             <div class="col-md-6">
-                                <label class="small mb-1">Prix</label>
+                                <label class="small mb-1">Prix de la prestation</label>
                                 <input class="form-control" name="prix" type="number" value="{{ Request::old('prix') }}" required />
                             </div>
                             <div class="col-md-6">
-                                <label class="small mb-1">Famille</label>
-                                <select name="familles_id" class="form-control">
-                                    <option value="">Selectionner une famille</option>
+                                <label class="small mb-1">Département</label>
+                                <select name="familles_id" class="form-select" required>
+                                    <option value="">Selectionner un département</option>
                                     @foreach ($familles as $famille)
                                         <option value="{{ $famille->id }}">{{ $famille->libelle }}</option>
                                     @endforeach
@@ -72,7 +76,7 @@
                         <!-- Save changes button-->
                         <button class="btn btn-1" type="submit">
                             <i class="fas fa-save"></i>
-                            &nbsp; &nbsp;Enregistrer
+                            &nbsp; &nbsp; Enregistrer
                         </button>
                     </form>
                 </div>
@@ -96,10 +100,10 @@
                                                     <thead>
                                                         <tr>
                                                             <th class="text-center">Code</th>
-                                                            <th class="text-center">Base taxable</th>
+                                                            <th class="text-center">Prestation</th>
                                                             <th class="text-center">Réference</th>
-                                                            <th class="text-center">Prix</th>
-                                                            <th class="text-center">Famille</th>
+                                                            <th class="text-center">Prix de la prestation</th>
+                                                            <th class="text-center">Département</th>
                                                             <th class="text-center">Action</th>
                                                         </tr>
                                                     </thead>

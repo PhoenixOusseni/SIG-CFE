@@ -3,7 +3,7 @@
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
             <div class="modal-header bg-success">
-                <h5 class="modal-title text-light" id="exampleModalLabel">Ordre de recette N°{{ $recette->id }}</h5>
+                <h5 class="modal-title text-light" id="exampleModalLabel">Facture N°{{ $recette->id }}</h5>
                 <button type="button" class="btn-close text-light" data-bs-dismiss="modal" aria-label="Close">X</button>
             </div>
             <div class="modal-body">
@@ -14,7 +14,7 @@
                         <div class="card-body">
                             <fieldset class="w-100 p-2" style="border-radius: 5px; background: rgb(234, 233, 233)">
                                 <div class="row">
-                                    <div class="col-lg-4 col-md-12">
+                                    {{-- <div class="col-lg-4 col-md-12">
                                         <div class="mb-3">
                                             <label class="small mb-1">Budget</label>
                                             <select name="budgets_id" class="form-select">
@@ -25,10 +25,10 @@
                                                 @endforeach
                                             </select>
                                         </div>
-                                    </div>
+                                    </div> --}}
                                     <div class="col-lg-4 col-md-12">
                                         <div class="mb-3">
-                                            <label class="small mb-1">Contribuable</label>
+                                            <label class="small mb-1">Client</label>
                                             <select name="contribuables_id" class="form-select">
                                                 <option value="{{ $recette->Contribuable->id }}">
                                                     {{ $recette->Contribuable->assujeti }}</option>
@@ -50,7 +50,7 @@
                                 <div class="row">
                                     <div class="col-lg-3 col-md-12">
                                         <div class="mb-3">
-                                            <label class="small mb-1">Objet</label>
+                                            <label class="small mb-1">Désignation</label>
                                             <input class="form-control" name="objet" type="text"
                                                 value="{{ $recette->objet }}" />
                                         </div>

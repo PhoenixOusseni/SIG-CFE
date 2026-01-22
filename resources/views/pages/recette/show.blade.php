@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('title')
-    <title>SIG - CFE | Ordre de recette</title>
+    <title>SIG - CFE | Facturation</title>
 @endsection
 
 @section('style')
@@ -17,7 +17,7 @@
                         <div class="col-auto mt-4">
                             <h1 class="page-header-title">
                                 <div class="page-header-icon"><i data-feather="filter"></i></div>
-                                Gestion des ordres de recettes
+                                Gestion des factures
                             </h1>
                         </div>
                     </div>
@@ -36,15 +36,12 @@
                     </a>
                     <a href="#" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#editModal">
                         <i class="fas fa-edit"></i>
-                        &nbsp; &nbsp; Modifier
                     </a>
                     <a href="{{ url('print_ordre_recette/' . $recette->id) }}" class="btn btn-secondary">
                         <i class="fas fa-print"></i>
-                        &nbsp; &nbsp; Imprimer
                     </a>
                     <a href="{{ url('supp_ordre_recette/' . $recette->id) }}" class="btn btn-danger">
                         <i class="fas fa-trash"></i>
-                        &nbsp; &nbsp; Supprimer
                     </a>
                 </div>
                 <div class="card-body">
@@ -55,19 +52,19 @@
                                     <input class="form-control" name="statut" type="text" value="en attente" hidden />
                                     <div class="col-lg-4 col-md-12">
                                         <div class="mb-3">
-                                            <label class="small mb-1">N° ordre de recette</label>
+                                            <label class="small mb-1">N° facture</label>
                                             <input class="form-control" value="{{ $recette->id }}" type="text" readonly />
                                         </div>
                                     </div>
-                                    <div class="col-lg-4 col-md-12">
+                                    {{-- <div class="col-lg-4 col-md-12">
                                         <div class="mb-3">
                                             <label class="small mb-1">Budget</label>
                                             <input class="form-control" type="text" value="{{ $recette->Budget->libelle }}" readonly />
                                         </div>
-                                    </div>
+                                    </div> --}}
                                     <div class="col-lg-4 col-md-12">
                                         <div class="mb-3">
-                                            <label class="small mb-1">Contribuable</label>
+                                            <label class="small mb-1">Client</label>
                                             <input class="form-control" type="text" value="{{ $recette->Contribuable->assujeti }}" readonly />
                                         </div>
                                     </div>
@@ -75,7 +72,7 @@
                                 <div class="row">
                                     <div class="col-lg-6 col-md-12">
                                         <div class="mb-3">
-                                            <label class="small mb-1">Objet</label>
+                                            <label class="small mb-1">Désignation</label>
                                             <input class="form-control" type="text" value="{{ $recette->objet }}" readonly />
                                         </div>
                                     </div>
@@ -98,8 +95,7 @@
                                 <table class="table table-bordered table-striped table-hover">
                                     <thead>
                                         <tr>
-                                            <th>Designation</th>
-                                            <th>Source prelevement</th>
+                                            <th>Désignation</th>
                                             <th>Unité</th>
                                             <th>Qte</th>
                                             <th>P.Unitaire</th>
@@ -111,7 +107,6 @@
                                         @foreach ($elements as $elmnt)
                                             <tr>
                                                 <td>{{ $elmnt->Base->libelle }}</td>
-                                                <td>{{ $elmnt->Source->libelle }}</td>
                                                 <td>{{ $elmnt->unite }}</td>
                                                 <td>{{ $elmnt->quantite }}</td>
                                                 <td>{{ $elmnt->prix_unitaire }}</td>

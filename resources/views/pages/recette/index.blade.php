@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('title')
-    <title>SIG - CFE | Ordre de recette</title>
+    <title>SIG - CFE | Facturation</title>
 @endsection
 
 @section('style')
@@ -16,8 +16,8 @@
                     <div class="row align-items-center justify-content-between">
                         <div class="col-auto mt-4">
                             <h1 class="page-header-title">
-                                <div class="page-header-icon"><i data-feather="filter"></i></div>
-                                Gestion des ordres de recettes
+                                <div class="page-header-icon"><i data-feather="file-text"></i></div>
+                                Gestion des factures
                             </h1>
                         </div>
                     </div>
@@ -29,7 +29,7 @@
         <div class="container-xl px-4 mt-n10" style="margin-bottom: 8rem;">
             <!-- Account details card-->
             <div class="card mb-4">
-                <div class="card-header">Ajouter un ordres de recette</div>
+                <div class="card-header">Ajouter une facture</div>
                 <div class="card-body">
 
                     <form action="{{ route('module_ordre_recette.store') }}" method="POST" enctype="multipart/form-data">
@@ -40,7 +40,7 @@
                                     <div class="row">
                                         <input class="form-control" name="statut" type="text" value="en attente" hidden />
                                         <input class="form-control" name="users_id" type="text" value="{{ Auth::user()->id }}" hidden />
-                                        <div class="col-lg-4 col-md-12">
+                                        {{-- <div class="col-lg-4 col-md-12">
                                             <div class="mb-3">
                                                 <label class="small mb-1">Budget</label>
                                                 <select name="budgets_id" class="form-select">
@@ -50,12 +50,12 @@
                                                     @endforeach
                                                 </select>
                                             </div>
-                                        </div>
-                                        <div class="col-lg-4 col-md-12">
+                                        </div> --}}
+                                        <div class="col-lg-6 col-md-12">
                                             <div class="mb-3">
-                                                <label class="small mb-1">Contribuable</label>
+                                                <label class="small mb-1">Client</label>
                                                 <select name="contribuables_id" class="form-select">
-                                                    <option value="">Sélectionner le contribuable</option>
+                                                    <option value="">Sélectionner le client</option>
                                                     @foreach ($contribuables as $contribuable)
                                                         <option value="{{ $contribuable->id }}">{{ $contribuable->assujeti }}
                                                         </option>
@@ -63,7 +63,7 @@
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="col-lg-4 col-md-12">
+                                        <div class="col-lg-6 col-md-12">
                                             <div class="mb-3">
                                                 <label class="small mb-1">Echeance de paiement</label>
                                                 <input class="form-control" type="date" name="echeance" />
@@ -71,25 +71,25 @@
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="col-lg-3 col-md-12">
+                                        <div class="col-lg-6 col-md-12">
                                             <div class="mb-3">
-                                                <label class="small mb-1">Objet</label>
+                                                <label class="small mb-1">Designation</label>
                                                 <input class="form-control" name="objet" type="text" />
                                             </div>
                                         </div>
-                                        <div class="col-lg-3 col-md-12">
+                                        <div class="col-lg-2 col-md-12">
                                             <div class="mb-3">
                                                 <label class="small mb-1">Date</label>
                                                 <input class="form-control" name="date" type="date" />
                                             </div>
                                         </div>
-                                        <div class="col-lg-3 col-md-12">
+                                        <div class="col-lg-2 col-md-12">
                                             <div class="mb-3">
                                                 <label class="small mb-1">Période debut</label>
                                                 <input class="form-control" name="periode_debut" type="date" />
                                             </div>
                                         </div>
-                                        <div class="col-lg-3 col-md-12">
+                                        <div class="col-lg-2 col-md-12">
                                             <div class="mb-3">
                                                 <label class="small mb-1">Période fin</label>
                                                 <input class="form-control" name="periode_fin" type="date" />
@@ -115,7 +115,7 @@
                             <div class="m-3">
                                 <button class="btn btn-1" type="submit">
                                     <i class="fas fa-plus"></i>
-                                    &nbsp; &nbsp;Ajouter un ligne
+                                    &nbsp; &nbsp; Ajouter un ligne
                                 </button>
                             </div>
                         </div>
@@ -143,8 +143,7 @@
                                                             <th>Code</th>
                                                             <th>Designation</th>
                                                             <th>Date</th>
-                                                            <th>Budget</th>
-                                                            <th>Contribuable</th>
+                                                            <th>Client</th>
                                                             <th>Echeance</th>
                                                             <th>Action</th>
                                                         </tr>
@@ -155,7 +154,6 @@
                                                                 <td>{{ $recette->id }}</td>
                                                                 <td>{{ $recette->objet }}</td>
                                                                 <td>{{ $recette->date }}</td>
-                                                                <td>{{ $recette->Budget->libelle }}</td>
                                                                 <td>{{ $recette->Contribuable->assujeti }}</td>
                                                                 <td>{{ $recette->echeance }}</td>
                                                                 <td class="d-flex justify-content-center">

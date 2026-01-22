@@ -15,8 +15,18 @@ class FamilleSeeder extends Seeder
     public function run()
     {
         DB::table('familles')->insert([
-            'libelle' => 'Famille 001',
+            'libelle' => 'Département 001',
             'taux' => 5,
+        ]);
+
+        DB::table('familles')->insert([
+            'libelle' => 'Département 002',
+            'taux' => 10,
+        ]);
+
+        DB::table('familles')->insert([
+            'libelle' => 'Département 003',
+            'taux' => 15,
         ]);
     }
 }

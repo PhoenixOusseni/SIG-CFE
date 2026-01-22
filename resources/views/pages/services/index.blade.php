@@ -42,6 +42,7 @@
                         <table id="datatablesSimple">
                             <thead>
                                 <tr>
+                                    <th>ID</th>
                                     <th>Code</th>
                                     <th>Libellé</th>
                                     <th>Description</th>
@@ -52,6 +53,7 @@
                                 @foreach ($services as $service)
                                     <tr>
                                         <td>{{ $service->id }}</td>
+                                        <td>{{ $service->code }}</td>
                                         <td>{{ $service->libelle }}</td>
                                         <td>{{ $service->description }}</td>
                                         <td class="text-center">

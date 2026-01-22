@@ -4,7 +4,7 @@
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
             <div class="modal-header bg-success">
-                <h5 class="modal-title" id="exampleModalLabel">Information de la recette N° {{ $recette->id }}</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Information de la facture N° {{ $recette->id }}</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">X</button>
             </div>
             <div class="modal-body">
@@ -16,11 +16,11 @@
                             <input class="form-control" name="statut" type="text" value="en attente" hidden />
                             <div class="col-lg-4 col-md-12">
                                 <div class="mb-3">
-                                    <label class="small mb-1">N° ordre de recette</label>
-                                    <input class="form-control" type="text" readonly />
+                                    <label class="small mb-1">N° facture</label>
+                                    <input class="form-control" type="text" readonly value="{{ $recette->id }}" />
                                 </div>
                             </div>
-                            <div class="col-lg-4 col-md-12">
+                            {{-- <div class="col-lg-4 col-md-12">
                                 <div class="mb-3">
                                     <label class="small mb-1">Budget</label>
                                     <select name="budgets_id" class="form-control">
@@ -30,10 +30,10 @@
                                         @endforeach
                                     </select>
                                 </div>
-                            </div>
+                            </div> --}}
                             <div class="col-lg-4 col-md-12">
                                 <div class="mb-3">
-                                    <label class="small mb-1">Contribuable</label>
+                                    <label class="small mb-1">Client</label>
                                     <select name="contribuables_id" class="form-control">
                                         <option value="{{ $recette->Contribuable->id }}">{{ $recette->Contribuable->assujeti }}</option>
                                         @foreach ($contribuables as $contribuable)
@@ -46,7 +46,7 @@
                         <div class="row">
                             <div class="col-lg-6 col-md-12">
                                 <div class="mb-3">
-                                    <label class="small mb-1">Objet</label>
+                                    <label class="small mb-1">Designation</label>
                                     <input class="form-control" name="objet" type="text" value="{{ $recette->objet }}" />
                                 </div>
                             </div>

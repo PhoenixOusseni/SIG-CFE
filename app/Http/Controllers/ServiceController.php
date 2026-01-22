@@ -38,6 +38,7 @@ class ServiceController extends Controller
         Service::create(
             [
                 'libelle' => $request->libelle,
+                'code' => $request->code,
                 'description' => $request->description,
             ]
         );
@@ -73,6 +74,7 @@ class ServiceController extends Controller
             [
                 'libelle' => $request->libelle,
                 'description' => $request->description,
+                'code' => $request->code,
             ]
         );
 

@@ -38,6 +38,7 @@ class TraitementController extends Controller
             'date_fin' => 'nullable|date',
             'designation' => 'nullable|string|max:255',
             'commentaire' => 'nullable|string',
+            'code' => 'nullable|string|max:255',
 
             'service_id' => 'nullable|exists:services,id',
             'critere_id' => 'nullable|exists:criteres,id',
@@ -81,6 +82,7 @@ class TraitementController extends Controller
             'date_fin' => 'nullable|date',
             'designation' => 'nullable|string|max:255',
             'commentaire' => 'nullable|string',
+            'code' => 'nullable|string|max:255',
 
             'service_id' => 'nullable|exists:services,id',
             'critere_id' => 'nullable|exists:criteres,id',

@@ -38,7 +38,7 @@
                                 <div class="row">
                                     <div class="col-lg-4 col-md-12">
                                         <div class="mb-3">
-                                            <label class="small mb-1">Libelle</label>
+                                            <label class="small mb-1">Désignation</label>
                                             <input class="form-control" name="libelle" type="text" />
                                         </div>
                                     </div>
@@ -73,7 +73,7 @@
                             <div class="m-3">
                                 <button class="btn btn-1" type="submit">
                                     <i class="fas fa-save"></i>
-                                    &nbsp; &nbsp;Enregistrer
+                                    &nbsp; &nbsp; Enregistrer
                                 </button>
                             </div>
                         </div>
@@ -99,7 +99,7 @@
                                                     <thead>
                                                         <tr>
                                                             <th>N°</th>
-                                                            <th>Assujeti</th>
+                                                            <th>Désignation</th>
                                                             <th>Adresse</th>
                                                             <th>N° IFU</th>
                                                             <th>Téléphone</th>

@@ -82,7 +82,7 @@
                             <div class="row mb-3">
                                 <div class="col-md-12">
                                     <label class="small">Commentaire...</label>
-                                    <textarea name="commentaire" class="form-control" cols="30" rows="10"></textarea>
+                                    <textarea name="commentaire" class="form-control" cols="30" rows="5"></textarea>
                                 </div>
                             </div>
 

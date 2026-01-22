@@ -22,7 +22,6 @@ class CreateElementRecettesTable extends Migration
 
             $table->foreignId('recettes_id')->constrained('recettes')->onUpdate('cascade')->onDelete('cascade');
             $table->foreignId('base_taxables_id')->constrained('base_taxables')->onUpdate('cascade')->onDelete('cascade');
-            $table->foreignId('source_prelevements_id')->constrained('source_prelevements')->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();
         });
     }

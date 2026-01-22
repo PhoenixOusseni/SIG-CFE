@@ -3,7 +3,7 @@
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
             <div class="modal-header bg-success">
-                <h5 class="modal-title text-light" id="exampleModalLabel">Ajout des elements de la recette N°{{ $recette->id }}</h5>
+                <h5 class="modal-title text-light" id="exampleModalLabel">Ajout des elements de la facture N°{{ $recette->id }}</h5>
                 <button type="button" class="btn-close text-light" data-bs-dismiss="modal" aria-label="Close">X</button>
             </div>
             <div class="modal-body">
@@ -38,7 +38,7 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-lg-4 col-md-12">
+                            {{-- <div class="col-lg-4 col-md-12">
                                 <div class="mb-3">
                                     <label class="small mb-1">Source</label>
                                     <select class="form-select" name="source_prelevements_id">
@@ -48,7 +48,7 @@
                                         @endforeach
                                     </select>
                                 </div>
-                            </div>
+                            </div> --}}
                             <div class="col-lg-4 col-md-12">
                                 <div class="mb-3">
                                     <label class="small mb-1">Uinité</label>

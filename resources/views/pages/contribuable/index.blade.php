@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('title')
-    <title>SIG - CFE | Contribuable</title>
+    <title>SIG - CFE | Clients</title>
 @endsection
 
 @section('style')
@@ -17,7 +17,7 @@
                         <div class="col-auto mt-4">
                             <h1 class="page-header-title">
                                 <div class="page-header-icon"><i data-feather="filter"></i></div>
-                                Gestion des contribuables
+                                Gestion des clients
                             </h1>
                         </div>
                     </div>
@@ -29,7 +29,7 @@
         <div class="container-xl px-4 mt-n10" style="margin-bottom: 8rem;">
             <!-- Account details card-->
             <div class="card mb-4">
-                <div class="card-header">Ajouter un nouveau contribuable</div>
+                <div class="card-header">Ajouter un nouveau client</div>
                 <div class="card-body">
                     @if ($errors->any())
                         <div class="alert alert-danger">
@@ -48,7 +48,7 @@
                                 <div class="row">
                                     <div class="col-lg-4 col-md-12">
                                         <div class="mb-3">
-                                            <label class="small mb-1">Assujeti</label>
+                                            <label class="small mb-1">Désignations</label>
                                             <input class="form-control" name="assujeti" type="text" />
                                         </div>
                                     </div>
@@ -81,7 +81,7 @@
                                     <div class="col-lg-4 col-md-12">
                                         <div class="mb-3">
                                             <label class="small mb-1">Catégorie</label>
-                                            <select name="categories_id" class="form-control">
+                                            <select name="categories_id" class="form-select" required>
                                                 <option value="">-- Selectionner --</option>
                                                 @foreach ($categories as $categorie)
                                                     <option value="{{ $categorie->id }}">{{ $categorie->libelle }}</option>
@@ -119,8 +119,8 @@
                                                 <table id="datatablesSimple">
                                                     <thead>
                                                         <tr>
-                                                            <th>Code site</th>
-                                                            <th>Assujeti</th>
+                                                            <th>Code</th>
+                                                            <th>Désignations</th>
                                                             <th>Adresse</th>
                                                             <th>N° IFU</th>
                                                             <th>Catégorie</th>

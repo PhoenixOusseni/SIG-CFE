@@ -17,6 +17,7 @@ class CreateFamillesTable extends Migration
             $table->id();
             $table->string('libelle')->unique();
             $table->integer('taux')->nullable();
+            $table->string('code')->nullable();
             $table->timestamps();
         });
     }

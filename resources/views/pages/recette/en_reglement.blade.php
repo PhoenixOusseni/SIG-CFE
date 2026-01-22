@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('title')
-    <title>SIG - CFE | Ordre de recette</title>
+    <title>SIG - CFE | Facturation</title>
 @endsection
 
 @section('style')
@@ -17,7 +17,7 @@
                         <div class="col-auto mt-4">
                             <h1 class="page-header-title">
                                 <div class="page-header-icon"><i data-feather="filter"></i></div>
-                                Gestion des ordres de recettes
+                                Gestion des factures
                             </h1>
                         </div>
                     </div>

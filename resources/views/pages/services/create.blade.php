@@ -31,9 +31,11 @@
                 <div class="card mb-4">
                     <div class="card-body">
                         <div class="col-sm-12 mb-3">
-                            <a href="{{ route('gestion_service.create') }}" class="btn btn-light"><i data-feather="plus"></i>&thinsp;&thinsp;
+                            <a href="{{ route('gestion_service.create') }}" class="btn btn-light"><i
+                                    data-feather="plus"></i>&thinsp;&thinsp;
                                 Ajouter un service</a>
-                            <a href="{{ route('gestion_service.index') }}" class="btn btn-light"><i data-feather="align-left"></i>&thinsp;&thinsp;
+                            <a href="{{ route('gestion_service.index') }}" class="btn btn-light"><i
+                                    data-feather="align-left"></i>&thinsp;&thinsp;
                                 Liste des services</a>
                         </div>
                         <div class="row">
@@ -42,15 +44,21 @@
                                 <form method="POST" action="{{ route('gestion_service.store') }}">
                                     @csrf
                                     <div class="mb-3">
+                                        <label for="code" class="form-label">Code</label>
+                                        <input type="text" class="form-control" id="code" name="code" required>
+                                    </div>
+                                    <div class="mb-3">
                                         <label for="libelle" class="form-label">Libellé</label>
                                         <input type="text" class="form-control" id="libelle" name="libelle" required>
                                     </div>
                                     <div class="mb-3">
                                         <label for="description" class="form-label">Description</label>
-                                        <textarea class="form-control" id="description" name="description" rows="3"></textarea>
+                                        <textarea class="form-control" id="description" name="description" rows="5"></textarea>
                                     </div>
-                                    <button type="submit" class="btn btn-dark"><i data-feather="save"></i>&thinsp;&thinsp; Enregistrer</button>
-                                    <button type="reset"  class="btn btn-danger"><i data-feather="x"></i>&thinsp;&thinsp; Annuler</button>
+                                    <button type="submit" class="btn btn-dark"><i data-feather="save"></i>&thinsp;&thinsp;
+                                        Enregistrer</button>
+                                    <button type="reset" class="btn btn-danger"><i data-feather="x"></i>&thinsp;&thinsp;
+                                        Annuler</button>
                                 </form>
                             </div>
                         </div>

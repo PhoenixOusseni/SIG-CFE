@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('title')
-    <title>SIG - CFE | Ordre de recette</title>
+    <title>SIG - CFE | Facturation</title>
 @endsection
 
 @section('style')
@@ -17,7 +17,7 @@
                         <div class="col-auto mt-4">
                             <h1 class="page-header-title">
                                 <div class="page-header-icon"><i data-feather="filter"></i></div>
-                                Gestion des ordres de recettes
+                                Gestion des factures
                             </h1>
                         </div>
                     </div>
@@ -44,7 +44,6 @@
                                                             <th>Code</th>
                                                             <th>Designation</th>
                                                             <th>Date</th>
-                                                            <th>Budget</th>
                                                             <th>Contribuable</th>
                                                             <th>Echeance</th>
                                                             <th>Statut</th>
@@ -57,7 +56,6 @@
                                                                 <td>{{ $recette->id }}</td>
                                                                 <td>{{ $recette->objet }}</td>
                                                                 <td>{{ $recette->date }}</td>
-                                                                <td>{{ $recette->Budget->libelle }}</td>
                                                                 <td>{{ $recette->Contribuable->assujeti }}</td>
                                                                 <td>{{ $recette->echeance }}</td>
                                                                 <td>{{ $recette->statut }}</td>

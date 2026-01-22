@@ -127,7 +127,6 @@ class RecetteController extends Controller
             'date' => $request->date,
             'periode_debut' => $request->periode_debut,
             'periode_fin' => $request->periode_fin,
-            'budgets_id' => $request->budgets_id,
             'contribuables_id' => $request->contribuables_id,
             'statut' => $request->statut,
             'echeance' => $request->echeance,

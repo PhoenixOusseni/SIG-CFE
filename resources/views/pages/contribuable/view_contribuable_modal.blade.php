@@ -15,7 +15,7 @@
                     <div class="row">
                         <div class="col-lg-4 col-md-12">
                             <div class="mb-3">
-                                <label class="small mb-1">Assujeti</label>
+                                <label class="small mb-1">Désignations</label>
                                 <input class="form-control" name="assujeti" value="{{ $contribuable->assujeti }}" type="text" />
                             </div>
                         </div>
@@ -48,10 +48,10 @@
                             </div>
                         </div>
                     </div>
-                    <div class="m-3">
+                    <div class="mt-3">
                         <button class="btn btn-1" type="submit">
                             <i class="fas fa-edit"></i>
-                            &nbsp; &nbsp;Modifier
+                            &nbsp; &nbsp; Modifier
                         </button>
                     </div>
                 </form>

@@ -40,7 +40,12 @@
                         <form action="{{ route('gestion_critere.store') }}" method="POST" enctype="multipart/form-data">
                             @csrf
                             <div class="row mb-3">
-                                <div class="col-md-6">
+                                <div class="col-md-2">
+                                    <label class="small">Code</label>
+                                    <input type="text" name="code" class="form-control" required>
+                                    <div class="invalid-feedback">Ce champ est requis</div>
+                                </div>
+                                <div class="col-md-5">
                                     <label class="small">Diligence</label>
                                     <select name="diligence_id" name="diligence_id" class="form-select" required>
                                         <option selected disabled>Sélectionner une diligence...</option>
@@ -49,7 +54,7 @@
                                         @endforeach
                                     </select>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-5">
                                     <label class="small">Service</label>
                                     <select name="service_id" class="form-select" required>
                                         <option selected disabled>Sélectionner un service...</option>
@@ -90,7 +95,7 @@
                             <div class="row mb-3">
                                 <div class="col-md-12">
                                     <label class="small">Appreciation</label>
-                                    <textarea name="appreciation" class="form-control" cols="30" rows="10"></textarea>
+                                    <textarea name="appreciation" class="form-control" cols="30" rows="5"></textarea>
                                 </div>
                             </div>
 

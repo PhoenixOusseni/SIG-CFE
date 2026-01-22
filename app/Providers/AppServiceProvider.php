@@ -50,47 +50,47 @@ class AppServiceProvider extends ServiceProvider
         });
 
 
-        Service::created(function (Service $service) {
-            // Compter combien d'utilisateurs ont déjà été créés
-            $count = Service::count();
+        // Service::created(function (Service $service) {
+        //     // Compter combien d'utilisateurs ont déjà été créés
+        //     $count = Service::count();
 
-            // Générer le numéro formaté
-            $number = str_pad($count, 3, '0', STR_PAD_LEFT);
+        //     // Générer le numéro formaté
+        //     $number = str_pad($count, 3, '0', STR_PAD_LEFT);
 
-            // Construire le code
-            $code = "SRV-{$number}";
+        //     // Construire le code
+        //     $code = "SRV-{$number}";
 
-            // Mettre à jour le service
-            $service->update(['code' => $code]);
-        });
+        //     // Mettre à jour le service
+        //     $service->update(['code' => $code]);
+        // });
 
-        Diligence::created(function (Diligence $diligence) {
-            // Compter combien d'utilisateurs ont déjà été créés
-            $count = Diligence::count();
+        // Diligence::created(function (Diligence $diligence) {
+        //     // Compter combien d'utilisateurs ont déjà été créés
+        //     $count = Diligence::count();
 
-            // Générer le numéro formaté
-            $number = str_pad($count, 3, '0', STR_PAD_LEFT);
+        //     // Générer le numéro formaté
+        //     $number = str_pad($count, 3, '0', STR_PAD_LEFT);
 
-            // Construire le code
-            $code = "DLG-{$number}";
+        //     // Construire le code
+        //     $code = "DLG-{$number}";
 
-            // Mettre à jour le diligence
-            $diligence->update(['code' => $code]);
-        });
+        //     // Mettre à jour le diligence
+        //     $diligence->update(['code' => $code]);
+        // });
 
-        Critere::created(function (Critere $critere) {
-            // Compter combien d'utilisateurs ont déjà été créés
-            $count = Critere::count();
+        // Critere::created(function (Critere $critere) {
+        //     // Compter combien d'utilisateurs ont déjà été créés
+        //     $count = Critere::count();
 
-            // Générer le numéro formaté
-            $number = str_pad($count, 3, '0', STR_PAD_LEFT);
+        //     // Générer le numéro formaté
+        //     $number = str_pad($count, 3, '0', STR_PAD_LEFT);
 
-            // Construire le code
-            $code = "CRT-{$number}";
+        //     // Construire le code
+        //     $code = "CRT-{$number}";
 
-            // Mettre à jour le critère
-            $critere->update(['code' => $code]);
-        });
+        //     // Mettre à jour le critère
+        //     $critere->update(['code' => $code]);
+        // });
 
         Traitement::created(function (Traitement $traitement) {
             // Compter combien d'utilisateurs ont déjà été créés

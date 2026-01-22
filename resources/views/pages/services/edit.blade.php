@@ -46,15 +46,24 @@
                                     @csrf
                                     @method('PUT')
                                     <div class="mb-3">
+                                        <label for="code" class="form-label">Code</label>
+                                        <input type="text" class="form-control" id="code" name="code"
+                                            value="{{ $finds->code }}" required>
+                                    </div>
+                                    <div class="mb-3">
                                         <label for="libelle" class="form-label">Libellé</label>
-                                        <input type="text" class="form-control" id="libelle" name="libelle" value="{{ $finds->libelle }}" required>
+                                        <input type="text" class="form-control" id="libelle" name="libelle"
+                                            value="{{ $finds->libelle }}" required>
                                     </div>
                                     <div class="mb-3">
                                         <label for="description" class="form-label">Description</label>
                                         <textarea class="form-control" id="description" name="description" rows="3">{{ $finds->description }}</textarea>
                                     </div>
-                                    <button type="submit" class="btn btn-dark"><i data-feather="edit"></i>&thinsp;&thinsp; Modifier</button>
-                                    <button type="reset" class="btn btn-danger"><i data-feather="x"></i>&thinsp;&thinsp; Annuler</button>
+
+                                    <button type="submit" class="btn btn-dark"><i data-feather="edit"></i>&thinsp;&thinsp;
+                                        Modifier</button>
+                                    <button type="reset" class="btn btn-danger"><i data-feather="x"></i>&thinsp;&thinsp;
+                                        Annuler</button>
                                 </form>
                             </div>
                         </div>
