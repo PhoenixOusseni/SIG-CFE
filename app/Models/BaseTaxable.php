@@ -16,4 +16,8 @@ class BaseTaxable extends Model
     function Famille() {
         return $this->belongsTo(Famille::class, 'familles_id');
     }
+
+    function marche() {
+        return $this->hasMany(Marche::class, 'base_taxables_id');
+    }
 }

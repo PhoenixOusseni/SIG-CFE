@@ -1,46 +1,107 @@
 <!-- Modal -->
-<div class="modal fade" id="addElementModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-xl">
+<div class="modal fade" id="addElementModal" tabindex="-1" aria-labelledby="addElementModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
-            <div class="modal-header bg-success">
-                <h5 class="modal-title text-white" id="exampleModalLabel">Ajout des elements à la facture N°{{ $factures->id }}</h5>
-                <button type="button" class="btn-close text-white" data-bs-dismiss="modal" aria-label="Close">X</button>
+            <div class="modal-header bg-success text-white">
+                <h5 class="modal-title" id="addElementModalLabel">
+                    <i class="fas fa-plus-circle"></i> Ajouter un élément à la facture N°{{ $factures->id }}
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body">
-                <form action="{{ route('add_facture_element') }}" method="POST">
-                    @csrf
-                    <fieldset class="w-100 p-2 mt-3" style="border-radius: 5px; background: rgb(219, 238, 221)">
-                        <div class="row">
-                            <input class="form-control" name="facture_fournisseurs_id" value="{{ $factures->id }}"
-                                type="text" hidden />
-                            <div class="col-lg-6 col-md-12">
-                                <div class="mb-3">
-                                    <label class="small mb-1">Designation</label>
-                                    <input class="form-control" name="designation" type="text" />
-                                </div>
-                            </div>
-                            <div class="col-lg-3 col-md-12">
-                                <div class="mb-3">
-                                    <label class="small mb-1">Quantité</label>
-                                    <input class="form-control" name="quantite" type="number" />
-                                </div>
-                            </div>
-                            <div class="col-lg-3 col-md-12">
-                                <div class="mb-3">
-                                    <label class="small mb-1">Prix unitaire</label>
-                                    <input class="form-control" name="prix_unitaire" type="number" />
-                                </div>
-                            </div>
+            <form action="{{ route('add_facture_element') }}" method="POST" id="addElementForm">
+                @csrf
+                <div class="modal-body">
+                    <input class="form-control" name="facture_fournisseurs_id" value="{{ $factures->id }}" type="hidden" />
+
+                    <div class="row">
+                        <div class="col-12 mb-3">
+                            <label class="form-label">Désignation <span class="text-danger">*</span></label>
+                            <input class="form-control @error('designation') is-invalid @enderror"
+                                   name="designation"
+                                   type="text"
+                                   placeholder="Description de l'élément"
+                                   required />
+                            @error('designation')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
                         </div>
-                    </fieldset>
-                    <div class="m-3">
-                        <button class="btn btn-1" type="submit">
-                            <i class="fas fa-plus"></i>
-                            &nbsp; &nbsp;Ajouter un ligne
-                        </button>
+
+                        <div class="col-md-4 mb-3">
+                            <label class="form-label">Quantité <span class="text-danger">*</span></label>
+                            <input class="form-control @error('quantite') is-invalid @enderror"
+                                   name="quantite"
+                                   type="number"
+                                   id="modal_quantite"
+                                   min="1"
+                                   step="1"
+                                   value="1"
+                                   placeholder="1"
+                                   required />
+                            @error('quantite')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <div class="col-md-4 mb-3">
+                            <label class="form-label">Prix unitaire (FCFA) <span class="text-danger">*</span></label>
+                            <input class="form-control @error('prix_unitaire') is-invalid @enderror"
+                                   name="prix_unitaire"
+                                   type="number"
+                                   id="modal_prix_unitaire"
+                                   min="0"
+                                   step="0.01"
+                                   placeholder="0"
+                                   required />
+                            @error('prix_unitaire')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <div class="col-md-4 mb-3">
+                            <label class="form-label">Montant total (FCFA)</label>
+                            <input class="form-control bg-light"
+                                   type="text"
+                                   id="modal_montant_total"
+                                   readonly
+                                   value="0 FCFA" />
+                        </div>
                     </div>
-                </form>
-            </div>
+
+                    <div class="alert alert-info">
+                        <i class="fas fa-info-circle"></i>
+                        <strong>Note :</strong> Le montant total sera calculé automatiquement (Quantité × Prix unitaire)
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                        <i class="fas fa-times"></i> Annuler
+                    </button>
+                    <button type="submit" class="btn btn-success">
+                        <i class="fas fa-plus"></i> Ajouter l'élément
+                    </button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const modalQuantite = document.getElementById('modal_quantite');
+        const modalPrixUnitaire = document.getElementById('modal_prix_unitaire');
+        const modalMontantTotal = document.getElementById('modal_montant_total');
+
+        function calculateModalTotal() {
+            const quantite = parseFloat(modalQuantite.value) || 0;
+            const prixUnitaire = parseFloat(modalPrixUnitaire.value) || 0;
+            const total = quantite * prixUnitaire;
+            modalMontantTotal.value = total.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ' ') + ' FCFA';
+        }
+
+        if (modalQuantite && modalPrixUnitaire) {
+            modalQuantite.addEventListener('input', calculateModalTotal);
+            modalPrixUnitaire.addEventListener('input', calculateModalTotal);
+        }
+    });
+</script>

@@ -16,15 +16,17 @@ class CreateRecettesTable extends Migration
         Schema::create('recettes', function (Blueprint $table) {
             $table->id();
             $table->string('objet')->nullable();
-            $table->date('date')->nullable();
             $table->date('periode_debut')->nullable();
             $table->date('periode_fin')->nullable();
             $table->string('statut')->nullable();
             $table->date('echeance')->nullable();
 
             $table->foreignId('users_id')->constrained('users')->onUpdate('cascade')->onDelete('cascade');
-            $table->foreignId('contribuables_id')->constrained('contribuables')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignId('contribuables_id')->nullable()->constrained('contribuables')->onUpdate('cascade')->onDelete('cascade');
             $table->foreignId('signataires_id')->nullable()->constrained('signataires')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignId('marche_id')->nullable()->constrained('marches')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignId('categorie_id')->constrained('categories')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignId('service_id')->constrained('services')->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();
         });
     }

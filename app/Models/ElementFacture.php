@@ -13,8 +13,8 @@ class ElementFacture extends Model
 
     ];
 
-    public function FactureFournisseure()
+    public function FactureFournisseur()
     {
-        return $this->hasMany(FactureFournisseur::class);
+        return $this->belongsTo(FactureFournisseur::class, 'facture_fournisseurs_id');
     }
 }

@@ -22,6 +22,7 @@ class CreateUsersTable extends Migration
             $table->string('role')->nullable();
             $table->string('activate')->nullable();
             $table->string('password')->nullable();
+            $table->enum('module', ['facturation', 'diligence', 'tous'])->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

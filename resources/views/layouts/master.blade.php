@@ -31,6 +31,7 @@
     </div>
     @include('partials.script')
     @notifyJs
+    @yield('script')
 </body>
 
 </html>

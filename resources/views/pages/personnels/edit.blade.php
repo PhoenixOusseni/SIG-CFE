@@ -35,64 +35,75 @@
                             @csrf
                             @method('PUT')
                             <div class="row mb-3">
-                                <div class="col-md-6">
-                                    <label>Nom</label>
+                                <div class="col-md-2">
+                                    <label class="small">Code</label>
+                                    <input type="text" name="code" class="form-control" value="{{ $finds->code }}" required>
+                                    <div class="invalid-feedback">Ce champ est requis</div>
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="small">Nom</label>
                                     <input type="text" name="nom" class="form-control" value="{{ $finds->nom }}" required>
                                     <div class="invalid-feedback">Ce champ est requis</div>
                                 </div>
-                                <div class="col-md-6">
-                                    <label>Prénom</label>
+                                <div class="col-md-4">
+                                    <label class="small">Prénom</label>
                                     <input type="text" name="prenom" class="form-control" value="{{ $finds->prenom }}" required>
+                                    <div class="invalid-feedback">Ce champ est requis</div>
+                                </div>
+                                <div class="col-md-2">
+                                    <label class="small">Taux horaire</label>
+                                    <input type="number" name="taux_horaire" class="form-control" value="{{ $finds->taux_horaire }}" required>
                                     <div class="invalid-feedback">Ce champ est requis</div>
                                 </div>
                             </div>
 
                             <div class="row mb-3">
                                 <div class="col-md-4">
-                                    <label for="service" class="form-label">Service</label>
+                                    <label for="service" class="small">Service</label>
                                     <select class="form-select" id="service" name="service_id" required>
-                                        <option selected disabled>Sélectionner un service...</option>
-                                        @foreach ($services as $item)
-                                            <option value="{{ $item->id }}">{{ $item->libelle }}</option>
+                                        @foreach ($services as $service)
+                                            <option value="{{ $service->id }}" {{ $finds->service_id == $service->id ? 'selected' : '' }}>
+                                                {{ $service->libelle }}
+                                            </option>
                                         @endforeach
                                     </select>
                                 </div>
                                 <div class="col-md-4">
-                                    <label for="email" class="form-label">Email</label>
+                                    <label for="email" class="small">Email</label>
                                     <input type="email" class="form-control" id="email" name="email" value="{{ $finds->email }}" required>
                                 </div>
                                 <div class="col-md-4">
-                                    <label for="telephone" class="form-label">Téléphone</label>
+                                    <label for="telephone" class="small">Téléphone</label>
                                     <input type="text" class="form-control" id="telephone" name="telephone" value="{{ $finds->telephone }}">
                                 </div>
                             </div>
 
                             <div class="row mb-3">
                                 <div class="col-md-4">
-                                    <label for="adresse" class="form-label">Adresse</label>
+                                    <label for="adresse" class="small">Adresse</label>
                                     <input type="text" class="form-control" id="adresse" name="adresse" value="{{ $finds->adresse }}">
                                 </div>
                                 <div class="col-md-4">
-                                    <label for="niveau_cadre" class="form-label">Niveau Cadre</label>
+                                    <label for="niveau_cadre" class="small">Niveau Cadre</label>
                                     <input type="text" class="form-control" id="niveau_cadre" name="niveau_cadre" value="{{ $finds->niveau_cadre }}">
                                 </div>
                                 <div class="col-md-4">
-                                    <label for="poste" class="form-label">Poste</label>
+                                    <label for="poste" class="small">Poste</label>
                                     <input type="text" class="form-control" id="poste" name="poste" value="{{ $finds->poste }}">
                                 </div>
                             </div>
 
                             <div class="row mb-3">
                                 <div class="col-md-4">
-                                    <label for="pj1" class="form-label">PJ 1</label>
+                                    <label for="pj1" class="small">PJ 1</label>
                                     <input type="file" class="form-control" id="pj1" name="pj1">
                                 </div>
                                 <div class="col-md-4">
-                                    <label for="pj2" class="form-label">PJ 2</label>
+                                    <label for="pj2" class="small">PJ 2</label>
                                     <input type="file" class="form-control" id="pj2" name="pj2">
                                 </div>
                                 <div class="col-md-4">
-                                    <label for="pj3" class="form-label">PJ 3</label>
+                                    <label for="pj3" class="small">PJ 3</label>
                                     <input type="file" class="form-control" id="pj3" name="pj3">
                                 </div>
                             </div>

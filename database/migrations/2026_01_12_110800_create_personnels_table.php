@@ -15,6 +15,8 @@ class CreatePersonnelsTable extends Migration
     {
         Schema::create('personnels', function (Blueprint $table) {
             $table->id();
+            $table->string('code')->nullable();
+            $table->float('taux_horaire')->nullable();
             $table->string('matricule')->nullable();
             $table->string('nom')->nullable();
             $table->string('prenom')->nullable();

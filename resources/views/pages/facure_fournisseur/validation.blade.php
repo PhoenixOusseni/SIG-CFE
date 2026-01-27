@@ -44,7 +44,7 @@
                                                             <th>N°</th>
                                                             <th>Date</th>
                                                             <th>Fournisseur</th>
-                                                            <th>Budget</th>
+                                                            <th>Prestation</th>
                                                             <th>Action</th>
                                                         </tr>
                                                     </thead>
@@ -54,7 +54,7 @@
                                                                 <td>{{ $facture->id }}</td>
                                                                 <td>{{ $facture->date }}</td>
                                                                 <td>{{ $facture->Fournisseur->libelle }}</td>
-                                                                <td>{{ $facture->Budget->libelle }}</td>
+                                                                <td>{{ $facture->BaseTaxable->libelle }}</td>
                                                                 <td class="d-flex justify-content-center">
                                                                     <a href="#" class="btn btn-primary btn-sm me-2" data-bs-toggle="modal" data-bs-target="#validationFactModal{{ $facture->id }}">
                                                                         Valider

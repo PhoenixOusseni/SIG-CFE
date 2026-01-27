@@ -45,6 +45,8 @@ class UserController extends Controller
             'email' => $request->email,
             'role' => $request->role,
             'activate' => $request->activate,
+            'module' => $request->module,
+            'password' => Hash::make('password'),
         ]);
 
         smilify('success', 'Utilisateur a été ajouté avec success !');

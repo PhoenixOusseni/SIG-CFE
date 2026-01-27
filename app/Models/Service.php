@@ -32,4 +32,9 @@ class Service extends Model
     {
         return $this->hasMany(Critere::class);
     }
+
+    public function recettes()
+    {
+        return $this->hasMany(Recette::class);
+    }
 }

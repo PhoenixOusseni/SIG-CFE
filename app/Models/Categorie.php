@@ -17,4 +17,9 @@ class Categorie extends Model
     {
         return $this->hasMany(Contribuable::class);
     }
+
+    public function Recette()
+    {
+        return $this->hasMany(Recette::class);
+    }
 }

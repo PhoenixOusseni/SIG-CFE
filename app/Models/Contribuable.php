@@ -22,4 +22,9 @@ class Contribuable extends Model
     {
         return $this->hasMany(Recette::class);
     }
+
+    public function Marches()
+    {
+        return $this->hasMany(Marche::class);
+    }
 }

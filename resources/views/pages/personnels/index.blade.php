@@ -44,6 +44,7 @@
                             <thead>
                                 <tr>
                                     <th>ID</th>
+                                    <th>Code</th>
                                     <th>Nom</th>
                                     <th>Prénom</th>
                                     <th>Email</th>
@@ -55,6 +56,7 @@
                                 @foreach ($personnels as $personnel)
                                     <tr>
                                         <td>{{ $personnel->id }}</td>
+                                        <td>{{ $personnel->code }}</td>
                                         <td>{{ $personnel->nom }}</td>
                                         <td>{{ $personnel->prenom }}</td>
                                         <td>{{ $personnel->email }}</td>

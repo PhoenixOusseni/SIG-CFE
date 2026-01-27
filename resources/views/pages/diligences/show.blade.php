@@ -46,11 +46,15 @@
                                     </div>
                                 </div>
                                 <div class="col-md-12">
-                                    <div class="col-md-12"><strong>Service :</strong>
+                                    <div class="col-md-12"><strong>Département :</strong>
                                         {{ $finds->service->libelle ?? 'N/A' }}
                                     </div>
                                 </div>
-                                <div class="col-md-12"></div>
+                                <div class="col-md-12">
+                                    <div class="col-md-12"><strong>Marché :</strong>
+                                        {{ $finds->marche->designation ?? 'N/A' }}
+                                    </div>
+                                </div>
                                 <div class="col-md-12"><strong>Désignation :</strong>
                                     {{ $finds->designation ?? 'N/A' }}
                                 </div>

@@ -21,6 +21,10 @@ class Diligence extends Model
         return $this->belongsTo(Personnel::class, 'personnel_id');
     }
 
+    function marche() {
+        return $this->belongsTo(Marche::class, 'marche_id');
+    }
+
     public function criteres()
     {
         return $this->hasMany(Critere::class);

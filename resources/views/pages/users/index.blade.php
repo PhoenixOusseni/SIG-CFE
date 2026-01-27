@@ -56,20 +56,27 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-lg-6 col-md-12">
+                                    <div class="col-lg-4 col-md-12">
                                         <div class="mb-3">
                                             <label class="small mb-1">Role utilisateur</label>
                                             <select class="form-select" name="role" required>
                                                 <option value="">Selectionner ici...</option>
                                                 <option value="Administrateur">Administrateur</option>
                                                 <option value="Superviseur">Superviseur</option>
-                                                
-                                                {{-- Emmet oredre de rectte DSCRE --}}
-                                                <option value="DAF">DAF</option>
-                                                <option value="Comptable">Comptable</option>
-                                                <option value="Controle">Controle</option>
-                                                {{-- Volume d'eau prelevé --}}
-                                                <option value="DSCRE">DSCRE</option>
+                                                <option value="Manager">Manager</option>
+                                                <option value="Seniore">Seniore</option>
+                                                <option value="Junior">Junior</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4 col-md-12">
+                                        <div class="mb-3">
+                                            <label class="small mb-1">Module</label>
+                                            <select class="form-select" name="module" required>
+                                                <option value="">Selectionner ici...</option>
+                                                <option value="facturation">Facturation</option>
+                                                <option value="recette">Recette</option>
+                                                <option value="tous">Tous</option>
                                             </select>
                                         </div>
                                     </div>
@@ -88,7 +95,7 @@
                             <div class="m-3">
                                 <button class="btn btn-1" type="submit">
                                     <i class="fas fa-save"></i>
-                                    &nbsp; &nbsp;Enregistrer
+                                    &nbsp; &nbsp; Enregistrer
                                 </button>
                             </div>
                         </div>

@@ -14,7 +14,6 @@
 
 <body style="height: 90vh;">
     <div id="layoutSidenav_content">
-
         @forelse ($entetes as $item)
             <div style="border-bottom: 1px solid black; margin: 10px;">
                 <div class="d-flex justify-content-between col-md-12">
@@ -56,11 +55,10 @@
                 <h5>N° IFU : <strong>{{ $recette->Contribuable->ifu }}</strong></h5>
                 <h5>RCCM : <strong>{{ $recette->Contribuable->rccm }}</strong></h5>
             </div>
-            <div class="col-6 text-end">
-                <h5>Date : <strong>{{ $recette->date }}</strong></h5>
-                <h5>Du : <strong>{{ $recette->periode_debut }}</strong> Au
-                    <strong>{{ $recette->periode_fin }}</strong></h5>
-                <h5>Date écheance : <strong>{{ $recette->echeance }}</strong></h5>
+            <div class="col-6 text-start" style="margin-left: 50px;">
+                <h5>Date : <strong>{{ $recette->created_at->format('d/m/Y') }}</strong></h5>
+                <h5>Référence : </h5>
+                <h5>Département : <strong>{{ $recette->Service->libelle ?? 'N/A' }}</strong></h5>
             </div>
         </div>
         <div class="text-start mt-5">
@@ -91,32 +89,49 @@
                 </tbody>
             </table>
 
-            <table class="table table-bordered border-dark">
-                <thead>
-                    <tr class="text-center">
-                        <th colspan="4">MONTANT TOTAL</th>
-                        <th style="background-color: rgb(193, 198, 203)" colspan="2">
-                            {{ number_format($montant_total, 0, ',', ' ') }} FCFA</th>
-                    </tr>
-                </thead>
-            </table>
-            <p>Arreté le présent facture à la somme de
-                <strong>({{ number_format($montant_total, 0, ',', ' ') }}) FRANCS CFA</strong>
-            </p>
-        </div>
+            <div class="row">
+                <div class="col-md-7"></div>
+                <div class="col-md-5 text-end">
+                    <table class="table table-bordered border-dark">
+                        <tr>
+                            <th>Sous-total</th>
+                            <td>{{ number_format($montant_total, 0, ',', ' ') }} FCFA</td>
+                        </tr>
+                        <tr>
+                            <th>TVA (18%)</th>
+                            <td>{{ number_format($tva, 0, ',', ' ') }} FCFA</td>
+                        </tr>
+                        <tr>
+                            <th>Total TTC</th>
+                            <td><strong>{{ number_format($montant_total_ttc, 0, ',', ' ') }} FCFA</strong></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="mt-3">
+                <p>Arrêté le présent facture à la somme de :
+                    <strong style="text-transform: uppercase;">{{ conversion($montant_total) }} FRANCS CFA</strong>
+                </p>
+                <p>
+                    ({{ number_format($montant_total, 0, ',', ' ') }} FCFA)
+                </p>
+            </div>
 
-        <div class="text-end m-3" style="margin-top: 50px;">
-            <img src="{{ asset('storage') . '/' . $recette->Signataire->photo }}" class="w-25" alt="logo entete">
-            <h4>{{ $recette->Signataire->nom }}</h4>
-            <p>{{ $recette->Signataire->fonction }}</p>
+            <div class="mt-5">
+                <h5>Conditions :</h5>
+                <div class="d-flex justify-content-between">
+                    <p>Délais de livraison : disponibilité</p>
+                    <p>Délais de paiement : 100% à la livraison</p>
+                </div>
+            </div>
         </div>
 
         {{-- Pied de page --}}
-        <div class="p-3" style="margin-top: 70px; border-top: 1px solid black;">
+        <div class="p-3" style="margin-top: 20px; border-top: 1px solid black;">
             @forelse (App\Models\Entete::all() as $item)
                 <p>{{ $item->pied_page }}</p>
             @empty
-            <p class="text-danger">Veuillez inserer un pied de page</p>
+                <p class="text-danger">Veuillez inserer un pied de page</p>
             @endforelse
         </div>
     </div>

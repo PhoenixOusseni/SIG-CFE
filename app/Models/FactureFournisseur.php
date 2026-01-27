@@ -17,12 +17,12 @@ class FactureFournisseur extends Model
         return $this->belongsTo(User::class, 'users_id');
     }
 
-    function Budget() {
-        return $this->belongsTo(Budget::class, 'budgets_id');
+    function BaseTaxable() {
+        return $this->belongsTo(BaseTaxable::class, 'base_taxable_id');
     }
 
     function Fournisseur() {
-        return $this->belongsTo(Fournisseur::class, 'fournisseurs_id');
+        return $this->belongsTo(Fournisseur::class, 'fournisseur_id');
     }
 
     function ElementFacture() {

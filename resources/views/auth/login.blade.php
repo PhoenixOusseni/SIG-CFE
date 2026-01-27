@@ -81,7 +81,7 @@
                                     <div class="input-group has-validation">
                                         <span class="input-group-text" id="inputGroupPrepend"><img class="img-icon"
                                                 src="{{ asset('images/user_shield_24px.png') }}" /></span>
-                                        <input type="text" name="login" class="form-control" placeholder="Nom utilisateur" required>
+                                        <input type="email" name="email" class="form-control" placeholder="Nom utilisateur" required>
                                     </div>
                                 </div>
 

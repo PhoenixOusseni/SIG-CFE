@@ -47,6 +47,7 @@
                                     <th>Désignation</th>
                                     <th>Taux</th>
                                     <th>Personnel</th>
+                                    <th>Marché</th>
                                     <th class="text-center">Actions</th>
                                 </tr>
                             </thead>
@@ -58,7 +59,9 @@
                                         <td>{{ $diligence->designation }}</td>
                                         <td>{{ $diligence->taux }}</td>
                                         <td>{{ $diligence->personnel->nom ?? 'N/A' }}
-                                            {{ $diligence->personnel->prenom ?? 'N/A' }}</td>
+                                            {{ $diligence->personnel->prenom ?? 'N/A' }}
+                                        </td>
+                                        <td>{{ $diligence->marche->designation ?? 'N/A' }}</td>
                                         <td class="text-center">
                                             <a class="text-center"
                                                 href="{{ route('gestion_diligence.show', $diligence->id) }}">

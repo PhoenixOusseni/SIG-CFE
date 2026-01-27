@@ -21,8 +21,4 @@ class ElementRecette extends Model
     function Base() {
         return $this->belongsTo(BaseTaxable::class, 'base_taxables_id');
     }
-
-    function Source() {
-        return $this->belongsTo(SourcePrelevement::class, 'source_prelevements_id');
-    }
 }

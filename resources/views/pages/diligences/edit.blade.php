@@ -66,12 +66,21 @@
                             </div>
 
                             <div class="row mb-3">
-                                <div class="col-md-6">
+                                <div class="col-md-4">
                                     <label class="small">Désignation</label>
                                     <input type="text" name="designation" class="form-control" value="{{ $finds->designation }}" required>
                                     <div class="invalid-feedback">Ce champ est requis</div>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-4">
+                                    <label class="small">Marché</label>
+                                    <select name="marche_id" id="marche_id" class="form-select" required>
+                                        <option selected disabled>Sélectionner un marché...</option>
+                                        @foreach ($marches as $item)
+                                            <option value="{{ $item->id }}">{{ $item->designation }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="col-md-4">
                                     <label class="small">Taux</label>
                                     <input type="number" name="taux" class="form-control" value="{{ $finds->taux }}" required>
                                 </div>
@@ -95,7 +104,7 @@
                             <div class="row mb-3">
                                 <div class="col-md-12">
                                     <label class="small">Contraintes</label>
-                                    <textarea name="contrainte" class="form-control" cols="30" rows="10">{{ $finds->contrainte }}</textarea>
+                                    <textarea name="contrainte" class="form-control" cols="30" rows="5">{{ $finds->contrainte }}</textarea>
                                 </div>
                             </div>
 

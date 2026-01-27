@@ -40,30 +40,44 @@
                                     <div class="row">
                                         <input class="form-control" name="statut" type="text" value="en attente" hidden />
                                         <input class="form-control" name="users_id" type="text" value="{{ Auth::user()->id }}" hidden />
-                                        {{-- <div class="col-lg-4 col-md-12">
-                                            <div class="mb-3">
-                                                <label class="small mb-1">Budget</label>
-                                                <select name="budgets_id" class="form-select">
-                                                    <option>Sélectionner le budget</option>
-                                                    @foreach ($budgets as $budget)
-                                                        <option value="{{ $budget->id }}">{{ $budget->libelle }}</option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-                                        </div> --}}
-                                        <div class="col-lg-6 col-md-12">
+                                        <div class="col-lg-4 col-md-12">
                                             <div class="mb-3">
                                                 <label class="small mb-1">Client</label>
                                                 <select name="contribuables_id" class="form-select">
                                                     <option value="">Sélectionner le client</option>
                                                     @foreach ($contribuables as $contribuable)
-                                                        <option value="{{ $contribuable->id }}">{{ $contribuable->assujeti }}
+                                                        <option value="{{ $contribuable->id }}">
+                                                            {{ $contribuable->assujeti }}
                                                         </option>
                                                     @endforeach
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="col-lg-6 col-md-12">
+                                        <div class="col-lg-3 col-md-12">
+                                            <div class="mb-3">
+                                                <label class="small mb-1">Categorie</label>
+                                                <select name="categorie_id" class="form-select">
+                                                    <option>Sélectionner la catégorie</option>
+                                                    @foreach (App\Models\Categorie::all() as $categorie)
+                                                        <option value="{{ $categorie->id }}">{{ $categorie->libelle }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-3 col-md-12">
+                                            <div class="mb-3">
+                                                <label class="small mb-1">Signataire</label>
+                                                <select name="signataires_id" class="form-select">
+                                                    <option>Sélectionner le signataire</option>
+                                                    @foreach (App\Models\Signataire::all() as $signataire)
+                                                        <option value="{{ $signataire->id }}">{{ $signataire->nom }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-2 col-md-12">
                                             <div class="mb-3">
                                                 <label class="small mb-1">Echeance de paiement</label>
                                                 <input class="form-control" type="date" name="echeance" />
@@ -71,16 +85,23 @@
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="col-lg-6 col-md-12">
+                                        <div class="col-lg-4 col-md-12">
                                             <div class="mb-3">
                                                 <label class="small mb-1">Designation</label>
                                                 <input class="form-control" name="objet" type="text" />
                                             </div>
                                         </div>
-                                        <div class="col-lg-2 col-md-12">
+                                        <div class="col-lg-4 col-md-12">
                                             <div class="mb-3">
-                                                <label class="small mb-1">Date</label>
-                                                <input class="form-control" name="date" type="date" />
+                                                <label class="small mb-1">Marché</label>
+                                                <select name="marche_id" class="form-select">
+                                                    <option value="">Sélectionner le marché</option>
+                                                    @foreach ($marches as $marche)
+                                                        <option value="{{ $marche->id }}">
+                                                            {{ $marche->designation }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
                                             </div>
                                         </div>
                                         <div class="col-lg-2 col-md-12">
@@ -97,13 +118,14 @@
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="col-lg-6 col-md-12">
+                                        <div class="col-lg-4 col-md-12">
                                             <div class="mb-3">
-                                                <label class="small mb-1">Signataire</label>
-                                                <select name="signataires_id" class="form-select">
-                                                    <option>Sélectionner le signataire</option>
-                                                    @foreach (App\Models\Signataire::all() as $signataire)
-                                                        <option value="{{ $signataire->id }}">{{ $signataire->nom }}
+                                                <label class="small mb-1">Département</label>
+                                                <select name="service_id" class="form-select" required>
+                                                    <option value="">Sélectionner le département</option>
+                                                    @foreach (App\Models\Service::all() as $service)
+                                                        <option value="{{ $service->id }}">
+                                                            {{ $service->libelle }}
                                                         </option>
                                                     @endforeach
                                                 </select>
@@ -111,11 +133,54 @@
                                         </div>
                                     </div>
                                 </fieldset>
+
+                                <fieldset class="w-100 p-2 mt-3" style="border-radius: 5px; background: rgb(219, 238, 221)">
+                                    <h5 class="mb-3 text-success">Éléments de la facture</h5>
+                                    <div id="elementsContainer">
+                                        <div class="row mb-3 element-row">
+                                            <div class="col-lg-4 col-md-12">
+                                                <div class="mb-3">
+                                                    <label class="small mb-1">Designation</label>
+                                                    <select class="form-select base-taxable-select" name="base_taxables_id[]">
+                                                        <option value="">Sélectionner la désignation</option>
+                                                        @foreach ($bases as $item)
+                                                            <option value="{{ $item->id }}">{{ $item->libelle }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-2 col-md-12">
+                                                <div class="mb-3">
+                                                    <label class="small mb-1">Quantité</label>
+                                                    <input class="form-control" name="quantite[]" type="number" />
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-2 col-md-12">
+                                                <div class="mb-3">
+                                                    <label class="small mb-1">Prix unitaire</label>
+                                                    <input class="form-control" name="prix_unitaire[]" type="number" />
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-2 col-md-12">
+                                                <div class="mb-3">
+                                                    <label class="small mb-1">Unité</label>
+                                                    <input class="form-control" name="unite[]" type="text" />
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-2 d-flex align-items-end">
+                                                <div class="mb-3">
+                                                    <button type="button" class="btn btn-success btn-sm me-2" id="addRowBtn"><i
+                                                        data-feather="plus"></i>&thinsp;&thinsp; Ajouter</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </fieldset>
                             </div>
                             <div class="m-3">
                                 <button class="btn btn-1" type="submit">
-                                    <i class="fas fa-plus"></i>
-                                    &nbsp; &nbsp; Ajouter un ligne
+                                    <i class="fas fa-save"></i>
+                                    &nbsp; &nbsp; Enregistrer la facture
                                 </button>
                             </div>
                         </div>
@@ -142,8 +207,8 @@
                                                         <tr>
                                                             <th>Code</th>
                                                             <th>Designation</th>
-                                                            <th>Date</th>
                                                             <th>Client</th>
+                                                            <th>Marché</th>
                                                             <th>Echeance</th>
                                                             <th>Action</th>
                                                         </tr>
@@ -153,12 +218,14 @@
                                                             <tr>
                                                                 <td>{{ $recette->id }}</td>
                                                                 <td>{{ $recette->objet }}</td>
-                                                                <td>{{ $recette->date }}</td>
                                                                 <td>{{ $recette->Contribuable->assujeti }}</td>
+                                                                <td>{{ $recette->Marche->designation }}</td>
                                                                 <td>{{ $recette->echeance }}</td>
                                                                 <td class="d-flex justify-content-center">
-                                                                    <a href="{{ route ('module_ordre_recette.show', [$recette->id]) }}">
-                                                                        <i class="fa fa-eye text-success" aria-hidden="true"></i>
+                                                                    <a
+                                                                        href="{{ route('module_ordre_recette.show', [$recette->id]) }}">
+                                                                        <i class="fa fa-eye text-success"
+                                                                            aria-hidden="true"></i>
                                                                     </a>
                                                                 </td>
                                                             </tr>
@@ -177,4 +244,83 @@
             </div>
         </div>
     </main>
+@endsection
+
+@section('script')
+    <script>
+        $(document).ready(function() {
+            // Variable pour stocker le HTML des options de base taxable
+            let baseOptions = `
+                <option value="">Sélectionner la désignation</option>
+                @foreach ($bases as $item)
+                    <option value="{{ $item->id }}">{{ $item->libelle }}</option>
+                @endforeach
+            `;
+
+            // Fonction pour réinitialiser les icônes Feather
+            function refreshFeatherIcons() {
+                if (typeof feather !== 'undefined') {
+                    feather.replace();
+                }
+            }
+
+            // Ajouter une nouvelle ligne
+            $(document).on('click', '#addRowBtn', function() {
+                let newRow = `
+                    <div class="row mb-3 element-row">
+                        <div class="col-lg-4 col-md-12">
+                            <div class="mb-3">
+                                <label class="small mb-1">Designation</label>
+                                <select class="form-select base-taxable-select" name="base_taxables_id[]">
+                                    ${baseOptions}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-md-12">
+                            <div class="mb-3">
+                                <label class="small mb-1">Quantité</label>
+                                <input class="form-control" name="quantite[]" type="number" />
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-md-12">
+                            <div class="mb-3">
+                                <label class="small mb-1">Prix unitaire</label>
+                                <input class="form-control" name="prix_unitaire[]" type="number" />
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-md-12">
+                            <div class="mb-3">
+                                <label class="small mb-1">Unité</label>
+                                <input class="form-control" name="unite[]" type="text" />
+                            </div>
+                        </div>
+                        <div class="col-lg-2 d-flex align-items-end">
+                            <div class="mb-3">
+                                <button type="button" class="btn btn-danger btn-sm removeRowBtn"><i
+                                        data-feather="trash-2"></i>&thinsp;&thinsp; Supprimer</button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+
+                $('#elementsContainer').append(newRow);
+
+                // Réinitialiser les icônes Feather
+                refreshFeatherIcons();
+            });
+
+            // Supprimer une ligne
+            $(document).on('click', '.removeRowBtn', function() {
+                // S'assurer qu'il reste au moins une ligne
+                if ($('.element-row').length > 1) {
+                    $(this).closest('.element-row').remove();
+                } else {
+                    alert('Vous devez conserver au moins un élément dans la facture.');
+                }
+            });
+
+            // Réinitialiser les icônes au chargement
+            refreshFeatherIcons();
+        });
+    </script>
 @endsection

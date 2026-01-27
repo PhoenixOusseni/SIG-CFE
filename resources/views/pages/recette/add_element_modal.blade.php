@@ -38,17 +38,6 @@
                             </div>
                         </div>
                         <div class="row">
-                            {{-- <div class="col-lg-4 col-md-12">
-                                <div class="mb-3">
-                                    <label class="small mb-1">Source</label>
-                                    <select class="form-select" name="source_prelevements_id">
-                                        <option>Sélectionner la source</option>
-                                        @foreach ($sources as $item)
-                                            <option value="{{ $item->id }}">{{ $item->libelle }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div> --}}
                             <div class="col-lg-4 col-md-12">
                                 <div class="mb-3">
                                     <label class="small mb-1">Uinité</label>

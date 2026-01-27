@@ -24,6 +24,7 @@ use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\DiligenceController;
 use App\Http\Controllers\CritereController;
 use App\Http\Controllers\TraitementController;
+use App\Http\Controllers\MarcheController;
 
 /*
 |--------------------------------------------------------------------------
@@ -75,6 +76,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('odre_recette_en_reglement', [RecetteController::class, 'reglement_rectte'])->name('reglement_rectte');
     Route::get('odre_recette_reglee', [RecetteController::class, 'regle_recette'])->name('regle_recette');
     Route::get('print_ordre_recette/{id}', [RecetteController::class, 'print_recette']);
+    Route::get('print_bon_execution/{id}', [RecetteController::class, 'printBonExecution'])->name('print_bon_execution');
     Route::get('supp_ordre_recette/{id}', [RecetteController::class, 'destroy']);
     Route::get('supp_element_recette/{id}', [RecetteController::class, 'destroy_element']);
 
@@ -86,6 +88,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::resource('module_facture_fournisseur', FactureFournisseurController::class);
     Route::post('add_element_row', [FactureFournisseurController::class, 'add_facture_element'])->name('add_facture_element');
+    Route::patch('update_element_row/{id}', [FactureFournisseurController::class, 'update_facture_element'])->name('update_facture_element');
     Route::get('facture_validation', [FactureFournisseurController::class, 'valider'])->name('valider_facture');
     Route::post('validation/{id}', [FactureFournisseurController::class, 'validation']);
     Route::get('facture_en_reglement', [FactureFournisseurController::class, 'en_reglement'])->name('mise_reglement_facture');
@@ -125,5 +128,17 @@ Route::middleware(['auth'])->group(function () {
 
     Route::resource('gestion_entete', EnteteController::class);
 
+    Route::resource('gestion_marche', MarcheController::class);
+    // print marche
+    Route::get('print_marche/{id}', [MarcheController::class, 'print_marche'])->name('print_marche');
+
     Route::get('gestion_etat', [PageController::class, 'etat'])->name('etat');
+
+    // ------------------ gestion des etats ------------------//
+    Route::get('etat/solde_client', [EtatController::class, 'solde_client'])->name('solde_client');
+    Route::get('etat/solde_fournisseur', [EtatController::class, 'solde_fournisseur'])->name('solde_fournisseur');
+    Route::get('etat/marche_global', [EtatController::class, 'marche_global'])->name('marche_global');
+    Route::get('etat/marche_detaille', [EtatController::class, 'marche_detaille'])->name('marche_detaille');
+    Route::get('etat/facture_par_categorie', [EtatController::class, 'facture_categorie'])->name('facture_par_categorie');
+    Route::get('etat/facture_par_departement', [EtatController::class, 'facture_departement'])->name('facture_par_departement');
 });

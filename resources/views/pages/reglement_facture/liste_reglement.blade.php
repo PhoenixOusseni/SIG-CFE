@@ -42,7 +42,7 @@
                                             <tr>
                                                 <th>N°</th>
                                                 <th>Date</th>
-                                                <th>Budget</th>
+                                                <th>Prestation</th>
                                                 <th>Fournisseur</th>
                                                 <th>Net à payer</th>
                                                 <th>Versement</th>
@@ -55,7 +55,7 @@
                                                 <tr>
                                                     <td>{{ $regle->id }}</td>
                                                     <td>{{ $regle->date }}</td>
-                                                    <td>{{ $regle->FactureFournisseur->Budget->libelle }}</td>
+                                                    <td>{{ $regle->FactureFournisseur->BaseTaxable->libelle }}</td>
                                                     <td>{{ $regle->FactureFournisseur->Fournisseur->libelle }}</td>
                                                     <td>{{ number_format($regle->net, 0, ',', ' ') }}</td>
                                                     <td>{{ number_format($regle->versement, 0, ',', ' ') }}</td>

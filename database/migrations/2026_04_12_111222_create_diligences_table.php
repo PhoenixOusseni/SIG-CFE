@@ -25,6 +25,7 @@ class CreateDiligencesTable extends Migration
 
             $table->foreignId('personnel_id')->nullable()->constrained('personnels')->onDelete('cascade')->onUpdate('cascade');
             $table->foreignId('service_id')->nullable()->constrained('services')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignId('marche_id')->nullable()->constrained('marches')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });
     }

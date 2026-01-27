@@ -20,17 +20,6 @@
                                     <input class="form-control" type="text" readonly value="{{ $recette->id }}" />
                                 </div>
                             </div>
-                            {{-- <div class="col-lg-4 col-md-12">
-                                <div class="mb-3">
-                                    <label class="small mb-1">Budget</label>
-                                    <select name="budgets_id" class="form-control">
-                                        <option value="{{ $recette->Budget->id }}">{{ $recette->Budget->libelle }}</option>
-                                        @foreach ($budgets as $budget)
-                                            <option value="{{ $budget->id }}">{{ $budget->libelle }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div> --}}
                             <div class="col-lg-4 col-md-12">
                                 <div class="mb-3">
                                     <label class="small mb-1">Client</label>
@@ -92,17 +81,6 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-lg-4 col-md-12">
-                                <div class="mb-3">
-                                    <label class="small mb-1">Source</label>
-                                    <select class="form-control" name="source_prelevements_id">
-                                        <option>Sélectionner la source</option>
-                                        @foreach ($sources as $item)
-                                            <option value="{{ $item->id }}">{{ $item->libelle }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
                             <div class="col-lg-4 col-md-12">
                                 <div class="mb-3">
                                     <label class="small mb-1">Uinité</label>

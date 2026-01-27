@@ -67,7 +67,7 @@
                                         <div class="timeline-item-content">
                                             {{ $item->Fournisseur->libelle }}
                                             <a class="fw-bold text-dark" href="#!">#{{ $item->date }}</a>
-                                            {{ $item->Budget->libelle }}
+                                            {{ $item->BaseTaxable->libelle }}
                                             <a class="fw-bold text-dark" href="#!">#140.000 FCFA</a>
                                         </div>
                                     </div>
@@ -81,15 +81,14 @@
             <!-- Example Charts for Dashboard Demo-->
             <div class="row">
                 <div class="card mb-4">
-                    <div class="card-header">Ordre de recette du jours</div>
+                    <div class="card-header">Factures du jour</div>
                     <div class="card-body">
                         <table id="datatablesSimple">
                             <thead>
                                 <tr>
                                     <th>Code</th>
                                     <th>Designation</th>
-                                    <th>Date</th>
-                                    <th>Budget</th>
+                                    <th>Marché</th>
                                     <th>Contribuable</th>
                                     <th>Echeance</th>
                                     <th>Action</th>
@@ -100,9 +99,8 @@
                                     <tr>
                                         <td>{{ $recette->id }}</td>
                                         <td>{{ $recette->objet }}</td>
-                                        <td>{{ $recette->date }}</td>
-                                        <td>{{ $recette->Budget->libelle }}</td>
-                                        <td>{{ $recette->Contribuable->assujeti }}</td>
+                                        <td>{{ $recette->Marche->designation ?? 'N/A' }}</td>
+                                        <td>{{ $recette->Contribuable->assujeti ?? 'N/A' }}</td>
                                         <td>{{ $recette->echeance }}</td>
                                         <td class="d-flex justify-content-between">
                                             <a href="{{ route ('module_ordre_recette.show', [$recette->id]) }}">

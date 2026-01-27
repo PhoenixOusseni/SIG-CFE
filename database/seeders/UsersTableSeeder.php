@@ -23,8 +23,9 @@ class UsersTableSeeder extends Seeder
             'email' => 'superviseur@gmail.com',
             'login' => 'superviseur',
             'activate' => 1,
-            'role' => 'superviseur',
-            'password' => Hash::make('superviseur'),
+            'role' => 'manager',
+            'module' => 'tous',
+            'password' => Hash::make('password'),
         ]);
     }
 }

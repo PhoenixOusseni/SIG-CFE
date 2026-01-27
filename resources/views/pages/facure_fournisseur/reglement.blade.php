@@ -44,7 +44,7 @@
                                                             <th>N°</th>
                                                             <th>Date</th>
                                                             <th>Fournisseur</th>
-                                                            <th>Budget</th>
+                                                            <th>Prestation</th>
                                                             <th>Satatut</th>
                                                             <th>Action</th>
                                                         </tr>
@@ -55,7 +55,7 @@
                                                                 <td>{{ $fact->id }}</td>
                                                                 <td>{{ $fact->date }}</td>
                                                                 <td>{{ $fact->Fournisseur->libelle }}</td>
-                                                                <td>{{ $fact->Budget->libelle }}</td>
+                                                                <td>{{ $fact->BaseTaxable->libelle }}</td>
                                                                 <td>{{ $fact->statut }}</td>
                                                                 <td class="d-flex justify-content-center">
                                                                     <a href="{{ url('view_reglement_fact/' . $fact->id) }}" class="btn btn-primary btn-sm me-2">

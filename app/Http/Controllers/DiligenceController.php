@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Diligence;
 use App\Models\Personnel;
 use App\Models\Service;
+use App\Models\Marche;
+
 use Illuminate\Http\Request;
 
 class DiligenceController extends Controller
@@ -25,7 +27,8 @@ class DiligenceController extends Controller
     {
         $personnels = Personnel::all();
         $services = Service::all();
-        return view('pages.diligences.create', compact('personnels', 'services'));
+        $marches = Marche::all();
+        return view('pages.diligences.create', compact('personnels', 'services', 'marches'));
     }
 
     /**
@@ -40,7 +43,7 @@ class DiligenceController extends Controller
         $diligence->contrainte = $request->contrainte;
         $diligence->personnel_id = $request->personnel_id;
         $diligence->service_id = $request->service_id;
-
+        $diligence->marche_id = $request->marche_id;
         if ($request->hasFile('pj1')) {
             $path = $request->file('pj1')->store('uploads', 'public');
             $diligence->pj1 = $path;
@@ -78,7 +81,8 @@ class DiligenceController extends Controller
         $finds = Diligence::findOrFail($id);
         $personnels = Personnel::all();
         $services = Service::all();
-        return view('pages.diligences.edit', compact('finds', 'personnels', 'services'));
+        $marches = Marche::all();
+        return view('pages.diligences.edit', compact('finds', 'personnels', 'services', 'marches'));
     }
 
     /**
@@ -93,7 +97,7 @@ class DiligenceController extends Controller
         $finds->contrainte = $request->contrainte;
         $finds->personnel_id = $request->personnel_id;
         $finds->service_id = $request->service_id;
-
+        $finds->marche_id = $request->marche_id;
         if ($request->hasFile('pj1')) {
             $file1 = $request->file('pj1');
             $filename1 = time() . '_pj1_' . $file1->getClientOriginalName();

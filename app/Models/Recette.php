@@ -21,20 +21,28 @@ class Recette extends Model
         return $this->hasMany(ElementRecette::class, 'recettes_id', 'id');
     }
 
-    function Budget() {
-        return $this->belongsTo(Budget::class, 'budgets_id');
-    }
-
     function Contribuable() {
         return $this->belongsTo(Contribuable::class, 'contribuables_id');
     }
 
     public function Reglement()
     {
-        return $this->hasMany(ReglementFacture::class);
+        return $this->hasMany(ReglementFacture::class, 'recettes_id', 'id');
     }
 
     function Signataire() {
         return $this->belongsTo(Signataire::class, 'signataires_id');
+    }
+
+    function Marche() {
+        return $this->belongsTo(Marche::class, 'marche_id');
+    }
+
+    function Categorie() {
+        return $this->belongsTo(Categorie::class, 'categorie_id');
+    }
+
+    function Service() {
+        return $this->belongsTo(Service::class, 'service_id');
     }
 }

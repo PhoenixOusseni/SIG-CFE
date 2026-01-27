@@ -33,6 +33,7 @@ class PersonnelController extends Controller
     public function store(Request $request)
     {
         $personnel = new Personnel();
+        $personnel->code = $request->code;
         $personnel->nom = $request->nom;
         $personnel->prenom = $request->prenom;
         $personnel->email = $request->email;
@@ -41,6 +42,7 @@ class PersonnelController extends Controller
         $personnel->niveau_cadre = $request->niveau_cadre;
         $personnel->poste = $request->poste;
         $personnel->service_id = $request->service_id;
+        $personnel->taux_horaire = $request->taux_horaire;
 
         if ($request->hasFile('pj1')) {
             $file1 = $request->file('pj1');
@@ -93,6 +95,7 @@ class PersonnelController extends Controller
     public function update(Request $request, String $id)
     {
         $personnel = Personnel::findOrFail($id);
+        $personnel->code = $request->code;
         $personnel->nom = $request->nom;
         $personnel->prenom = $request->prenom;
         $personnel->email = $request->email;
@@ -101,7 +104,7 @@ class PersonnelController extends Controller
         $personnel->niveau_cadre = $request->niveau_cadre;
         $personnel->poste = $request->poste;
         $personnel->service_id = $request->service_id;
-
+        $personnel->taux_horaire = $request->taux_horaire;
         if ($request->hasFile('pj1')) {
             $path = $request->file('pj1')->store('uploads', 'public');
             $personnel->pj1 = $path;

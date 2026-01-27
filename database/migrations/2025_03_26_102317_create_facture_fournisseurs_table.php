@@ -26,8 +26,8 @@ class CreateFactureFournisseursTable extends Migration
             $table->float('total_retenu')->nullable();
 
             $table->foreignId('users_id')->constrained('users')->onUpdate('cascade')->onDelete('cascade');
-            $table->foreignId('fournisseurs_id')->constrained('fournisseurs')->onDelete('cascade');
-            $table->foreignId('budgets_id')->constrained('budgets')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignId('fournisseur_id')->constrained('fournisseurs')->onDelete('cascade');
+            $table->foreignId('base_taxable_id')->constrained('base_taxables')->onUpdate('cascade')->onDelete('cascade');
             $table->foreignId('signataires_id')->constrained('signataires')->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();
         });

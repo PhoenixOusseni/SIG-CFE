@@ -44,7 +44,7 @@
                                                             <th>N°</th>
                                                             <th>Date</th>
                                                             <th>Fournisseur</th>
-                                                            <th>Budget</th>
+                                                            <th>Prestation</th>
                                                             <th>Action</th>
                                                         </tr>
                                                     </thead>
@@ -54,7 +54,7 @@
                                                                 <td>{{ $fact->id }}</td>
                                                                 <td>{{ $fact->date }}</td>
                                                                 <td>{{ $fact->Fournisseur->libelle }}</td>
-                                                                <td>{{ $fact->Budget->libelle }}</td>
+                                                                <td>{{ $fact->BaseTaxable->libelle }}</td>
                                                                 <td class="d-flex justify-content-center">
                                                                     <a href="#" class="btn btn-primary btn-sm me-2" data-bs-toggle="modal" data-bs-target="#validationFactModal{{ $fact->id }}">
                                                                         En reglement
