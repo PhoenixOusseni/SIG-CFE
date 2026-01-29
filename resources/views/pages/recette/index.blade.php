@@ -85,10 +85,16 @@
                                         </div>
                                     </div>
                                     <div class="row">
+                                        <div class="col-lg-2 col-md-12">
+                                            <div class="mb-3">
+                                                <label class="small mb-1">Code</label>
+                                                <input class="form-control" name="code" type="text" />
+                                            </div>
+                                        </div>
                                         <div class="col-lg-4 col-md-12">
                                             <div class="mb-3">
-                                                <label class="small mb-1">Designation</label>
-                                                <input class="form-control" name="objet" type="text" />
+                                                <label class="small mb-1">Référence</label>
+                                                <input class="form-control" name="reference" type="text" />
                                             </div>
                                         </div>
                                         <div class="col-lg-4 col-md-12">
@@ -106,14 +112,8 @@
                                         </div>
                                         <div class="col-lg-2 col-md-12">
                                             <div class="mb-3">
-                                                <label class="small mb-1">Période debut</label>
-                                                <input class="form-control" name="periode_debut" type="date" />
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-2 col-md-12">
-                                            <div class="mb-3">
-                                                <label class="small mb-1">Période fin</label>
-                                                <input class="form-control" name="periode_fin" type="date" />
+                                                <label class="small mb-1">Date</label>
+                                                <input class="form-control" name="date" type="date" />
                                             </div>
                                         </div>
                                     </div>
@@ -149,22 +149,16 @@
                                                     </select>
                                                 </div>
                                             </div>
-                                            <div class="col-lg-2 col-md-12">
+                                            <div class="col-lg-3 col-md-12">
                                                 <div class="mb-3">
                                                     <label class="small mb-1">Quantité</label>
                                                     <input class="form-control" name="quantite[]" type="number" />
                                                 </div>
                                             </div>
-                                            <div class="col-lg-2 col-md-12">
+                                            <div class="col-lg-3 col-md-12">
                                                 <div class="mb-3">
                                                     <label class="small mb-1">Prix unitaire</label>
                                                     <input class="form-control" name="prix_unitaire[]" type="number" />
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-2 col-md-12">
-                                                <div class="mb-3">
-                                                    <label class="small mb-1">Unité</label>
-                                                    <input class="form-control" name="unite[]" type="text" />
                                                 </div>
                                             </div>
                                             <div class="col-lg-2 d-flex align-items-end">

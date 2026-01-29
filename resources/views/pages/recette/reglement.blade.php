@@ -42,9 +42,9 @@
                                                     <thead>
                                                         <tr>
                                                             <th>Code</th>
-                                                            <th>Designation</th>
+                                                            <th>Référence</th>
                                                             <th>Date</th>
-                                                            <th>Contribuable</th>
+                                                            <th>Client</th>
                                                             <th>Echeance</th>
                                                             <th>Statut</th>
                                                             <th>Action</th>
@@ -53,14 +53,14 @@
                                                     <tbody>
                                                         @foreach ($collection as $recette)
                                                             <tr>
-                                                                <td>{{ $recette->id }}</td>
-                                                                <td>{{ $recette->objet }}</td>
+                                                                <td>{{ $recette->code }}</td>
+                                                                <td>{{ $recette->reference }}</td>
                                                                 <td>{{ $recette->date }}</td>
                                                                 <td>{{ $recette->Contribuable->assujeti }}</td>
                                                                 <td>{{ $recette->echeance }}</td>
                                                                 <td>{{ $recette->statut }}</td>
                                                                 <td class="d-flex justify-content-center">
-                                                                    <a href="{{ url('view_reglement/' . $recette->id) }}" class="btn btn-primary btn-sm me-2">
+                                                                    <a href="{{ url('view_reglement/' . $recette->id) }}" class="btn btn-success btn-sm me-2">
                                                                         Reglement
                                                                     </a>
                                                                 </td>

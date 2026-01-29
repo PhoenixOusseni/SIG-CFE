@@ -113,7 +113,7 @@
             </thead>
         </table>
         <p>Arrêté le présent ordre de recette à la somme de
-            <strong>{{ ucfirst(conversion($ht)) }} ({{ number_format($ht, 0, ',', ' ') }}) FRANCS CFA</strong>
+            <strong>{{ ucfirst(conversion($ttc - $retnu)) }} ({{ number_format($ttc - $retnu, 0, ',', ' ') }}) FRANCS CFA</strong>
         </p>
 
         <div class="text-end m-3" style="margin-top: 50px;">

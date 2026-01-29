@@ -44,7 +44,7 @@
         </div>
 
         <div class="text-center mt-3 mb-5">
-            <h4>FACTURE N° FAC0{{ $recette->id }}</h4>
+            <h2><strong>FACTURE N°{{ $recette->code }}</strong></h2>
         </div>
 
         <div class="d-flex justify-content-between m-3">
@@ -57,12 +57,11 @@
             </div>
             <div class="col-6 text-start" style="margin-left: 50px;">
                 <h5>Date : <strong>{{ $recette->created_at->format('d/m/Y') }}</strong></h5>
-                <h5>Référence : </h5>
                 <h5>Département : <strong>{{ $recette->Service->libelle ?? 'N/A' }}</strong></h5>
             </div>
         </div>
         <div class="text-start mt-5">
-            <h5 class="m-3">Objet : <strong>{{ $recette->objet }}</strong></h5>
+            <h5 class="m-3">Référence : <strong>{{ $recette->reference }}</strong></h5>
         </div>
 
         <div class="m-3">
@@ -70,20 +69,18 @@
                 <thead>
                     <tr style="background-color: rgb(193, 198, 203)">
                         <th>Designation</th>
-                        <th>Unité</th>
-                        <th>Qte</th>
-                        <th>P.Unitaire</th>
-                        <th>P.Total</th>
+                        <th class="text-center">Qte</th>
+                        <th class="text-center">P.Unitaire</th>
+                        <th class="text-center">Montant</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach ($elements as $elmnt)
                         <tr>
                             <td>{{ $elmnt->Base->libelle }}</td>
-                            <td>{{ $elmnt->unite }}</td>
-                            <td>{{ $elmnt->quantite }}</td>
-                            <td>{{ $elmnt->prix_unitaire }}</td>
-                            <td>{{ $elmnt->montant }}</td>
+                            <td class="text-center">{{ $elmnt->quantite }}</td>
+                            <td class="text-center">{{ $elmnt->prix_unitaire }}</td>
+                            <td class="text-center">{{ $elmnt->montant }}</td>
                         </tr>
                     @endforeach
                 </tbody>

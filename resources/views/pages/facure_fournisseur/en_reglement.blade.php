@@ -57,7 +57,7 @@
                                                                 <td>{{ $fact->BaseTaxable->libelle }}</td>
                                                                 <td class="d-flex justify-content-center">
                                                                     <a href="#" class="btn btn-primary btn-sm me-2" data-bs-toggle="modal" data-bs-target="#validationFactModal{{ $fact->id }}">
-                                                                        En reglement
+                                                                        Mise en reglement
                                                                     </a>
                                                                 </td>
                                                             </tr>
@@ -77,8 +77,7 @@
                                                                                     <div class="col-lg-4 col-md-12">
                                                                                         <div class="mb-3">
                                                                                             <label class="small mb-1">Retenues BIC</label>
-                                                                                            <select name="retenu_bic" class="form-control">
-                                                                                                <option>Sélectionner le budget</option>
+                                                                                            <select name="retenu_bic" class="form-select">
                                                                                                 <option value="5">Prestation</option>
                                                                                                 <option value="1">Travaux et équipements</option>
                                                                                                 <option value="0.2">Hydrocarbures</option>

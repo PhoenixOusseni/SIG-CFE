@@ -41,10 +41,10 @@
                                                 <table id="datatablesSimple">
                                                     <thead>
                                                         <tr>
-                                                            <th>N°</th>
-                                                            <th>Designation</th>
+                                                            <th>Code</th>
+                                                            <th>Référence</th>
                                                             <th>Date</th>
-                                                            <th>Contribuable</th>
+                                                            <th>Client</th>
                                                             <th>Echeance</th>
                                                             <th>Statut</th>
                                                             <th>Action</th>
@@ -54,7 +54,7 @@
                                                         @foreach ($collection as $recette)
                                                             <tr>
                                                                 <td>{{ $recette->id }}</td>
-                                                                <td>{{ $recette->objet }}</td>
+                                                                <td>{{ $recette->reference }}</td>
                                                                 <td>{{ $recette->date }}</td>
                                                                 <td>{{ $recette->Contribuable->assujeti }}</td>
                                                                 <td>{{ $recette->echeance }}</td>

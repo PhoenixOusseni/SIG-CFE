@@ -141,9 +141,9 @@ class RecetteController extends Controller
 
             // Créer la recette principale
             $recette = Recette::create([
-                'objet' => $request->objet,
-                'periode_debut' => $request->periode_debut,
-                'periode_fin' => $request->periode_fin,
+                'reference' => $request->reference,
+                'date' => $request->date,
+                'code' => $request->code,
                 'contribuables_id' => $request->contribuables_id,
                 'statut' => $request->statut,
                 'echeance' => $request->echeance,
@@ -164,7 +164,6 @@ class RecetteController extends Controller
                             'base_taxables_id' => $baseTaxableId,
                             'quantite' => $request->quantite[$index] ?? 0,
                             'prix_unitaire' => $request->prix_unitaire[$index] ?? 0,
-                            'unite' => $request->unite[$index] ?? null,
                         ]);
                     }
                 }
@@ -308,15 +307,14 @@ class RecetteController extends Controller
     {
         $recette = Recette::find($id);
         $recette->update([
-            'objet' => $request->objet,
-            'periode_debut' => $request->periode_debut,
-            'periode_fin' => $request->periode_fin,
+            'reference' => $request->reference,
+            'date' => $request->date,
+            'code' => $request->code,
             'budgets_id' => $request->budgets_id,
             'contribuables_id' => $request->contribuables_id,
             'echeance' => $request->echeance,
-            'categorie_id' => $request->categorie_id,
-            'categorie_id' => $request->categorie_id,
             'service_id' => $request->service_id,
+            'categorie_id' => $request->categorie_id,
             'marche_id' => $request->marche_id,
         ]);
 
@@ -347,11 +345,18 @@ class RecetteController extends Controller
      * @param  \App\Models\Recette  $recette
      * @return \Illuminate\Http\Response
      */
-    public function reglement(string $id)
+    public function reglement(Request $request, string $id)
     {
-        $recette = Recette::find($id);
-        $recette->update([
+        $fact = Recette::find($id);
+        $elements = ElementRecette::where('recettes_id', '=', $id)->get();
+        $total = $elements->sum('montant');
+        $fact->update([
             'statut' => 'en reglement',
+            'retenu_bic' => ($total * $request->retenu_bic) / 100,
+            'retenu_arcop' => $request->retenu_arcop,
+            'penalite' => $request->penalite,
+
+            'total_retenu' => $request->retenu_arcop + $request->penalite,
         ]);
 
         smilify('success', 'Ordre de recette mis en reglement avec succès !');

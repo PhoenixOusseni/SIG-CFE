@@ -15,7 +15,6 @@ class CreateElementRecettesTable extends Migration
     {
         Schema::create('element_recettes', function (Blueprint $table) {
             $table->id();
-            $table->string('unite')->nullable();
             $table->integer('quantite')->nullable();
             $table->integer('prix_unitaire')->nullable();
             $table->integer('montant')->nullable();

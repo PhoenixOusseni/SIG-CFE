@@ -295,7 +295,7 @@ class FactureFournisseurController extends Controller
         $elements = ElementFacture::where('facture_fournisseurs_id', '=', $id)->get();
         $total = $elements->sum('montant_total');
 
-        $tota_ret = $factures->total_retenu;
+        $total_ret = $factures->total_retenu;
 
         $total_ht = $elements->sum('montant_total') - $factures->total_retenu;
 

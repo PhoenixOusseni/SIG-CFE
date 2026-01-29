@@ -94,7 +94,7 @@
                         <div class="col-md-6">
                             <div class="info-label">Numéro de facture</div>
                             <div class="info-value">
-                                <strong>#{{ $recette->id }}</strong>
+                                <strong>{{ $recette->code }}</strong>
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -117,8 +117,8 @@
 
                     <div class="row mt-3">
                         <div class="col-md-4">
-                            <div class="info-label">Désignation/Objet</div>
-                            <div class="info-value">{{ $recette->objet }}</div>
+                            <div class="info-label">Référence</div>
+                            <div class="info-value">{{ $recette->reference }}</div>
                         </div>
                         <div class="col-md-4">
                             <div class="info-label">Département</div>
@@ -220,10 +220,9 @@
                             <table class="table table-striped table-hover">
                                 <thead class="table-dark">
                                     <tr>
-                                        <th>#</th>
+                                        <th>N°</th>
                                         <th>Désignation</th>
                                         <th>Quantité</th>
-                                        <th>Unité</th>
                                         <th>Prix unitaire</th>
                                         <th>Montant</th>
                                     </tr>
@@ -236,7 +235,6 @@
                                                 <strong>{{ $element->Base->libelle ?? 'N/A' }}</strong>
                                             </td>
                                             <td>{{ number_format($element->quantite, 0, ',', ' ') }}</td>
-                                            <td>{{ $element->unite ?? '-' }}</td>
                                             <td>{{ number_format($element->prix_unitaire, 0, ',', ' ') }} FCFA</td>
                                             <td>
                                                 <strong>{{ number_format($element->montant ?? $element->quantite * $element->prix_unitaire, 0, ',', ' ') }}
@@ -247,7 +245,7 @@
                                 </tbody>
                                 <tfoot class="table-light">
                                     <tr>
-                                        <td colspan="5" class="text-end"><strong>MONTANT TOTAL :</strong></td>
+                                        <td colspan="3" class="text-end"><strong>MONTANT TOTAL :</strong></td>
                                         <td colspan="2">
                                             <div class="total-amount">
                                                 {{ number_format($montant_total, 0, ',', ' ') }} FCFA

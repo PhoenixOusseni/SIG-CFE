@@ -15,11 +15,18 @@ class CreateRecettesTable extends Migration
     {
         Schema::create('recettes', function (Blueprint $table) {
             $table->id();
-            $table->string('objet')->nullable();
-            $table->date('periode_debut')->nullable();
-            $table->date('periode_fin')->nullable();
+            $table->string('code')->nullable();
+            $table->string('reference')->nullable();
+            $table->date('date')->nullable();
+
             $table->string('statut')->nullable();
             $table->date('echeance')->nullable();
+
+            // Retenue details
+            $table->float('retenu_bic')->nullable();
+            $table->float('retenu_arcop')->nullable();
+            $table->float('penalite')->nullable();
+            $table->float('total_retenu')->nullable();
 
             $table->foreignId('users_id')->constrained('users')->onUpdate('cascade')->onDelete('cascade');
             $table->foreignId('contribuables_id')->nullable()->constrained('contribuables')->onUpdate('cascade')->onDelete('cascade');

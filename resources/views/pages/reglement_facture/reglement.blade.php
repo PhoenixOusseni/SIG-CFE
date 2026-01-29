@@ -66,7 +66,7 @@
                                         <div class="col-lg-6 col-md-12">
                                             <div class="mb-3">
                                                 <label class="small mb-1">Mode de reglement</label>
-                                                <select name="mode_reglement" class="form-control">
+                                                <select name="mode_reglement" class="form-select">
                                                     <option value="Espèce">Espèce</option>
                                                     <option value="Chèque">Chèque</option>
                                                     <option value="Virement">Virement</option>

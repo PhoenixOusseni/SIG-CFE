@@ -422,7 +422,7 @@
                             <th style="width: 25%;">Nom et Prénom</th>
                             <th style="width: 25%;">Service</th>
                             <th style="width: 15%;">Temps</th>
-                            <th style="width: 15%;">Fonction</th>
+                            <th style="width: 15%;">Montant</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -438,7 +438,7 @@
                                 <td class="text-center">
                                     <span class="badge badge-primary">{{ $detail->temps ?? 'Non précisé' }}</span>
                                 </td>
-                                <td>{{ $detail->personnel->fonction ?? '-' }}</td>
+                                <td>{{ number_format(($detail->personnel->taux_horaire ?? 0) * ($detail->temps ?? 0), 0, ',', ' ') }} FCFA</td>
                             </tr>
                         @endforeach
                     </tbody>

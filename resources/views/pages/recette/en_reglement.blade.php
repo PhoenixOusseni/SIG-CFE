@@ -42,10 +42,9 @@
                                                     <thead>
                                                         <tr>
                                                             <th>Code</th>
-                                                            <th>Designation</th>
+                                                            <th>Référence</th>
                                                             <th>Date</th>
-                                                            <th>Budget</th>
-                                                            <th>Contribuable</th>
+                                                            <th>Client</th>
                                                             <th>Echeance</th>
                                                             <th>Statut</th>
                                                             <th>Action</th>
@@ -54,22 +53,21 @@
                                                     <tbody>
                                                         @foreach ($collection as $recette)
                                                             <tr>
-                                                                <td>{{ $recette->id }}</td>
-                                                                <td>{{ $recette->objet }}</td>
+                                                                <td>{{ $recette->code }}</td>
+                                                                <td>{{ $recette->reference }}</td>
                                                                 <td>{{ $recette->date }}</td>
-                                                                <td>{{ $recette->Budget->libelle }}</td>
                                                                 <td>{{ $recette->Contribuable->assujeti }}</td>
                                                                 <td>{{ $recette->echeance }}</td>
                                                                 <td>{{ $recette->statut }}</td>
                                                                 <td class="d-flex justify-content-center">
-                                                                    <a href="#" class="btn btn-primary btn-sm me-2" data-bs-toggle="modal" data-bs-target="#validationRecetteModal{{ $recette->id }}">
-                                                                        En reglement
+                                                                    <a href="#" class="btn btn-success btn-sm me-2" data-bs-toggle="modal" data-bs-target="#validationRecetteModal{{ $recette->id }}">
+                                                                        Mise en reglement
                                                                     </a>
                                                                 </td>
                                                             </tr>
                                                             <!-- Modal -->
                                                             <div class="modal fade" id="validationRecetteModal{{ $recette->id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                                                <div class="modal-dialog modal-sm">
+                                                                <div class="modal-dialog modal-xl">
                                                                     <div class="modal-content">
                                                                         <div class="modal-header bg-success">
                                                                             <h5 class="modal-title text-light" id="exampleModalLabel">
@@ -77,12 +75,35 @@
                                                                             <button type="button" class="btn-close text-light" data-bs-dismiss="modal" aria-label="Close">X</button>
                                                                         </div>
                                                                         <div class="modal-body">
-                                                                            <h5>Voulez-vous vraiment mettre cet ordre de recette en reglement ?</h5>
                                                                             <form method="POST" action="{{ url('recette_en_reglement/' . $recette->id) }}">
                                                                                 @csrf
-                                                                                <button class="btn btn-1 p-3 mt-3 w-100" type="submit">
-                                                                                    {{ __('Confirmer') }}
-                                                                                </button>
+                                                                                <div class="row">
+                                                                                    <div class="col-lg-4 col-md-12">
+                                                                                        <div class="mb-3">
+                                                                                            <label class="small mb-1">Retenues BIC</label>
+                                                                                            <select name="retenu_bic" class="form-select">
+                                                                                                <option value="5">Prestation</option>
+                                                                                                <option value="1">Travaux et équipements</option>
+                                                                                                <option value="0.2">Hydrocarbures</option>
+                                                                                            </select>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="col-lg-4 col-md-12">
+                                                                                        <div class="mb-3">
+                                                                                            <label class="small mb-1">Retenue ARCOP</label>
+                                                                                            <input type="text" name="retenu_arcop" class="form-control" />
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="col-lg-4 col-md-12">
+                                                                                        <div class="mb-3">
+                                                                                            <label class="small mb-1">Pénalités</label>
+                                                                                            <input type="text" name="penalite" class="form-control" />
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="m-3">
+                                                                                    <button class="btn btn-1" type="submit">Mettre en règlement</button>
+                                                                                </div>
                                                                             </form>
                                                                         </div>
                                                                     </div>

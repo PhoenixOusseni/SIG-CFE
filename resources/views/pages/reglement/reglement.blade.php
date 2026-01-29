@@ -67,7 +67,7 @@
                                         <div class="col-lg-6 col-md-12">
                                             <div class="mb-3">
                                                 <label class="small mb-1">Mode de reglement</label>
-                                                <select name="mode_reglement" class="form-control">
+                                                <select name="mode_reglement" class="form-select">
                                                     <option value="Espèce">Espèce</option>
                                                     <option value="Chèque">Chèque</option>
                                                     <option value="Virement">Virement</option>
@@ -81,9 +81,8 @@
                                     <table class="table table-bordered table-striped table-hover">
                                         <thead>
                                             <tr>
-                                                <th>Designation</th>
-                                                <th>Source prelevement</th>
-                                                <th>Unité</th>
+                                                <th>Code</th>
+                                                <th>Référence</th>
                                                 <th>Qte</th>
                                                 <th>P.Unitaire</th>
                                                 <th>P.Total</th>
@@ -92,9 +91,8 @@
                                         <tbody>
                                             @foreach ($elements as $elmnt)
                                                 <tr>
-                                                    <td>{{ $elmnt->Base->libelle }}</td>
-                                                    <td>{{ $elmnt->Source->libelle }}</td>
-                                                    <td>{{ $elmnt->unite }}</td>
+                                                    <td>{{ $elmnt->code }}</td>
+                                                    <td>{{ $elmnt->reference }}</td>
                                                     <td>{{ $elmnt->quantite }}</td>
                                                     <td>{{ $elmnt->prix_unitaire }}</td>
                                                     <td>{{ $elmnt->montant }}</td>
