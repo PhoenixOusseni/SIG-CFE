@@ -22,12 +22,6 @@ class CreateRecettesTable extends Migration
             $table->string('statut')->nullable();
             $table->date('echeance')->nullable();
 
-            // Retenue details
-            $table->float('retenu_bic')->nullable();
-            $table->float('retenu_arcop')->nullable();
-            $table->float('penalite')->nullable();
-            $table->float('total_retenu')->nullable();
-
             $table->foreignId('users_id')->constrained('users')->onUpdate('cascade')->onDelete('cascade');
             $table->foreignId('contribuables_id')->nullable()->constrained('contribuables')->onUpdate('cascade')->onDelete('cascade');
             $table->foreignId('signataires_id')->nullable()->constrained('signataires')->onUpdate('cascade')->onDelete('cascade');

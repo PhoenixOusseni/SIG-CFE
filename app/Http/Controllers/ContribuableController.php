@@ -23,16 +23,6 @@ class ContribuableController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -54,37 +44,25 @@ class ContribuableController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Contribuable  $contribuable
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Contribuable $contribuable)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Contribuable  $contribuable
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Contribuable $contribuable)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Contribuable  $contribuable
+     * @param  String  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Contribuable $contribuable)
+    public function update(Request $request, String $id)
     {
-        //
+        $contribuable = Contribuable::findOrFail($id);
+        $contribuable->update([
+            'assujeti' => $request->assujeti,
+            'adresse' => $request->adresse,
+            'telephone' => $request->telephone,
+            'ifu' => $request->ifu,
+            'rccm' => $request->rccm,
+        ]);
+
+        smilify('success','Contribuable mis à jour avec succès !');
+        return redirect()->back();
     }
 
     /**
@@ -93,8 +71,12 @@ class ContribuableController extends Controller
      * @param  \App\Models\Contribuable  $contribuable
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Contribuable $contribuable)
+    public function destroy(String $id)
     {
-        //
+        $contribuable = Contribuable::findOrFail($id);
+        $contribuable->delete();
+
+        smilify('success','Contribuable supprimé avec succès !');
+        return redirect()->back();
     }
 }

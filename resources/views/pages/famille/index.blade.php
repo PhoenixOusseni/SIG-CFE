@@ -96,13 +96,34 @@
                                                                 <td>{{ $item->id }}</td>
                                                                 <td>{{ $item->libelle }}</td>
                                                                 <td>{{ $item->taux }}</td>
-                                                                <td
-                                                                    class="d-flex align-items-center justify-content-center">
-                                                                    <a class="" href="">
-                                                                        <i class="me-2 text-green" data-feather="eye"></i>
+                                                                <td class="d-flex align-items-center justify-content-center">
+                                                                    <a href="#" data-bs-toggle="modal" data-bs-target="#deleteFamilleModal{{ $item->id }}">
+                                                                        <i class="fa fa-trash text-danger mx-2" aria-hidden="true"></i>
                                                                     </a>
                                                                 </td>
                                                             </tr>
+                                                            <!-- delete modal -->
+                                                            <div class="modal fade" id="deleteFamilleModal{{ $item->id }}" tabindex="-1" aria-labelledby="deleteFamilleModalLabel{{ $item->id }}" aria-hidden="true">
+                                                                <div class="modal-dialog">
+                                                                    <div class="modal-content">
+                                                                        <div class="modal-header">
+                                                                            <h5 class="modal-title" id="deleteFamilleModalLabel{{ $item->id }}">Confirmer la suppression</h5>
+                                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                                        </div>
+                                                                        <div class="modal-body">
+                                                                            Êtes-vous sûr de vouloir supprimer ce département ?
+                                                                        </div>
+                                                                        <div class="m-3">
+                                                                            <form action="{{ route('module_famille.destroy', $item->id) }}" method="POST" style="display: inline;">
+                                                                                @csrf
+                                                                                @method('DELETE')
+                                                                                <button type="submit" class="btn btn-danger">Supprimer</button>
+                                                                            </form>
+                                                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
                                                         @endforeach
                                                     </tbody>
                                                 </table>

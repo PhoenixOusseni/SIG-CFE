@@ -45,7 +45,7 @@
                                                 <th>Contribuable</th>
                                                 <th>Net à payer</th>
                                                 <th>Versement</th>
-                                                <th>Reste à payer</th></th>
+                                                <th>Reste à payer</th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>

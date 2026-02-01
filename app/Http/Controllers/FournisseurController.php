@@ -21,16 +21,6 @@ class FournisseurController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -51,37 +41,25 @@ class FournisseurController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Fournisseur  $fournisseur
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Fournisseur $fournisseur)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Fournisseur  $fournisseur
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Fournisseur $fournisseur)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Fournisseur  $fournisseur
+     * @param  String  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Fournisseur $fournisseur)
+    public function update(Request $request, String $id)
     {
-        //
+        $fournisseur = Fournisseur::findOrFail($id);
+        $fournisseur->update([
+            'libelle' => $request->libelle,
+            'adresse' => $request->adresse,
+            'telephone' => $request->telephone,
+            'ifu' => $request->ifu,
+            'rccm' => $request->rccm,
+        ]);
+
+        smilify('success','Fournisseur mis à jour avec succès !');
+        return redirect()->back();
     }
 
     /**
@@ -90,8 +68,12 @@ class FournisseurController extends Controller
      * @param  \App\Models\Fournisseur  $fournisseur
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Fournisseur $fournisseur)
+    public function destroy(String $id)
     {
-        //
+        $fournisseur = Fournisseur::findOrFail($id);
+        $fournisseur->delete();
+
+        smilify('success','Fournisseur supprimé avec succès !');
+        return redirect()->back();
     }
 }

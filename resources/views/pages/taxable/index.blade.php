@@ -115,13 +115,44 @@
                                                                 <td>{{ $item->reference }}</td>
                                                                 <td>{{ $item->prix }}</td>
                                                                 <td>{{ $item->Famille->libelle }}</td>
-                                                                <td
-                                                                    class="d-flex align-items-center justify-content-center">
-                                                                    <a class="" href="">
-                                                                        <i class="me-2 text-green" data-feather="eye"></i>
+                                                                <td class="d-flex align-items-center justify-content-center">
+                                                                    <a href="#" data-bs-toggle="modal" data-bs-target="#deletePrestationModal{{ $item->id }}">
+                                                                        <i class="fa fa-trash text-danger" aria-hidden="true"></i>
                                                                     </a>
                                                                 </td>
                                                             </tr>
+
+                                                            <!-- Modal de suppression -->
+                                                            <div class="modal fade" id="deletePrestationModal{{ $item->id }}" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+                                                                <div class="modal-dialog modal-dialog-centered">
+                                                                    <div class="modal-content">
+                                                                        <div class="modal-header bg-danger">
+                                                                            <h5 class="modal-title text-white" id="deleteModalLabel">Confirmation de suppression</h5>
+                                                                            <button type="button" class="btn-close text-white" data-bs-dismiss="modal" aria-label="Close">X</button>
+                                                                        </div>
+                                                                        <div class="modal-body">
+                                                                            <div class="text-center mb-3">
+                                                                                <i class="fa fa-exclamation-triangle text-danger" style="font-size: 3rem;"></i>
+                                                                            </div>
+                                                                            <p class="text-center">
+                                                                                Êtes-vous sûr de vouloir supprimer la prestation <strong>{{ $item->libelle }}</strong> ?
+                                                                            </p>
+                                                                            <p class="text-center text-muted">
+                                                                                Cette action est irréversible et supprimera également tous les éléments associés à cette prestation.
+                                                                            </p>
+                                                                        </div>
+                                                                        <div class="m-3">
+                                                                            <form action="{{ route('module_base_taxable.destroy', [$item->id]) }}" method="POST" style="display: inline;">
+                                                                                @csrf
+                                                                                @method('DELETE')
+                                                                                <button type="submit" class="btn btn-danger">
+                                                                                    <i class="fas fa-trash"></i>&nbsp; Supprimer
+                                                                                </button>
+                                                                            </form>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
                                                         @endforeach
                                                     </tbody>
                                                 </table>

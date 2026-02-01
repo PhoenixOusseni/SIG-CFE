@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('title')
-    <title>SIG - CFE | Ordre de recette</title>
+    <title>SIG - CFE | Facture</title>
 @endsection
 
 @section('style')
@@ -17,7 +17,7 @@
                         <div class="col-auto mt-4">
                             <h1 class="page-header-title">
                                 <div class="page-header-icon"><i data-feather="filter"></i></div>
-                                Réglement de l'ordre de recette N° {{ $recette->id }}
+                                Réglement de la facture N° {{ $recette->code }}
                             </h1>
                         </div>
                     </div>
@@ -91,8 +91,8 @@
                                         <tbody>
                                             @foreach ($elements as $elmnt)
                                                 <tr>
-                                                    <td>{{ $elmnt->code }}</td>
-                                                    <td>{{ $elmnt->reference }}</td>
+                                                    <td>{{ $recette->code }}</td>
+                                                    <td>{{ $recette->reference }}</td>
                                                     <td>{{ $elmnt->quantite }}</td>
                                                     <td>{{ $elmnt->prix_unitaire }}</td>
                                                     <td>{{ $elmnt->montant }}</td>
@@ -102,7 +102,7 @@
                                     </table>
                                     <div class="row m-1">
                                         <div class="col-lg-9 col-md-6 p-3" style="background: rgb(50, 49, 49)">
-                                            <h4 class="text-light"><strong>TOTAL</strong></h4>
+                                            <h4 class="text-light"><strong>TOTAL NET</strong></h4>
                                         </div>
                                         <div class="col-lg-3 col-md-6 p-3 bg-danger">
                                             <h4 class="text-light"><strong>{{ number_format($total, 0, ',', ' ') }} FCFA</strong></h4>

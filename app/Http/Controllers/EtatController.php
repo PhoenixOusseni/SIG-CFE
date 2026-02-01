@@ -484,4 +484,382 @@ class EtatController extends Controller
 
         return view('pages.etats.etat_departement', compact('services', 'resultats'));
     }
+
+    // Print solde client
+    public function print_solde_client(Request $request)
+    {
+        $contribuables = Contribuable::orderBy('id', 'asc')->get();
+        $soldes = collect([]);
+
+        if ($request->has('contribuable_id') || $request->has('date_debut') || $request->has('date_fin')) {
+            $query = Recette::with('contribuable')
+                ->join('element_recettes', 'recettes.id', '=', 'element_recettes.recettes_id')
+                ->select('recettes.contribuables_id')
+                ->selectRaw('SUM(element_recettes.montant) as total_facture');
+
+            if ($request->filled('contribuable_id')) {
+                $query->where('recettes.contribuables_id', $request->contribuable_id);
+            }
+
+            if ($request->filled('date_debut')) {
+                $query->where(function($q) use ($request) {
+                    $q->where('recettes.periode_debut', '>=', $request->date_debut)
+                      ->orWhere('recettes.created_at', '>=', $request->date_debut);
+                });
+            }
+
+            if ($request->filled('date_fin')) {
+                $query->where(function($q) use ($request) {
+                    $q->where('recettes.periode_fin', '<=', $request->date_fin)
+                      ->orWhere('recettes.created_at', '<=', $request->date_fin);
+                });
+            }
+
+            $query->groupBy('recettes.contribuables_id');
+            $recettes = $query->get();
+
+            foreach ($recettes as $recette) {
+                $contribuable = Contribuable::find($recette->contribuables_id);
+                $reglementQuery = ReglementFacture::whereHas('recette', function($q) use ($recette, $request) {
+                    $q->where('contribuables_id', $recette->contribuables_id);
+                    if ($request->filled('date_debut')) {
+                        $q->where(function($query) use ($request) {
+                            $query->where('periode_debut', '>=', $request->date_debut)
+                                  ->orWhere('created_at', '>=', $request->date_debut);
+                        });
+                    }
+                    if ($request->filled('date_fin')) {
+                        $q->where(function($query) use ($request) {
+                            $query->where('periode_fin', '<=', $request->date_fin)
+                                  ->orWhere('created_at', '<=', $request->date_fin);
+                        });
+                    }
+                });
+
+                $totalRegle = $reglementQuery->sum('versement');
+                $soldes->push((object)[
+                    'contribuable' => $contribuable,
+                    'total_facture' => $recette->total_facture ?? 0,
+                    'total_regle' => $totalRegle ?? 0,
+                    'solde' => ($recette->total_facture ?? 0) - ($totalRegle ?? 0)
+                ]);
+            }
+        }
+
+        return view('pages.etats.print_solde_client', compact('soldes', 'request'));
+    }
+
+    // Print solde fournisseur
+    public function print_solde_fournisseur(Request $request)
+    {
+        $fournisseurs = Fournisseur::orderBy('id', 'asc')->get();
+        $soldes = collect([]);
+
+        if ($request->has('fournisseur_id') || $request->has('date_debut') || $request->has('date_fin')) {
+            $query = FactureFournisseur::with('fournisseur')
+                ->join('element_factures', 'facture_fournisseurs.id', '=', 'element_factures.facture_fournisseurs_id')
+                ->select('facture_fournisseurs.fournisseur_id')
+                ->selectRaw('SUM(element_factures.montant_total) as total_facture');
+
+            if ($request->filled('fournisseur_id')) {
+                $query->where('facture_fournisseurs.fournisseur_id', $request->fournisseur_id);
+            }
+
+            if ($request->filled('date_debut')) {
+                $query->where('facture_fournisseurs.date', '>=', $request->date_debut);
+            }
+
+            if ($request->filled('date_fin')) {
+                $query->where('facture_fournisseurs.date', '<=', $request->date_fin);
+            }
+
+            $query->groupBy('facture_fournisseurs.fournisseur_id');
+            $factures = $query->get();
+
+            foreach ($factures as $facture) {
+                $fournisseur = Fournisseur::find($facture->fournisseur_id);
+                $reglementQuery = ReglementFournisseur::whereHas('factureFournisseur', function($q) use ($facture, $request) {
+                    $q->where('fournisseur_id', $facture->fournisseur_id);
+                    if ($request->filled('date_debut')) {
+                        $q->where('date', '>=', $request->date_debut);
+                    }
+                    if ($request->filled('date_fin')) {
+                        $q->where('date', '<=', $request->date_fin);
+                    }
+                });
+
+                $totalRegle = $reglementQuery->sum('versement');
+                $soldes->push((object)[
+                    'fournisseur' => $fournisseur,
+                    'total_facture' => $facture->total_facture ?? 0,
+                    'total_regle' => $totalRegle ?? 0,
+                    'solde' => ($facture->total_facture ?? 0) - ($totalRegle ?? 0)
+                ]);
+            }
+        }
+
+        return view('pages.etats.print_solde_fournisseur', compact('soldes', 'request'));
+    }
+
+    // Print etat marche
+    public function print_etat_marche(Request $request)
+    {
+        $marches = Marche::orderBy('code', 'asc')->get();
+        $resultats = collect([]);
+
+        if ($request->has('marche_id') || $request->has('date_debut') || $request->has('date_fin')) {
+            $query = Marche::with(['contribuable', 'baseTaxable', 'details', 'diligences']);
+
+            if ($request->filled('marche_id')) {
+                $query->where('marches.id', $request->marche_id);
+            }
+
+            if ($request->filled('date_debut')) {
+                $query->where('marches.date_debut', '>=', $request->date_debut);
+            }
+
+            if ($request->filled('date_fin')) {
+                $query->where('marches.date_cloture', '<=', $request->date_fin);
+            }
+
+            $marchesData = $query->get();
+
+            foreach ($marchesData as $marche) {
+                $tauxTotal = 0;
+                foreach ($marche->diligences as $diligence) {
+                    $tauxTotal += floatval($diligence->taux ?? 0);
+                }
+
+                $montantExecute = ($marche->montant * $tauxTotal) / 100;
+                $reste = $marche->montant - $montantExecute;
+
+                $resultats->push((object)[
+                    'id' => $marche->id,
+                    'code' => $marche->code,
+                    'designation' => $marche->designation,
+                    'montant' => $marche->montant,
+                    'montant_execute' => $montantExecute,
+                    'reste' => $reste,
+                    'date_debut' => $marche->date_debut,
+                    'date_cloture' => $marche->date_cloture,
+                    'contribuable' => $marche->contribuable,
+                    'baseTaxable' => $marche->baseTaxable,
+                    'details' => $marche->details,
+                    'diligences' => $marche->diligences,
+                ]);
+            }
+        }
+
+        return view('pages.etats.print_etat_marche', compact('resultats', 'request'));
+    }
+
+    // Print detail marche
+    public function print_detail_marche(Request $request)
+    {
+        $marches = Marche::with('contribuable')->orderBy('code', 'asc')->get();
+        $resultats = collect([]);
+
+        if ($request->has('marche_id') || $request->has('date_debut') || $request->has('date_fin')) {
+            $query = Marche::with(['contribuable', 'baseTaxable']);
+
+            if ($request->filled('marche_id')) {
+                $query->where('marches.id', $request->marche_id);
+            }
+
+            if ($request->filled('date_debut')) {
+                $query->where('marches.date_debut', '>=', $request->date_debut);
+            }
+
+            if ($request->filled('date_fin')) {
+                $query->where('marches.date_cloture', '<=', $request->date_fin);
+            }
+
+            $marchesData = $query->get();
+
+            foreach ($marchesData as $marche) {
+                $recettesQuery = Recette::where('marche_id', $marche->id);
+
+                if ($request->filled('date_debut')) {
+                    $recettesQuery->where(function($q) use ($request) {
+                        $q->where('periode_debut', '>=', $request->date_debut)
+                          ->orWhere('created_at', '>=', $request->date_debut);
+                    });
+                }
+
+                if ($request->filled('date_fin')) {
+                    $recettesQuery->where(function($q) use ($request) {
+                        $q->where('periode_fin', '<=', $request->date_fin)
+                          ->orWhere('created_at', '<=', $request->date_fin);
+                    });
+                }
+
+                $recettes = $recettesQuery->get();
+
+                $facturesQuery = FactureFournisseur::with(['Fournisseur', 'ElementFacture', 'ReglementFournisseur']);
+
+                if ($request->filled('date_debut')) {
+                    $facturesQuery->where('date', '>=', $request->date_debut);
+                }
+
+                if ($request->filled('date_fin')) {
+                    $facturesQuery->where('date', '<=', $request->date_fin);
+                }
+
+                if (!$request->filled('date_debut') && !$request->filled('date_fin')) {
+                    $facturesQuery->whereBetween('date', [
+                        $marche->date_debut ?? now()->subYear(),
+                        $marche->date_cloture ?? now()
+                    ]);
+                }
+
+                $factures = $facturesQuery->orderBy('date', 'asc')->get();
+
+                $totalFacture = 0;
+                $totalRegle = 0;
+
+                foreach ($factures as $facture) {
+                    $montantHT = $facture->ElementFacture->sum('montant_total');
+                    $montantTVA = ($montantHT * ($facture->tva ?? 0)) / 100;
+                    $montantTTC = $montantHT + $montantTVA;
+                    $totalFacture += $montantTTC;
+                    $totalRegle += $facture->ReglementFournisseur->sum('versement');
+                }
+
+                $reste = $totalFacture - $totalRegle;
+
+                $resultats->push((object)[
+                    'marche' => $marche,
+                    'factures' => $factures,
+                    'recettes' => $recettes,
+                    'total_facture' => $totalFacture,
+                    'total_regle' => $totalRegle,
+                    'reste' => $reste,
+                ]);
+            }
+        }
+
+        return view('pages.etats.print_detail_marche', compact('resultats', 'request'));
+    }
+
+    // Print etat categorie
+    public function print_etat_categorie(Request $request)
+    {
+        $categories = Categorie::orderBy('libelle', 'asc')->get();
+        $resultats = collect([]);
+
+        if ($request->has('categorie_id') || $request->has('date_debut') || $request->has('date_fin')) {
+            $query = Categorie::query();
+
+            if ($request->filled('categorie_id')) {
+                $query->where('categories.id', $request->categorie_id);
+            }
+
+            $categoriesData = $query->get();
+
+            foreach ($categoriesData as $categorie) {
+                $recettesQuery = Recette::with(['Contribuable', 'ElementRecette', 'Reglement'])
+                    ->where('categorie_id', $categorie->id);
+
+                if ($request->filled('date_debut')) {
+                    $recettesQuery->where(function($q) use ($request) {
+                        $q->where('periode_debut', '>=', $request->date_debut)
+                          ->orWhere('created_at', '>=', $request->date_debut);
+                    });
+                }
+
+                if ($request->filled('date_fin')) {
+                    $recettesQuery->where(function($q) use ($request) {
+                        $q->where('periode_fin', '<=', $request->date_fin)
+                          ->orWhere('created_at', '<=', $request->date_fin);
+                    });
+                }
+
+                $recettes = $recettesQuery->orderBy('created_at', 'desc')->get();
+
+                $totalMontant = 0;
+                $totalRegle = 0;
+
+                foreach ($recettes as $recette) {
+                    $montantRecette = $recette->ElementRecette->sum('montant');
+                    $totalMontant += $montantRecette;
+                    $totalRegle += $recette->Reglement->sum('versement');
+                }
+
+                $reste = $totalMontant - $totalRegle;
+
+                if ($recettes->count() > 0) {
+                    $resultats->push((object)[
+                        'categorie' => $categorie,
+                        'recettes' => $recettes,
+                        'total_montant' => $totalMontant,
+                        'total_regle' => $totalRegle,
+                        'reste' => $reste,
+                    ]);
+                }
+            }
+        }
+
+        return view('pages.etats.print_etat_categorie', compact('resultats', 'request'));
+    }
+
+    // Print etat departement
+    public function print_etat_departement(Request $request)
+    {
+        $services = Service::orderBy('libelle', 'asc')->get();
+        $resultats = collect([]);
+
+        if ($request->has('service_id') || $request->has('date_debut') || $request->has('date_fin')) {
+            $query = Service::query();
+
+            if ($request->filled('service_id')) {
+                $query->where('services.id', $request->service_id);
+            }
+
+            $servicesData = $query->get();
+
+            foreach ($servicesData as $service) {
+                $recettesQuery = Recette::with(['Contribuable', 'Categorie', 'ElementRecette', 'Reglement'])
+                    ->where('service_id', $service->id);
+
+                if ($request->filled('date_debut')) {
+                    $recettesQuery->where(function($q) use ($request) {
+                        $q->where('periode_debut', '>=', $request->date_debut)
+                          ->orWhere('created_at', '>=', $request->date_debut);
+                    });
+                }
+
+                if ($request->filled('date_fin')) {
+                    $recettesQuery->where(function($q) use ($request) {
+                        $q->where('periode_fin', '<=', $request->date_fin)
+                          ->orWhere('created_at', '<=', $request->date_fin);
+                    });
+                }
+
+                $recettes = $recettesQuery->orderBy('created_at', 'desc')->get();
+
+                $totalMontant = 0;
+                $totalRegle = 0;
+
+                foreach ($recettes as $recette) {
+                    $montantRecette = $recette->ElementRecette->sum('montant');
+                    $totalMontant += $montantRecette;
+                    $totalRegle += $recette->Reglement->sum('versement');
+                }
+
+                $reste = $totalMontant - $totalRegle;
+
+                if ($recettes->count() > 0) {
+                    $resultats->push((object)[
+                        'service' => $service,
+                        'recettes' => $recettes,
+                        'total_montant' => $totalMontant,
+                        'total_regle' => $totalRegle,
+                        'reste' => $reste,
+                    ]);
+                }
+            }
+        }
+
+        return view('pages.etats.print_etat_departement', compact('resultats', 'request'));
+    }
 }

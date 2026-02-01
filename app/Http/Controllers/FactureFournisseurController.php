@@ -89,8 +89,7 @@ class FactureFournisseurController extends Controller
 
         if ($validator->fails()) {
             return redirect()->back()
-                ->withErrors($validator)
-                ->withInput();
+                ->withErrors($validator)->withInput();
         }
 
         // Vérifier que les tableaux ont la même taille
@@ -495,7 +494,7 @@ class FactureFournisseurController extends Controller
         $fact->delete();
 
         smilify('error', 'La facture a été supprimer avec success !');
-        return redirect()->route('all_recette');
+        return redirect()->back();
     }
 
     public function destroy_element(string $id)

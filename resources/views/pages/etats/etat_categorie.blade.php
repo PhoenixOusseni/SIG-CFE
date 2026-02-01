@@ -294,10 +294,13 @@
         <!-- Résultats -->
         @if (isset($resultats) && $resultats->count() > 0)
             <div class="result-card card">
-                <div class="card-header">
+                <div class="card-header d-flex justify-content-between align-items-center">
                     <h5 class="mb-0">
                         <i data-feather="bar-chart-2"></i> Résultats de la recherche
                     </h5>
+                    <a href="{{ route('print_etat_categorie', request()->all()) }}" target="_blank" class="btn btn-success">
+                        <i data-feather="printer"></i> Imprimer
+                    </a>
                 </div>
                 <div class="card-body">
                     @php

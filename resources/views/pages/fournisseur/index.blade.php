@@ -114,12 +114,48 @@
                                                                 <td>{{ $fournisseur->adresse }}</td>
                                                                 <td>{{ $fournisseur->ifu }}</td>
                                                                 <td>{{ $fournisseur->telephone }}</td>
-                                                                <td class="d-flex justify-content-center">
+                                                                <td class="d-flex gap-3">
                                                                     <a href="#" data-bs-toggle="modal" data-bs-target="#enteteModal{{ $fournisseur->id }}">
                                                                         <i class="fa fa-eye text-success" aria-hidden="true"></i>
                                                                     </a>
+                                                                    <a href="#" data-bs-toggle="modal" data-bs-target="#deleteFournisseurModal{{ $fournisseur->id }}">
+                                                                        <i class="fa fa-trash text-danger" aria-hidden="true"></i>
+                                                                    </a>
                                                                 </td>
                                                             </tr>
+                                                            <!-- Modal de suppression -->
+                                                            <div class="modal fade" id="deleteFournisseurModal{{ $fournisseur->id }}" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+                                                                <div class="modal-dialog modal-dialog-centered">
+                                                                    <div class="modal-content">
+                                                                        <div class="modal-header bg-danger">
+                                                                            <h5 class="modal-title text-white"
+                                                                                id="deleteModalLabel">Confirmation de suppression</h5>
+                                                                            <button type="button" class="btn-close text-white" data-bs-dismiss="modal" aria-label="Close">X</button>
+                                                                        </div>
+                                                                        <div class="modal-body">
+                                                                            <div class="text-center mb-3">
+                                                                                <i class="fa fa-exclamation-triangle text-danger"
+                                                                                    style="font-size: 3rem;"></i>
+                                                                            </div>
+                                                                            <p class="text-center">
+                                                                                Êtes-vous sûr de vouloir supprimer le fournisseur<strong>{{ $fournisseur->nom }}</strong>?
+                                                                            </p>
+                                                                            <p class="text-center text-muted">
+                                                                                Cette action est irréversible et supprimera également tous les éléments associés à ce fournisseur.
+                                                                            </p>
+                                                                        </div>
+                                                                        <div class="m-3">
+                                                                            <form action="{{ route('module_fornisseur.destroy', [$fournisseur->id]) }}" method="POST" style="display: inline;">
+                                                                                @csrf
+                                                                                @method('DELETE')
+                                                                                <button type="submit" class="btn btn-danger">
+                                                                                    <i class="fas fa-trash"></i>&nbsp; Supprimer
+                                                                                </button>
+                                                                            </form>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
                                                             @include('pages.fournisseur.view_fournisseur_modal')
                                                         @endforeach
                                                     </tbody>

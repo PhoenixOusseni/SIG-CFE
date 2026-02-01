@@ -3,7 +3,7 @@
 
 <head>
     @include('partials.meta')
-    <title>SIG-CFE| Print Reglement facture fournisseur</title>
+    <title>SIG-CFE| Print Reglement facture</title>
     @yield('style')
     @include('partials.style')
     <style>
@@ -44,7 +44,7 @@
         </div>
 
         <div class="text-center mt-3 mb-5">
-            <h4>REGLEMENT ORDRE DE RECETTE N° REG0{{ $reglements->id }}</h4>
+            <h4>REGLEMENT DE LA FACTURE N° {{ $reglements->id }}</h4>
         </div>
 
         <div class="d-flex justify-content-between m-3">
@@ -61,12 +61,10 @@
         </div>
 
         <div class="col-12 text-start m-3">
-            <h5>Numéro ordre de recette : <strong>{{ $reglements->Recette->id }}</strong></h5>
-            <h5>Objet : <strong>{{ $reglements->Recette->objet }}</strong></h5>
+            <h5>Numéro facture : <strong>{{ $reglements->Recette->id }}</strong></h5>
+            <h5>Objet : <strong>{{ $reglements->Recette->reference }}</strong></h5>
         </div>
-
         <div class="m-3"></div>
-
         <div class="m-3">
             <table class="table table-bordered border-dark">
                 <thead>
@@ -98,7 +96,7 @@
                 </thead>
             </table>
             <p>Arreté le présent ordre de recette à la somme de
-                <strong>({{ number_format($reglements->versement, 0, ',', ' ') }}) FRANCS CFA</strong>
+                <strong>{{ strtoupper(conversion($reglements->versement)) }} ({{ number_format($reglements->versement, 0, ',', ' ') }}) FRANCS CFA</strong>
             </p>
         </div>
 

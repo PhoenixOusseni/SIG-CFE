@@ -81,7 +81,7 @@
                         <span>
                             <i data-feather="bar-chart-2"></i> Résultats du solde client
                         </span>
-                        <button class="btn btn-sm btn-success" onclick="window.print()">
+                        <button class="btn btn-sm btn-success" onclick="window.open('{{ route('print_solde_client', request()->all()) }}', '_blank')">
                             <i data-feather="printer"></i>&thinsp; Imprimer
                         </button>
                     </div>

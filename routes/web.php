@@ -141,4 +141,12 @@ Route::middleware(['auth'])->group(function () {
     Route::get('etat/marche_detaille', [EtatController::class, 'marche_detaille'])->name('marche_detaille');
     Route::get('etat/facture_par_categorie', [EtatController::class, 'facture_categorie'])->name('facture_par_categorie');
     Route::get('etat/facture_par_departement', [EtatController::class, 'facture_departement'])->name('facture_par_departement');
+
+    // Print des etats
+    Route::get('etat/print_solde_client', [EtatController::class, 'print_solde_client'])->name('print_solde_client');
+    Route::get('etat/print_solde_fournisseur', [EtatController::class, 'print_solde_fournisseur'])->name('print_solde_fournisseur');
+    Route::get('etat/print_etat_marche', [EtatController::class, 'print_etat_marche'])->name('print_etat_marche');
+    Route::get('etat/print_detail_marche', [EtatController::class, 'print_detail_marche'])->name('print_detail_marche');
+    Route::get('etat/print_etat_categorie', [EtatController::class, 'print_etat_categorie'])->name('print_etat_categorie');
+    Route::get('etat/print_etat_departement', [EtatController::class, 'print_etat_departement'])->name('print_etat_departement');
 });

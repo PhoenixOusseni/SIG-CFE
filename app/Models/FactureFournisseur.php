@@ -31,7 +31,7 @@ class FactureFournisseur extends Model
 
     public function ReglementFournisseur()
     {
-        return $this->hasMany(ReglementFournisseur::class);
+        return $this->hasMany(ReglementFournisseur::class, 'facture_fournisseurs_id', 'id');
     }
 
     function Signataire() {

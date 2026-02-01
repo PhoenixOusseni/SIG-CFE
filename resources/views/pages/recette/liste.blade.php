@@ -76,13 +76,20 @@
                                                                 <td>{{ $recette->Contribuable->assujeti }}</td>
                                                                 <td>{{ $recette->echeance }}</td>
                                                                 <td>{{ $recette->statut }}</td>
-                                                                <td class="d-flex justify-content-center">
+                                                                <td class="d-flex justify-content-between">
                                                                     <a href="{{ route ('module_ordre_recette.show', [$recette->id]) }}">
                                                                         <i class="fa fa-eye text-success" aria-hidden="true"></i>
+                                                                    </a>
+                                                                    <a href="{{ route ('module_ordre_recette.edit', [$recette->id]) }}">
+                                                                        <i class="fa fa-edit text-warning" aria-hidden="true"></i>
+                                                                    </a>
+                                                                    <a href="#" data-bs-toggle="modal" data-bs-target="#deleteRecetteModal{{ $recette->id }}">
+                                                                        <i class="fa fa-trash text-danger" aria-hidden="true"></i>
                                                                     </a>
                                                                 </td>
                                                             </tr>
                                                             @include('pages.recette.view_recette_modal')
+                                                            @include('pages.recette.delet_modal')
                                                         @endforeach
                                                     </tbody>
                                                 </table>

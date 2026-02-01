@@ -23,17 +23,6 @@ class ReglementFactureController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
      * Display the specified resource.
      *
      * @param  \App\Models\ReglementFacture  $reglementFacture
@@ -44,17 +33,6 @@ class ReglementFactureController extends Controller
         $reglement = ReglementFacture::find($id);
 
         return view('pages.reglement.show',compact('reglement'));
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\ReglementFacture  $reglementFacture
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(ReglementFacture $reglementFacture)
-    {
-        //
     }
 
     /**
@@ -72,13 +50,13 @@ class ReglementFactureController extends Controller
          ]);
 
         $reglements = ReglementFacture::create([
+            'recettes_id' => $recettes->id,
             'date' => $request->date,
-            'net' => $request->net,
             'versement' => $request->versement,
+            'net' => $request->net,
             'reste' => $request->net - $request->versement,
-            'mode_reglement' => $request->mode_reglement,
-            'recettes_id' => $id,
         ]);
+
         if ($reglements) {
             smilify('success','Facture reglée avec succès !');
         } else {

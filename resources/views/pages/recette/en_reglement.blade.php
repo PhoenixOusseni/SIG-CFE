@@ -80,24 +80,16 @@
                                                                                 <div class="row">
                                                                                     <div class="col-lg-4 col-md-12">
                                                                                         <div class="mb-3">
-                                                                                            <label class="small mb-1">Retenues BIC</label>
+                                                                                            <label class="small mb-1">Retenues</label>
                                                                                             <select name="retenu_bic" class="form-select">
                                                                                                 <option value="5">Prestation</option>
-                                                                                                <option value="1">Travaux et équipements</option>
-                                                                                                <option value="0.2">Hydrocarbures</option>
                                                                                             </select>
                                                                                         </div>
                                                                                     </div>
                                                                                     <div class="col-lg-4 col-md-12">
                                                                                         <div class="mb-3">
-                                                                                            <label class="small mb-1">Retenue ARCOP</label>
-                                                                                            <input type="text" name="retenu_arcop" class="form-control" />
-                                                                                        </div>
-                                                                                    </div>
-                                                                                    <div class="col-lg-4 col-md-12">
-                                                                                        <div class="mb-3">
-                                                                                            <label class="small mb-1">Pénalités</label>
-                                                                                            <input type="text" name="penalite" class="form-control" />
+                                                                                            <label class="small mb-1">Autres retenues</label>
+                                                                                            <input type="text" name="autres_retenu" class="form-control" />
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>

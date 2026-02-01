@@ -74,12 +74,19 @@
                                                                 <td>{{ $fact->BaseTaxable->libelle }}</td>
                                                                 <td>{{ $fact->Fournisseur->libelle }}</td>
                                                                 <td>{{ $fact->statut }}</td>
-                                                                <td class="d-flex justify-content-center">
+                                                                <td class="d-flex justify-content-between">
                                                                     <a href="{{ route ('module_facture_fournisseur.show', [$fact->id]) }}">
                                                                         <i class="fa fa-eye text-success" aria-hidden="true"></i>
                                                                     </a>
+                                                                    <a href="{{ route ('module_facture_fournisseur.edit', [$fact->id]) }}">
+                                                                        <i class="fa fa-edit text-warning" aria-hidden="true"></i>
+                                                                    </a>
+                                                                    <a href="#" data-bs-toggle="modal" data-bs-target="#deleteFactureFournisseurModal{{ $fact->id }}">
+                                                                        <i class="fa fa-trash text-danger" aria-hidden="true"></i>
+                                                                    </a>
                                                                 </td>
                                                             </tr>
+                                                            @include('pages.facure_fournisseur.delet_modal', ['fact' => $fact])
                                                         @endforeach
                                                     </tbody>
                                                 </table>

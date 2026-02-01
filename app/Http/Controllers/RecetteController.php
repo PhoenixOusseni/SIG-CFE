@@ -152,7 +152,6 @@ class RecetteController extends Controller
                 'marche_id' => $request->marche_id,
                 'categorie_id' => $request->categorie_id,
                 'service_id' => $request->service_id,
-                // 'code' => $request->code,
             ]);
 
             // Ajouter tous les éléments de la recette
@@ -219,7 +218,7 @@ class RecetteController extends Controller
         $contribuables = Contribuable::all();
         $services = Service::all();
 
-        $montant_total = $elements->sum('montant');
+        $montant_total = $elements->sum('montant') - $recette->total_retenu;
 
         return view('pages.recette.show', compact('recette', 'bases', 'elements', 'budgets', 'contribuables', 'services', 'montant_total'));
     }
@@ -347,17 +346,40 @@ class RecetteController extends Controller
      */
     public function reglement(Request $request, string $id)
     {
-        $fact = Recette::find($id);
-        $elements = ElementRecette::where('recettes_id', '=', $id)->get();
-        $total = $elements->sum('montant');
-        $fact->update([
+        // Mettre à jour le statut de la recette
+        $recette = Recette::find($id);
+        $recette->update([
             'statut' => 'en reglement',
-            'retenu_bic' => ($total * $request->retenu_bic) / 100,
-            'retenu_arcop' => $request->retenu_arcop,
-            'penalite' => $request->penalite,
-
-            'total_retenu' => $request->retenu_arcop + $request->penalite,
         ]);
+
+        // Récupérer tous les éléments de cette recette
+        $elements = ElementRecette::where('recettes_id', '=', $id)->get();
+
+        // Traiter chaque élément
+        foreach ($elements as $element) {
+            // Récupérer le montant initial de l'élément
+            $montant_initial = $element->montant;
+
+            // Calculer retenu_bic (pourcentage du montant)
+            $retenu_bic = ($montant_initial * ($request->retenu_bic ?? 0)) / 100;
+
+            // Récupérer autres_retenu depuis la requête
+            $autres_retenu = $request->autres_retenu ?? 0;
+
+            // Calculer total_retenu
+            $total_retenu = $retenu_bic + $autres_retenu;
+
+            // Calculer le nouveau montant
+            $nouveau_montant = $montant_initial - $total_retenu;
+
+            // Mettre à jour l'élément
+            $element->update([
+                'retenu_bic' => $retenu_bic,
+                'autres_retenu' => $autres_retenu,
+                'total_retenu' => $total_retenu,
+                'montant' => $nouveau_montant,
+            ]);
+        }
 
         smilify('success', 'Ordre de recette mis en reglement avec succès !');
         return redirect()->back();
@@ -411,7 +433,7 @@ class RecetteController extends Controller
         $recet->delete();
 
         smilify('error', 'L\'ordre de recette a été supprimer avec success !');
-        return redirect()->route('all_recette');
+        return redirect()->back();
     }
 
     public function destroy_element(string $id)

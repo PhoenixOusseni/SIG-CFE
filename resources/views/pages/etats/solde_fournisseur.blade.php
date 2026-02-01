@@ -236,7 +236,7 @@
 
                         <!-- Bouton d'impression -->
                         <div class="text-end mt-3">
-                            <button onclick="window.print()" class="btn btn-secondary">
+                            <button onclick="window.open('{{ route('print_solde_fournisseur', request()->all()) }}', '_blank')" class="btn btn-secondary">
                                 <i data-feather="printer"></i> Imprimer le rapport
                             </button>
                         </div>

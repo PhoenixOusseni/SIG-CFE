@@ -17,7 +17,7 @@
                         <div class="col-lg-4 col-md-12">
                             <div class="mb-3">
                                 <label class="small mb-1">Libelle</label>
-                                <input class="form-control" name="denomination" value="{{ $fournisseur->libelle }}" type="text" />
+                                <input class="form-control" name="libelle" value="{{ $fournisseur->libelle }}" type="text" />
                             </div>
                         </div>
                         <div class="col-lg-4 col-md-12">
@@ -44,7 +44,7 @@
                         <div class="col-lg-4 col-md-12">
                             <div class="mb-3">
                                 <label class="small mb-1">Adresse</label>
-                                <input class="form-control" name="email" value="{{ $fournisseur->adresse }}" type="text" />
+                                <input class="form-control" name="adresse" value="{{ $fournisseur->adresse }}" type="text" />
                             </div>
                         </div>
                     </div>
