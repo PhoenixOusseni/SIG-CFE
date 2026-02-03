@@ -75,7 +75,7 @@
                                             <select class="form-select" name="module" required>
                                                 <option value="">Selectionner ici...</option>
                                                 <option value="facturation">Facturation</option>
-                                                <option value="recette">Recette</option>
+                                                c
                                                 <option value="tous">Tous</option>
                                             </select>
                                         </div>
@@ -124,6 +124,7 @@
                                                             <th>Nom</th>
                                                             <th>Prénom</th>
                                                             <th>Login</th>
+                                                            <th>Email</th>
                                                             <th>Role</th>
                                                             <th>Action</th>
                                                         </tr>
@@ -135,6 +136,7 @@
                                                             <td>{{ $item->nom }}</td>
                                                             <td>{{ $item->prenom }}</td>
                                                             <td>{{ $item->login }}</td>
+                                                            <td>{{ $item->email }}</td>
                                                             <td>{{ $item->role }}</td>
                                                             <td class="d-flex justify-content-center">
                                                                 <a href="{{ route ('module_utilisateur.show', [$item->id]) }}">

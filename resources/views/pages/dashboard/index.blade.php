@@ -87,7 +87,7 @@
                             <thead>
                                 <tr>
                                     <th>Code</th>
-                                    <th>Designation</th>
+                                    <th>Rérérence</th>
                                     <th>Marché</th>
                                     <th>Contribuable</th>
                                     <th>Echeance</th>
@@ -97,8 +97,8 @@
                             <tbody>
                                 @foreach ($recettes as $recette)
                                     <tr>
-                                        <td>{{ $recette->id }}</td>
-                                        <td>{{ $recette->objet }}</td>
+                                        <td>{{ $recette->code }}</td>
+                                        <td>{{ $recette->reference }}</td>
                                         <td>{{ $recette->Marche->designation ?? 'N/A' }}</td>
                                         <td>{{ $recette->Contribuable->assujeti ?? 'N/A' }}</td>
                                         <td>{{ $recette->echeance }}</td>
