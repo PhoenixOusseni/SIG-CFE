@@ -3,7 +3,7 @@
 
 <head>
     @include('partials.meta')
-    <title>SIG-CFE| Print facture</title>
+    <title>SIG-FORVISMAZARS| Print facture</title>
     @yield('style')
     @include('partials.style')
     <style>

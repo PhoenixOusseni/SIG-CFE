@@ -3,7 +3,7 @@
 
 <head>
     @include('partials.meta')
-    <title>SIG-CFE | Solde Fournisseur</title>
+    <title>SIG-FORVISMAZARS | Solde Fournisseur</title>
     @include('partials.style')
     <style>
         body { font-family: Arial, sans-serif; }

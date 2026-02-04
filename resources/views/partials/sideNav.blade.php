@@ -35,6 +35,10 @@
                         </a>
                         <div class="collapse" id="collapsePagesPara" data-bs-parent="#accordionSidenav">
                             <nav class="sidenav-menu-nested nav">
+                                <a class="nav-link" href="{{ route('gestion_service.index') }}">Service</a>
+                                <a class="nav-link" href="{{ route('gestion_personnel.index') }}">Personnel</a>
+                                <a class="nav-link" href="{{ route('gestion_marche.index') }}">Projet</a>
+
                                 <a class="nav-link" href="{{ route('module_famille.index') }}">département</a>
                                 <a class="nav-link" href="{{ route('module_base_taxable.index') }}">prestation</a>
                                 <a class="nav-link" href="{{ route('module_categorie.index') }}">catégories</a>
@@ -42,6 +46,8 @@
                                 <a class="nav-link" href="{{ route('module_fornisseur.index') }}">fournisseurs</a>
                             </nav>
                         </div>
+
+                        <div class="sidenav-menu-heading">FACTURATION</div>
 
                         <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse"
                             data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePagesST">
@@ -71,37 +77,14 @@
                         </a>
                         <div class="collapse" id="pagesCollapseErrorEB" data-bs-parent="#accordionSidenav">
                             <nav class="sidenav-menu-nested nav">
-                                <a class="nav-link"
-                                    href="{{ route('module_facture_fournisseur.index') }}">préparation</a>
+                                <a class="nav-link" href="{{ route('module_facture_fournisseur.index') }}">préparation</a>
                                 <a class="nav-link" href="{{ route('valider_facture') }}">validation</a>
-                                <a class="nav-link" href="{{ route('mise_reglement_facture') }}">mise en
-                                    règlement</a>
+                                <a class="nav-link" href="{{ route('mise_reglement_facture') }}">mise en règlement</a>
                                 <a class="nav-link" href="{{ route('reglement_facture') }}">règlements</a>
                                 <a class="nav-link" href="{{ route('all_facture') }}">liste des factures</a>
-                                <a class="nav-link" href="{{ route('module_reglement_fournisseur.index') }}">liste
-                                    des
-                                    règlements</a>
+                                <a class="nav-link" href="{{ route('module_reglement_fournisseur.index') }}">liste des règlements</a>
                             </nav>
                         </div>
-
-                        <div class="sidenav-menu-heading">FACTURATION</div>
-
-                        <a class="nav-link collapsed" href="{{ route('module_ordre_recette.index') }}">
-                            <div class="nav-link-icon"><i data-feather="file-plus"></i></div>
-                            créer facture
-                        </a>
-                        <a class="nav-link collapsed" href="{{ route('module_facture_fournisseur.index') }}">
-                            <div class="nav-link-icon"><i data-feather="user-plus"></i></div>
-                            créer fact sous-traitant
-                        </a>
-                        <a class="nav-link collapsed" href="{{ route('reglement_recette') }}">
-                            <div class="nav-link-icon"><i data-feather="dollar-sign"></i></div>
-                            règlement facture
-                        </a>
-                        <a class="nav-link collapsed" href="{{ route('reglement_facture') }}">
-                            <div class="nav-link-icon"><i data-feather="dollar-sign"></i></div>
-                            règlement fact sous-traitant
-                        </a>
 
                         <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse"
                             data-bs-target="#pagesCollapseErrorEBS" aria-expanded="false"
@@ -125,7 +108,7 @@
                             </nav>
                         </div>
 
-                        <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse"
+                        {{-- <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse"
                             data-bs-target="#pagesCollapseErrorEval" aria-expanded="false"
                             aria-controls="pagesCollapseError">
                             <div class="nav-link-icon"><i data-feather="clipboard"></i></div>
@@ -140,10 +123,10 @@
                                 <a class="nav-link" href="">Efficacité organisationnelle</a>
                                 <a class="nav-link" href="">Fiche du personnel</a>
                             </nav>
-                        </div>
+                        </div> --}}
                     @endif
 
-                    @if (in_array(Auth::user()->module, ['diligence', 'tous']))
+                    {{-- @if (in_array(Auth::user()->module, ['diligence', 'tous']))
                         <div class="sidenav-menu-heading">GESTION DILIGENCES</div>
 
                         <a class="nav-link collapsed" href="{{ route('gestion_personnel.index') }}">
@@ -170,7 +153,7 @@
                             <div class="nav-link-icon"><i data-feather="shopping-cart"></i></div>
                             Marché
                         </a>
-                    @endif
+                    @endif --}}
                 </div>
             </div>
             <div class="sidenav-footer">

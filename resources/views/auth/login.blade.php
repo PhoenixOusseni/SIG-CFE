@@ -4,7 +4,7 @@
 <head>
     @include('partials.meta')
     @yield('title')
-    <title>SIG-CFE | Connexion</title>
+    <title>SIG-FORVISMAZARS | Connexion</title>
     @yield('style')
     @include('partials.style')
     @notifyCss
@@ -317,18 +317,12 @@
             <!-- Section Information -->
             <div class="info-section">
                 <div class="info-content">
-                    <h1 class="brand-title">Bienvenue sur SIG-CFE</h1>
+                    <h1 class="brand-title">Bienvenue sur SIG-FORVISMAZARS</h1>
                     <p class="brand-description">
                         Un système de gestion informatisée moderne et efficace pour la facturation et le suivi budgétaire de votre entreprise.
                     </p>
 
                     <ul class="feature-list">
-                        <li class="feature-item">
-                            <svg class="feature-icon" fill="currentColor" viewBox="0 0 20 20">
-                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
-                            </svg>
-                            <span class="feature-text">Gestion des diligences</span>
-                        </li>
                         <li class="feature-item">
                             <svg class="feature-icon" fill="currentColor" viewBox="0 0 20 20">
                                 <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>

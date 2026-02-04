@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('title')
-    <title>SIG - CFE | Liste des marchés</title>
+    <title>SIG - CFE | Liste des projets</title>
 @endsection
 
 @section('style')
@@ -16,7 +16,7 @@
                     <div class="col-auto mt-4">
                         <h1 class="page-header-title">
                             <div class="page-header-icon"><i data-feather="list"></i></div>
-                            Liste des marchés
+                            Liste des projet
                         </h1>
                     </div>
                 </div>
@@ -35,10 +35,10 @@
                         <div class="col-sm-12 mb-3">
                             <a href="{{ route('gestion_marche.create') }}" class="btn btn-light"><i
                                     data-feather="plus"></i>&thinsp;&thinsp;
-                                Ajouter un marché</a>
+                                Ajouter un projet</a>
                             <a href="{{ route('gestion_marche.index') }}" class="btn btn-light"><i
                                     data-feather="align-left"></i>&thinsp;&thinsp;
-                                Liste des marchés</a>
+                                Liste des projets</a>
                         </div>
                         <table id="datatablesSimple">
                             <thead>

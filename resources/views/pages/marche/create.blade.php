@@ -1,6 +1,6 @@
 @extends('layouts.master')
 @section('title')
-    <title>SIG - CFE | Ajouter un marché</title>
+    <title>SIG - FORVISMAZARS | Ajouter un marché</title>
 @endsection
 
 @section('style')
@@ -15,7 +15,7 @@
                     <div class="col-auto mt-4">
                         <h1 class="page-header-title">
                             <div class="page-header-icon"><i data-feather="user-plus"></i></div>
-                            Ajouter un marché
+                            Ajouter un projet
                         </h1>
                     </div>
                 </div>
@@ -33,10 +33,10 @@
                         <div class="col-sm-12 mb-3">
                             <a href="{{ route('gestion_marche.create') }}" class="btn btn-light"><i
                                     data-feather="plus"></i>&thinsp;&thinsp;
-                                Ajouter un marché</a>
+                                Ajouter un projet</a>
                             <a href="{{ route('gestion_marche.index') }}" class="btn btn-light"><i
                                     data-feather="align-left"></i>&thinsp;&thinsp;
-                                Liste des marchés</a>
+                                Liste des projet</a>
                         </div>
                         <form action="{{ route('gestion_marche.store') }}" method="POST" enctype="multipart/form-data">
                             @csrf
@@ -103,7 +103,7 @@
                             </div>
                             <hr>
 
-                            <h4 class="mt-3 mb-3 text-success">Equipe du marché</h4>
+                            <h4 class="mt-3 mb-3 text-success">Equipe du projet</h4>
 
                             <div style="background: rgba(219, 218, 216, 0.248); padding: 5px; border-radius: 5px">
                                 <div id="equipeContainer">

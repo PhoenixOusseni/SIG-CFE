@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('title')
-    <title>SIG - CFE | Ordre de recette</title>
+    <title>SIG - FOVISMAZARS | Gestion des Facture fournisseurs</title>
 @endsection
 
 @section('style')

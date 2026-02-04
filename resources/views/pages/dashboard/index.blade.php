@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('title')
-    <title>SIG-CFE | Tableau de bord</title>
+    <title>SIG-FORVISMAZARS | Tableau de bord</title>
 @endsection
 
 @section('style')
@@ -17,7 +17,7 @@
                         <div class="col-auto mt-4">
                             <h1 class="page-header-title">
                                 <div class="page-header-icon"><i data-feather="activity"></i></div>
-                                SIG - CFE | Tableau de bord
+                                SIG - FORVISMAZARS | Tableau de bord
                             </h1>
                         </div>
                         <div class="col-12 col-xl-auto mt-4">

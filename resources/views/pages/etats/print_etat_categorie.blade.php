@@ -3,7 +3,7 @@
 
 <head>
     @include('partials.meta')
-    <title>SIG-CFE | État des recettes par catégorie</title>
+    <title>SIG-FORVISMAZARS | État des recettes par catégorie</title>
     @include('partials.style')
     <style>
         .inset-0 {
