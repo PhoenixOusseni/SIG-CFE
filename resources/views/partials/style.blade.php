@@ -30,8 +30,13 @@
         background-color: #2f663f;
         color: white;
     }
-    /* .btn-2 {
-        background-color: #2f663f;
+
+    table {
+        font-size: 14px;
+    }
+
+    table thead {
+        background-color: #548361;
         color: white;
-    } */
+    }
 </style>

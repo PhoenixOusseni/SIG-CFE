@@ -16,7 +16,7 @@ class BaseTaxableController extends Controller
      */
     public function index()
     {
-        $collection = BaseTaxable::all();
+        $collection = BaseTaxable::paginate(10);
         $familles = Famille::all();
 
         return view('pages.taxable.index',compact('collection', 'familles'));
@@ -38,6 +38,26 @@ class BaseTaxableController extends Controller
         ]);
 
         smilify('success','Base taxable ajoutée avec succès !');
+        return redirect()->back();
+    }
+
+        /**
+        * Show the form for editing the specified resource.
+        *
+        * @param  \App\Models\BaseTaxable  $baseTaxable
+        * @return \Illuminate\Http\Response
+        */
+    public function update(String $id, Request $request)
+    {
+        $baseTaxable = BaseTaxable::findOrFail($id);
+        $baseTaxable->update([
+            'libelle' => $request->libelle,
+            'reference' => $request->reference,
+            'prix' => $request->prix,
+            'familles_id' => $request->familles_id,
+        ]);
+
+        smilify('success','Base taxable modifiée avec succès !');
         return redirect()->back();
     }
 

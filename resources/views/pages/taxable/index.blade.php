@@ -95,8 +95,15 @@
                                     <!-- Tabbed dashboard card example-->
                                     <div class="card mb-4">
                                         <div class="card-body">
+                                            <div class="d-flex justify-content-between mb-3">
+                                                <h2 class="h4 mb-0">Liste des prestations</h2>
+                                                <div>
+                                                    <input type="text" placeholder="Rechercher..." class="form-control"
+                                                        id="searchInput" onkeyup="searchTable()">
+                                                </div>
+                                            </div>
                                             <div class="sbp-preview-content">
-                                                <table id="datatablesSimple">
+                                                <table class="table table-bordered table-hover table-striped">
                                                     <thead>
                                                         <tr>
                                                             <th class="text-center">Code</th>
@@ -116,11 +123,60 @@
                                                                 <td>{{ $item->prix }}</td>
                                                                 <td>{{ $item->Famille->libelle }}</td>
                                                                 <td class="d-flex align-items-center justify-content-center">
+                                                                    <a href="#" data-bs-toggle="modal" data-bs-target="#editPrestationModal{{ $item->id }}" class="me-2">
+                                                                        <i class="fa fa-edit text-warning" aria-hidden="true"></i>
+                                                                    </a>
                                                                     <a href="#" data-bs-toggle="modal" data-bs-target="#deletePrestationModal{{ $item->id }}">
                                                                         <i class="fa fa-trash text-danger" aria-hidden="true"></i>
                                                                     </a>
                                                                 </td>
                                                             </tr>
+
+                                                            <!-- Modal de modification -->
+                                                            <div class="modal fade" id="editPrestationModal{{ $item->id }}" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+                                                                <div class="modal-dialog modal-dialog-centered">
+                                                                    <div class="modal-content">
+                                                                        <div class="modal-header bg-warning">
+                                                                            <h5 class="modal-title text-white" id="editModalLabel">Modifier la prestation</h5>
+                                                                            <button type="button" class="btn-close text-white" data-bs-dismiss="modal" aria-label="Close">X</button>
+                                                                        </div>
+                                                                        <div class="modal-body">
+                                                                            <form action="{{ route('module_base_taxable.update', [$item->id]) }}" method="POST">
+                                                                                @csrf
+                                                                                @method('PUT')
+                                                                                <div class="mb-3">
+                                                                                    <label class="small mb-1">Code prestation</label>
+                                                                                    <input class="form-control" name="code" type="text" value="{{ $item->id }}" disabled />
+                                                                                </div>
+                                                                                <div class="mb-3">
+                                                                                    <label class="small mb-1">Nom de la prestation</label>
+                                                                                    <input class="form-control" name="libelle" type="text" value="{{ $item->libelle }}" required />
+                                                                                </div>
+                                                                                <div class="mb-3">
+                                                                                    <label class="small mb-1">Réference</label>
+                                                                                    <input class="form-control" name="reference" type="text" value="{{ $item->reference }}" required />
+                                                                                </div>
+                                                                                <div class="mb-3">
+                                                                                    <label class="small mb-1">Prix de la prestation</label>
+                                                                                    <input class="form-control" name="prix" type="number" value="{{ $item->prix }}" required />
+                                                                                </div>
+                                                                                <div class="mb-3">
+                                                                                    <label class="small mb-1">Département</label>
+                                                                                    <select name="familles_id" class="form-select" required>
+                                                                                        @foreach ($familles as $famille)
+                                                                                            <option value="{{ $famille->id }}" {{ $item->familles_id == $famille->id ? 'selected' : '' }}>{{ $famille->libelle }}</option>
+                                                                                        @endforeach
+                                                                                    </select>
+                                                                                </div>
+                                                                                <!-- Save changes button-->
+                                                                                <button class="btn btn-warning text-white" type="submit">
+                                                                                    <i class="fas fa-save"></i>&nbsp; Enregistrer les modifications
+                                                                                </button>
+                                                                            </form>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
 
                                                             <!-- Modal de suppression -->
                                                             <div class="modal fade" id="deletePrestationModal{{ $item->id }}" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
@@ -156,6 +212,7 @@
                                                         @endforeach
                                                     </tbody>
                                                 </table>
+                                                {{ $collection->links() }}
                                             </div>
                                         </div>
                                     </div>

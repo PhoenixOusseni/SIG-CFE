@@ -16,7 +16,7 @@ class ContribuableController extends Controller
      */
     public function index()
     {
-        $collection = Contribuable::all();
+        $collection = Contribuable::paginate(10);
         $categories = Categorie::all();
 
         return view('pages.contribuable.index',compact('collection', 'categories'));
@@ -59,6 +59,7 @@ class ContribuableController extends Controller
             'telephone' => $request->telephone,
             'ifu' => $request->ifu,
             'rccm' => $request->rccm,
+            'categories_id' => $request->categories_id,
         ]);
 
         smilify('success','Contribuable mis à jour avec succès !');

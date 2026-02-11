@@ -21,6 +21,7 @@ class DatabaseSeeder extends Seeder
             BudgetSeeder::class,
             CategorieSeeder::class,
             ContribuableSeeder::class,
+            PersonnelSeeder::class,
         ]);
     }
 }

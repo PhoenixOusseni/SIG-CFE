@@ -72,8 +72,15 @@
                                     <!-- Tabbed dashboard card example-->
                                     <div class="card mb-4">
                                         <div class="card-body">
+                                            <div class="d-flex justify-content-between mb-3">
+                                                <h2 class="h4 mb-0">Liste des catégories</h2>
+                                                <div>
+                                                    <input type="text" placeholder="Rechercher..." class="form-control"
+                                                        id="searchInput" onkeyup="searchTable()">
+                                                </div>
+                                            </div>
                                             <div class="sbp-preview-content">
-                                                <table id="datatablesSimple">
+                                                <table class="table table-bordered table-striped table-hover">
                                                     <thead>
                                                         <tr>
                                                             <th class="text-center">Code</th>
@@ -87,11 +94,41 @@
                                                                 <td>{{ $item->id }}</td>
                                                                 <td>{{ $item->libelle }}</td>
                                                                 <td class="d-flex align-items-center justify-content-center">
+                                                                    <a href="#" data-bs-toggle="modal" data-bs-target="#editCategorieModal{{ $item->id }}">
+                                                                        <i class="fa fa-edit text-warning mx-2" aria-hidden="true"></i>
+                                                                    </a>
                                                                     <a href="#" data-bs-toggle="modal" data-bs-target="#deleteCategorieModal{{ $item->id }}">
                                                                         <i class="fa fa-trash text-danger mx-2" aria-hidden="true"></i>
                                                                     </a>
                                                                 </td>
                                                             </tr>
+
+                                                            <!-- Modal de modification -->
+                                                            <div class="modal fade" id="editCategorieModal{{ $item->id }}" tabindex="-1" aria-labelledby="editModalLabel{{ $item->id }}" aria-hidden="true">
+                                                                <div class="modal-dialog modal-dialog-centered">
+                                                                    <div class="modal-content">
+                                                                        <div class="modal-header header-gradient">
+                                                                            <h5 class="modal-title text-white" id="editModalLabel{{ $item->id }}">Modifier la catégorie</h5>
+                                                                            <button type="button" class="btn-close text-white" data-bs-dismiss="modal" aria-label="Close">X</button>
+                                                                        </div>
+                                                                        <div class="modal-body">
+                                                                            <form action="{{ route('module_categorie.update', [$item->id]) }}" method="POST">
+                                                                                @csrf
+                                                                                @method('PUT')
+                                                                                <div class="mb-3">
+                                                                                    <label for="libelle{{ $item->id }}" class="form-label">Libellé</label>
+                                                                                    <input type="text" class="form-control" id="libelle{{ $item->id }}" name="libelle" value="{{ $item->libelle }}" required>
+                                                                                </div>
+                                                                                <div class="d-flex justify-content-start">
+                                                                                    <button type="submit" class="btn btn-1">
+                                                                                        <i class="fas fa-save"></i>&nbsp; Enregistrer les modifications
+                                                                                    </button>
+                                                                                </div>
+                                                                            </form>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
 
                                                             <!-- Modal de suppression -->
                                                             <div class="modal fade" id="deleteCategorieModal{{ $item->id }}" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
@@ -130,6 +167,7 @@
                                                         @endforeach
                                                     </tbody>
                                                 </table>
+                                                {{ $collection->links() }}
                                             </div>
                                         </div>
                                     </div>

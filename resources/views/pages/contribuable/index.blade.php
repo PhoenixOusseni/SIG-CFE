@@ -94,7 +94,7 @@
                             <div class="m-3">
                                 <button class="btn btn-1" type="submit">
                                     <i class="fas fa-save"></i>
-                                    &nbsp; &nbsp;Enregistrer
+                                    &nbsp; &nbsp; Enregistrer
                                 </button>
                             </div>
                         </div>
@@ -115,8 +115,15 @@
                                     <!-- Tabbed dashboard card example-->
                                     <div class="card mb-4">
                                         <div class="card-body">
+                                            <div class="d-flex justify-content-between mb-3">
+                                                <h2 class="h4 mb-0">Liste des contribuables</h2>
+                                                <div>
+                                                    <input type="text" placeholder="Rechercher..." class="form-control"
+                                                        id="searchInput" onkeyup="searchTable()">
+                                                </div>
+                                            </div>
                                             <div class="sbp-preview-content">
-                                                <table id="datatablesSimple">
+                                                <table class="table table-bordered table-hover table-striped">
                                                     <thead>
                                                         <tr>
                                                             <th>Code</th>
@@ -138,12 +145,15 @@
                                                                 <td>{{ $contribuable->Categorie->libelle }}</td>
                                                                 <td>{{ $contribuable->telephone }}</td>
                                                                 <td class="d-flex justify-content-between">
-                                                                    <a href="#" data-bs-toggle="modal" data-bs-target="#enteteModal{{ $contribuable->id }}">
-                                                                        <i class="fa fa-eye text-success" aria-hidden="true"></i>
+                                                                    <a href="#" data-bs-toggle="modal"
+                                                                        data-bs-target="#enteteModal{{ $contribuable->id }}">
+                                                                        <i class="fa fa-edit text-warning"
+                                                                            aria-hidden="true"></i>
                                                                     </a>
                                                                     <a href="#" data-bs-toggle="modal"
                                                                         data-bs-target="#deleteContribuableModal{{ $contribuable->id }}">
-                                                                        <i class="fa fa-trash text-danger" aria-hidden="true"></i>
+                                                                        <i class="fa fa-trash text-danger"
+                                                                            aria-hidden="true"></i>
                                                                     </a>
                                                                 </td>
                                                             </tr>
@@ -156,20 +166,27 @@
                                                                     <div class="modal-content">
                                                                         <div class="modal-header bg-danger">
                                                                             <h5 class="modal-title text-white"
-                                                                                id="deleteModalLabel">Confirmation de suppression</h5>
-                                                                            <button type="button" class="btn-close text-white" data-bs-dismiss="modal" aria-label="Close">X</button>
+                                                                                id="deleteModalLabel">Confirmation de
+                                                                                suppression</h5>
+                                                                            <button type="button"
+                                                                                class="btn-close text-white"
+                                                                                data-bs-dismiss="modal"
+                                                                                aria-label="Close">X</button>
                                                                         </div>
                                                                         <div class="modal-body">
                                                                             <div class="text-center mb-3">
-                                                                                <i class="fa fa-exclamation-triangle text-danger" style="font-size: 3rem;"></i>
+                                                                                <i class="fa fa-exclamation-triangle text-danger"
+                                                                                    style="font-size: 3rem;"></i>
                                                                             </div>
                                                                             <p class="text-center">
-                                                                                Êtes-vous sûr de vouloir supprimer le contribuable
+                                                                                Êtes-vous sûr de vouloir supprimer le
+                                                                                contribuable
                                                                                 <strong>{{ $contribuable->assujeti }}</strong>?
                                                                             </p>
                                                                             <p class="text-center text-muted">
                                                                                 Cette action est irréversible et supprimera
-                                                                                également tous les éléments associés à cette contribuable.
+                                                                                également tous les éléments associés à cette
+                                                                                contribuable.
                                                                             </p>
                                                                         </div>
                                                                         <div class="m-3">
@@ -178,8 +195,10 @@
                                                                                 method="POST" style="display: inline;">
                                                                                 @csrf
                                                                                 @method('DELETE')
-                                                                                <button type="submit" class="btn btn-danger">
-                                                                                    <i class="fas fa-trash"></i>&nbsp; Supprimer
+                                                                                <button type="submit"
+                                                                                    class="btn btn-danger">
+                                                                                    <i class="fas fa-trash"></i>&nbsp;
+                                                                                    Supprimer
                                                                                 </button>
                                                                             </form>
                                                                         </div>
@@ -190,6 +209,7 @@
                                                         @endforeach
                                                     </tbody>
                                                 </table>
+                                                {{ $collection->links() }}
                                             </div>
                                         </div>
                                     </div>

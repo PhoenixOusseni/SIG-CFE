@@ -38,7 +38,7 @@
                                     <li>{{ $error }}</li>
                                 @endforeach
                             </ul>
-                        </div><br/>
+                        </div><br />
                     @endif
 
                     <form action="{{ route('module_famille.store') }}" method="POST">
@@ -47,15 +47,18 @@
                         <div class="row gx-3 mb-3">
                             <div class="col-md-3">
                                 <label class="small mb-1">Code département</label>
-                                <input class="form-control" name="code" type="text" value="{{ Request::old('code') }}" required />
+                                <input class="form-control" name="code" type="text" value="{{ Request::old('code') }}"
+                                    required />
                             </div>
                             <div class="col-md-3">
                                 <label class="small mb-1">Taux (%)</label>
-                                <input class="form-control" name="taux" type="number" value="{{ Request::old('taux') }}" required />
+                                <input class="form-control" name="taux" type="number" value="{{ Request::old('taux') }}"
+                                    required />
                             </div>
                             <div class="col-md-6">
                                 <label class="small mb-1">Nom département</label>
-                                <input class="form-control" name="libelle" type="text" value="{{ Request::old('libelle') }}" required />
+                                <input class="form-control" name="libelle" type="text"
+                                    value="{{ Request::old('libelle') }}" required />
                             </div>
                         </div>
                         <!-- Save changes button-->
@@ -80,8 +83,15 @@
                                     <!-- Tabbed dashboard card example-->
                                     <div class="card mb-4">
                                         <div class="card-body">
+                                            <div class="d-flex justify-content-between mb-3">
+                                                <h2 class="h4 mb-0">Liste des departements</h2>
+                                                <div>
+                                                    <input type="text" placeholder="Rechercher..." class="form-control"
+                                                        id="searchInput" onkeyup="searchTable()">
+                                                </div>
+                                            </div>
                                             <div class="sbp-preview-content">
-                                                <table id="datatablesSimple">
+                                                <table class="table table-bordered table-hover table-striped">
                                                     <thead>
                                                         <tr>
                                                             <th class="text-center">Code</th>
@@ -96,30 +106,86 @@
                                                                 <td>{{ $item->id }}</td>
                                                                 <td>{{ $item->libelle }}</td>
                                                                 <td>{{ $item->taux }}</td>
-                                                                <td class="d-flex align-items-center justify-content-center">
-                                                                    <a href="#" data-bs-toggle="modal" data-bs-target="#deleteFamilleModal{{ $item->id }}">
+                                                                <td
+                                                                    class="d-flex align-items-center justify-content-center">
+                                                                    <a href="#" data-bs-toggle="modal"
+                                                                        data-bs-target="#editFamilleModal{{ $item->id }}">
+                                                                        <i class="fa fa-edit text-warning mx-2" aria-hidden="true"></i>
+                                                                    </a>
+                                                                    <a href="#" data-bs-toggle="modal"
+                                                                        data-bs-target="#deleteFamilleModal{{ $item->id }}">
                                                                         <i class="fa fa-trash text-danger mx-2" aria-hidden="true"></i>
                                                                     </a>
                                                                 </td>
                                                             </tr>
-                                                            <!-- delete modal -->
-                                                            <div class="modal fade" id="deleteFamilleModal{{ $item->id }}" tabindex="-1" aria-labelledby="deleteFamilleModalLabel{{ $item->id }}" aria-hidden="true">
+
+                                                            <!-- edit modal -->
+                                                            <div class="modal fade"
+                                                                id="editFamilleModal{{ $item->id }}" tabindex="-1"
+                                                                aria-labelledby="editFamilleModalLabel{{ $item->id }}" aria-hidden="true">
                                                                 <div class="modal-dialog">
                                                                     <div class="modal-content">
                                                                         <div class="modal-header">
-                                                                            <h5 class="modal-title" id="deleteFamilleModalLabel{{ $item->id }}">Confirmer la suppression</h5>
-                                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                                            <h5 class="modal-title" id="editFamilleModalLabel{{ $item->id }}">Modifier le département N°{{ $item->id }}</h5>
+                                                                            <button type="button" class="btn-close text-dark"
+                                                                                data-bs-dismiss="modal" aria-label="Close">X</button>
                                                                         </div>
                                                                         <div class="modal-body">
-                                                                            Êtes-vous sûr de vouloir supprimer ce département ?
+                                                                            <form action="{{ route('module_famille.update', $item->id) }}" method="POST">
+                                                                                @csrf
+                                                                                @method('PUT')
+                                                                                <div class="mb-3">
+                                                                                    <label class="small mb-1">Code département</label>
+                                                                                    <input class="form-control" name="code" type="text" value="{{ $item->id }}" required />
+                                                                                </div>
+                                                                                <div class="mb-3">
+                                                                                    <label class="small mb-1">Taux (%)</label>
+                                                                                    <input class="form-control" name="taux" type="number" value="{{ $item->taux }}" required />
+                                                                                </div>
+                                                                                <div class="mb-3">
+                                                                                    <label class="small mb-1">Nom département</label>
+                                                                                    <input class="form-control" name="libelle" type="text" value="{{ $item->libelle }}" required />
+                                                                                </div>
+                                                                                <button type="submit" class="btn btn-1">
+                                                                                    <i class="fas fa-save"></i>&nbsp; Enregistrer la modification
+                                                                                </button>
+                                                                            </form>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <!-- delete modal -->
+                                                            <div class="modal fade"
+                                                                id="deleteFamilleModal{{ $item->id }}" tabindex="-1"
+                                                                aria-labelledby="deleteFamilleModalLabel{{ $item->id }}"
+                                                                aria-hidden="true">
+                                                                <div class="modal-dialog">
+                                                                    <div class="modal-content">
+                                                                        <div class="modal-header">
+                                                                            <h5 class="modal-title"
+                                                                                id="deleteFamilleModalLabel{{ $item->id }}">
+                                                                                Confirmer la suppression</h5>
+                                                                            <button type="button" class="btn-close"
+                                                                                data-bs-dismiss="modal"
+                                                                                aria-label="Close"></button>
+                                                                        </div>
+                                                                        <div class="modal-body">
+                                                                            Êtes-vous sûr de vouloir supprimer ce
+                                                                            département ?
                                                                         </div>
                                                                         <div class="m-3">
-                                                                            <form action="{{ route('module_famille.destroy', $item->id) }}" method="POST" style="display: inline;">
+                                                                            <form
+                                                                                action="{{ route('module_famille.destroy', $item->id) }}"
+                                                                                method="POST" style="display: inline;">
                                                                                 @csrf
                                                                                 @method('DELETE')
-                                                                                <button type="submit" class="btn btn-danger">Supprimer</button>
+                                                                                <button type="submit"
+                                                                                    class="btn btn-danger">Supprimer</button>
                                                                             </form>
-                                                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                                                                            <button type="button"
+                                                                                class="btn btn-secondary"
+                                                                                data-bs-dismiss="modal">Annuler</button>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -127,6 +193,7 @@
                                                         @endforeach
                                                     </tbody>
                                                 </table>
+                                                {{ $collection->links() }}
                                             </div>
                                         </div>
                                     </div>

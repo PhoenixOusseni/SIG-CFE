@@ -18,6 +18,11 @@
                             Ajouter un projet
                         </h1>
                     </div>
+                    <div class="col-auto mt-4">
+                        <a href="{{ route('gestion_marche.index') }}" class="btn btn-light"><i
+                                data-feather="align-left"></i>&thinsp;&thinsp;
+                            Liste des projets</a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -111,9 +116,11 @@
                                         <div class="col-md-5">
                                             <label class="small">Personnels</label>
                                             <select name="personnel_id[]" class="form-select personnel-select">
-                                                <option value="" selected disabled>Sélectionner un personnel...</option>
+                                                <option value="" selected disabled>Sélectionner un personnel...
+                                                </option>
                                                 @foreach ($personnels as $item)
-                                                    <option value="{{ $item->id }}">{{ $item->nom }} {{ $item->prenom }}</option>
+                                                    <option value="{{ $item->id }}">{{ $item->nom }}
+                                                        {{ $item->prenom }}</option>
                                                 @endforeach
                                             </select>
                                         </div>
@@ -151,7 +158,7 @@
             let personnelOptions = `
                 <option value="" selected disabled>Sélectionner un personnel...</option>
                 @foreach ($personnels as $item)
-                    <option value="{{ $item->id }}">{{ $item->assujeti }}</option>
+                    <option value="{{ $item->id }}">{{ $item->nom }} {{ $item->prenom }}</option>
                 @endforeach
             `;
 

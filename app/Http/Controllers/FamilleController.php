@@ -15,7 +15,7 @@ class FamilleController extends Controller
      */
     public function index()
     {
-        $collection = Famille::all();
+        $collection = Famille::paginate(10);
         return view('pages.famille.index',compact('collection'));
     }
 
@@ -33,6 +33,26 @@ class FamilleController extends Controller
         ]);
 
         smilify('success','Famille ajoutée avec succès !');
+        return redirect()->back();
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\Famille  $famille
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, String $id)
+    {
+        $famille = Famille::findOrFail($id);
+        $famille->update([
+            'libelle' => $request->libelle,
+            'taux' => $request->taux,
+            'code' => $request->code,
+        ]);
+
+        smilify('success','Famille mise à jour avec succès !');
         return redirect()->back();
     }
 

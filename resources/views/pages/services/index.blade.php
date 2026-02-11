@@ -39,7 +39,7 @@
                                     data-feather="align-left"></i>&thinsp;&thinsp;
                                 Liste des services</a>
                         </div>
-                        <table id="datatablesSimple">
+                        <table class="table table-bordered table-striped">
                             <thead>
                                 <tr>
                                     <th>ID</th>
@@ -58,15 +58,14 @@
                                         <td>{{ $service->description }}</td>
                                         <td class="text-center">
                                             <a href="{{ route('gestion_service.edit', $service->id) }}"
-                                                class="btn btn-sm btn-primary"><i data-feather="edit"></i>&thinsp;&thinsp;
-                                                Modifier</a>
+                                                class="btn btn-sm btn-warning"><i data-feather="edit"></i></a>
                                             <form action="{{ route('gestion_service.destroy', $service->id) }}"
                                                 method="POST" style="display: inline-block;">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit" class="btn btn-sm btn-danger"
                                                     onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce service ?')"><i
-                                                        data-feather="trash-2"></i>&thinsp;&thinsp; Supprimer</button>
+                                                        data-feather="trash-2"></i></button>
                                             </form>
                                         </td>
                                     </tr>

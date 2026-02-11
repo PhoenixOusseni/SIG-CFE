@@ -19,6 +19,10 @@
                             Modifier le personnel
                         </h1>
                     </div>
+                    <div class="col-auto mt-4">
+                        <a href="{{ route('gestion_personnel.index') }}" class="btn btn-light"><i data-feather="align-left"></i>&thinsp;&thinsp;
+                            Liste des personnels</a>
+                    </div>
                 </div>
             </div>
         </div>

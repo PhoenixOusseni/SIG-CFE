@@ -4,7 +4,7 @@
 <head>
     @include('partials.meta')
     @yield('title')
-    <title>SIG-FORVISMAZARS</title>
+    <title>SIG-CFE</title>
     @yield('style')
     @include('partials.style')
     @notifyCss

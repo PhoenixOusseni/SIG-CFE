@@ -40,7 +40,7 @@
                                     data-feather="align-left"></i>&thinsp;&thinsp;
                                 Liste des personnels</a>
                         </div>
-                        <table id="datatablesSimple">
+                        <table class="table table-bordered table-hover table-striped">
                             <thead>
                                 <tr>
                                     <th>ID</th>
@@ -61,11 +61,23 @@
                                         <td>{{ $personnel->prenom }}</td>
                                         <td>{{ $personnel->email }}</td>
                                         <td>{{ $personnel->telephone }}</td>
-                                        <td class="text-center">
+                                        <td class="d-flex gap-2 justify-content-center">
                                             <a class="text-center"
                                                 href="{{ route('gestion_personnel.show', $personnel->id) }}">
-                                                <i class="me-2 text-green" data-feather="more-horizontal"></i>
+                                                <i class="me-2 text-green" data-feather="eye"></i>
                                             </a>
+                                            <a class="text-center"
+                                                href="{{ route('gestion_personnel.edit', $personnel->id) }}">
+                                                <i class="me-2 text-warning" data-feather="edit"></i>
+                                            </a>
+                                            <form action="{{ route('gestion_personnel.destroy', $personnel->id) }}"
+                                                method="POST" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer ce personnel ?');">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-link p-0 m-0 align-self-center text-center">
+                                                    <i class="me-2 text-red" data-feather="trash-2"></i>
+                                                </button>
+                                            </form>
                                         </td>
                                     </tr>
                                 @endforeach

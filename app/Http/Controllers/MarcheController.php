@@ -22,7 +22,7 @@ class MarcheController extends Controller
      */
     public function index()
     {
-        $marches = Marche::all();
+        $marches = Marche::paginate(10);
         return view('pages.marche.index', compact('marches'));
     }
 
@@ -147,8 +147,8 @@ class MarcheController extends Controller
         $marche = Marche::findOrFail($id);
         $clients = Contribuable::all();
         $personnels = Personnel::all();
-        $baseTaxables = BaseTaxable::all();
-        return view('pages.marche.edit', compact('marche', 'clients', 'personnels', 'baseTaxables'));
+        $prestations = BaseTaxable::all();
+        return view('pages.marche.edit', compact('marche', 'clients', 'personnels', 'prestations'));
     }
 
     /**
@@ -205,6 +205,24 @@ class MarcheController extends Controller
                 $marche->pj3 = 'storage/marches/' . $filename;
             }
             $marche->save();
+
+            // Mise à jour des membres de l'équipe (personnels)
+            // Supprimer les anciens détails
+            MarcheDetail::where('marche_id', $marche->id)->delete();
+
+            // Ajouter les nouveaux détails
+            if ($request->has('personnel_id') && is_array($request->personnel_id)) {
+                foreach ($request->personnel_id as $index => $personnelId) {
+                    if (!empty($personnelId)) {
+                        MarcheDetail::create([
+                            'marche_id' => $marche->id,
+                            'personnel_id' => $personnelId,
+                            'temps' => $request->temps[$index] ?? null,
+                        ]);
+                    }
+                }
+            }
+
             DB::commit();
             notify()->success('Marché mis à jour avec succès !');
             return redirect()->route('gestion_marche.index');

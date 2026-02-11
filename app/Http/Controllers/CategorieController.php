@@ -14,8 +14,9 @@ class CategorieController extends Controller
      */
     public function index()
     {
-        $collection = Categorie::orderBy('created_at','desc')->get();
-        return view('pages.categories.index',compact('collection'));
+        $collection = Categorie::orderBy('created_at', 'desc')->paginate(10);
+        // $collection = Categorie::all(); --- IGNORE ---
+        return view('pages.categories.index', compact('collection'));
     }
 
     /**
@@ -27,14 +28,14 @@ class CategorieController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'libelle' =>    ['required', 'string', 'max:150', 'min:2'],
+            'libelle' => ['required', 'string', 'max:150', 'min:2'],
         ]);
 
         Categorie::create([
             'libelle' => $request->libelle,
         ]);
 
-        smilify('success','categorie enregistrée avec succès!');
+        smilify('success', 'categorie enregistrée avec succès!');
         return redirect()->back();
     }
 
@@ -72,11 +73,12 @@ class CategorieController extends Controller
     public function update(Request $request, $id)
     {
         $validatedData = $request->validate([
-            'name' =>    ['required', 'string', 'max:150', 'min:2']
+            'libelle' => ['required', 'string', 'max:150', 'min:2'],
         ]);
+
         Categorie::whereId($id)->update($validatedData);
-        smilify('success','Categorie modifiée avec succès!');
-        return redirect()->route('categorie.index');
+        smilify('success', 'Categorie modifiée avec succès!');
+        return redirect()->back();
     }
 
     /**
@@ -89,7 +91,7 @@ class CategorieController extends Controller
     {
         $categorie = Categorie::findOrFail($id);
         $categorie->delete();
-        smilify('success','Categorie supprimée avec succès!');
+        smilify('success', 'Categorie supprimée avec succès!');
         return redirect()->back();
     }
 }

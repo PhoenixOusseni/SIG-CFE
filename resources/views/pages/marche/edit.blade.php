@@ -19,6 +19,11 @@
                             Modifier le marché
                         </h1>
                     </div>
+                    <div class="col-auto mt-4">
+                        <a href="{{ route('gestion_marche.index') }}" class="btn btn-light"><i
+                                data-feather="arrow-left"></i>&thinsp;&thinsp; Retour
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -39,42 +44,61 @@
                                     data-feather="align-left"></i>&thinsp;&thinsp;
                                 Liste des marchés</a>
                         </div>
-                        <form action="{{ route('gestion_marche.update', $marche->id) }}" method="POST" enctype="multipart/form-data">
+                        <form action="{{ route('gestion_marche.update', $marche->id) }}" method="POST"
+                            enctype="multipart/form-data">
                             @csrf
                             @method('PUT')
                             <div class="row mb-3">
                                 <div class="col-md-2">
                                     <label>Code</label>
-                                    <input type="text" name="code" class="form-control" value="{{ old('code', $marche->code) }}" required>
+                                    <input type="text" name="code" class="form-control"
+                                        value="{{ old('code', $marche->code) }}" required>
                                     <div class="invalid-feedback">Ce champ est requis</div>
                                 </div>
                                 <div class="col-md-5">
                                     <label>Désignation</label>
-                                    <input type="text" name="designation" class="form-control" value="{{ old('designation', $marche->designation) }}" required>
+                                    <input type="text" name="designation" class="form-control"
+                                        value="{{ old('designation', $marche->designation) }}" required>
                                     <div class="invalid-feedback">Ce champ est requis</div>
                                 </div>
                                 <div class="col-md-5">
                                     <label>Montant du marché</label>
-                                    <input type="text" name="montant" class="form-control" value="{{ old('montant', $marche->montant) }}" required>
+                                    <input type="text" name="montant" class="form-control"
+                                        value="{{ old('montant', $marche->montant) }}" required>
                                     <div class="invalid-feedback">Ce champ est requis</div>
                                 </div>
                             </div>
 
                             <div class="row mb-3">
-                                <div class="col-md-4">
+                                <div class="col-md-2">
                                     <label for="date_debut" class="form-label">Date debut</label>
-                                    <input type="date" class="form-control" id="date_debut" name="date_debut" value="{{ old('date_debut', $marche->date_debut) }}">
+                                    <input type="date" class="form-control" id="date_debut" name="date_debut"
+                                        value="{{ old('date_debut', $marche->date_debut) }}">
+                                </div>
+                                <div class="col-md-2">
+                                    <label for="date_cloture" class="form-label">Date cloture</label>
+                                    <input type="date" class="form-control" id="date_cloture" name="date_cloture"
+                                        value="{{ old('date_cloture', $marche->date_cloture) }}">
                                 </div>
                                 <div class="col-md-4">
-                                    <label for="date_cloture" class="form-label">Date cloture</label>
-                                    <input type="date" class="form-control" id="date_cloture" name="date_cloture" value="{{ old('date_cloture', $marche->date_cloture) }}">
+                                    <label for="prestation" class="form-label">Prestation</label>
+                                    <select class="form-select" id="prestation" name="base_taxable_id" required>
+                                        <option selected disabled>Sélectionner une prestation...</option>
+                                        @foreach ($prestations as $item)
+                                            <option value="{{ $item->id }}"
+                                                {{ old('base_taxable_id', $marche->base_taxable_id) == $item->id ? 'selected' : '' }}>
+                                                {{ $item->libelle }}
+                                            </option>
+                                        @endforeach
+                                    </select>
                                 </div>
                                 <div class="col-md-4">
                                     <label for="client" class="form-label">Client</label>
-                                    <select class="form-select" id="client" name="client_id" required>
+                                    <select class="form-select" id="client" name="contribuable_id" required>
                                         <option selected disabled>Sélectionner un client...</option>
                                         @foreach ($clients as $item)
-                                            <option value="{{ $item->id }}" {{ old('client_id', $marche->contribuable_id) == $item->id ? 'selected' : '' }}>
+                                            <option value="{{ $item->id }}"
+                                                {{ old('contribuable_id', $marche->contribuable_id) == $item->id ? 'selected' : '' }}>
                                                 {{ $item->assujeti }}
                                             </option>
                                         @endforeach
@@ -86,22 +110,25 @@
                                 <div class="col-md-4">
                                     <label for="pj1" class="form-label">PJ 1</label>
                                     <input type="file" class="form-control" id="pj1" name="pj1">
-                                    @if($marche->pj1)
-                                        <small class="text-muted">Fichier actuel: <a href="{{ asset($marche->pj1) }}" target="_blank">Voir</a></small>
+                                    @if ($marche->pj1)
+                                        <small class="text-muted">Fichier actuel: <a href="{{ asset($marche->pj1) }}"
+                                                target="_blank">Voir</a></small>
                                     @endif
                                 </div>
                                 <div class="col-md-4">
                                     <label for="pj2" class="form-label">PJ 2</label>
                                     <input type="file" class="form-control" id="pj2" name="pj2">
-                                    @if($marche->pj2)
-                                        <small class="text-muted">Fichier actuel: <a href="{{ asset($marche->pj2) }}" target="_blank">Voir</a></small>
+                                    @if ($marche->pj2)
+                                        <small class="text-muted">Fichier actuel: <a href="{{ asset($marche->pj2) }}"
+                                                target="_blank">Voir</a></small>
                                     @endif
                                 </div>
                                 <div class="col-md-4">
                                     <label for="pj3" class="form-label">PJ 3</label>
                                     <input type="file" class="form-control" id="pj3" name="pj3">
-                                    @if($marche->pj3)
-                                        <small class="text-muted">Fichier actuel: <a href="{{ asset($marche->pj3) }}" target="_blank">Voir</a></small>
+                                    @if ($marche->pj3)
+                                        <small class="text-muted">Fichier actuel: <a href="{{ asset($marche->pj3) }}"
+                                                target="_blank">Voir</a></small>
                                     @endif
                                 </div>
                             </div>
@@ -111,57 +138,67 @@
 
                             <div style="background: rgba(219, 218, 216, 0.248); padding: 5px; border-radius: 5px">
                                 <div id="equipeContainer">
-                                    @if($marche->details->count() > 0)
-                                        @foreach($marche->details as $index => $detail)
+                                    @if ($marche->details->count() > 0)
+                                        @foreach ($marche->details as $index => $detail)
+                                            <div class="row mb-3 equipe-row">
+                                                <div class="col-md-5">
+                                                    <label>Personnels</label>
+                                                    <select name="personnel_id[]" class="form-select personnel-select">
+                                                        <option value="" disabled>Sélectionner un personnel...
+                                                        </option>
+                                                        @foreach ($personnels as $item)
+                                                            <option value="{{ $item->id }}"
+                                                                {{ $detail->personnel_id == $item->id ? 'selected' : '' }}>
+                                                                {{ $item->nom }} {{ $item->prenom }}
+                                                            </option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-5">
+                                                    <label>Temps</label>
+                                                    <input type="text" name="temps[]" class="form-control"
+                                                        value="{{ $detail->temps }}">
+                                                    <div class="invalid-feedback">Ce champ est requis</div>
+                                                </div>
+                                                <div class="col-md-2 d-flex align-items-end">
+                                                    @if ($index == 0)
+                                                        <button type="button" class="btn btn-success btn-sm me-2"
+                                                            id="addRowBtn"><i data-feather="plus"></i>&thinsp;&thinsp; Ajouter
+                                                        </button>
+                                                    @else
+                                                        <button type="button"
+                                                            class="btn btn-danger btn-sm removeRowBtn"><i
+                                                                data-feather="trash-2"></i>&thinsp;&thinsp; Supprimer
+                                                        </button>
+                                                    @endif
+                                                </div>
+                                            </div>
+                                        @endforeach
+                                    @else
                                         <div class="row mb-3 equipe-row">
                                             <div class="col-md-5">
                                                 <label>Personnels</label>
                                                 <select name="personnel_id[]" class="form-select personnel-select">
-                                                    <option value="" disabled>Sélectionner un personnel...</option>
+                                                    <option value="" selected disabled>Sélectionner un personnel...
+                                                    </option>
                                                     @foreach ($personnels as $item)
-                                                        <option value="{{ $item->id }}" {{ $detail->personnel_id == $item->id ? 'selected' : '' }}>
-                                                            {{ $item->nom }} {{ $item->prenom }}
+                                                        <option value="{{ $item->id }}">{{ $item->nom }}
+                                                            {{ $item->prenom }}
                                                         </option>
                                                     @endforeach
                                                 </select>
                                             </div>
                                             <div class="col-md-5">
                                                 <label>Temps</label>
-                                                <input type="text" name="temps[]" class="form-control" value="{{ $detail->temps }}">
+                                                <input type="text" name="temps[]" class="form-control">
                                                 <div class="invalid-feedback">Ce champ est requis</div>
                                             </div>
                                             <div class="col-md-2 d-flex align-items-end">
-                                                @if($index == 0)
-                                                <button type="button" class="btn btn-success btn-sm me-2" id="addRowBtn"><i
-                                                        data-feather="plus"></i>&thinsp;&thinsp; Ajouter</button>
-                                                @else
-                                                <button type="button" class="btn btn-danger btn-sm removeRowBtn"><i
-                                                        data-feather="trash-2"></i>&thinsp;&thinsp; Supprimer</button>
-                                                @endif
+                                                <button type="button" class="btn btn-success btn-sm me-2"
+                                                    id="addRowBtn"><i data-feather="plus"></i>&thinsp;&thinsp;
+                                                    Ajouter</button>
                                             </div>
                                         </div>
-                                        @endforeach
-                                    @else
-                                    <div class="row mb-3 equipe-row">
-                                        <div class="col-md-5">
-                                            <label>Personnels</label>
-                                            <select name="personnel_id[]" class="form-select personnel-select">
-                                                <option value="" selected disabled>Sélectionner un personnel...</option>
-                                                @foreach ($personnels as $item)
-                                                    <option value="{{ $item->id }}">{{ $item->assujeti }}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                        <div class="col-md-5">
-                                            <label>Temps</label>
-                                            <input type="text" name="temps[]" class="form-control">
-                                            <div class="invalid-feedback">Ce champ est requis</div>
-                                        </div>
-                                        <div class="col-md-2 d-flex align-items-end">
-                                            <button type="button" class="btn btn-success btn-sm me-2" id="addRowBtn"><i
-                                                    data-feather="plus"></i>&thinsp;&thinsp; Ajouter</button>
-                                        </div>
-                                    </div>
                                     @endif
                                 </div>
                             </div>
@@ -169,7 +206,8 @@
                             <div class="mt-3">
                                 <button type="submit" class="btn btn-dark"><i data-feather="save"></i>&thinsp;&thinsp;
                                     Mettre à jour</button>
-                                <a href="{{ route('gestion_marche.show', $marche->id) }}" class="btn btn-danger"><i data-feather="x"></i>&thinsp;&thinsp;
+                                <a href="{{ route('gestion_marche.show', $marche->id) }}" class="btn btn-danger"><i
+                                        data-feather="x"></i>&thinsp;&thinsp;
                                     Annuler</a>
                             </div>
                         </form>
@@ -187,7 +225,7 @@
             let personnelOptions = `
                 <option value="" selected disabled>Sélectionner un personnel...</option>
                 @foreach ($personnels as $item)
-                    <option value="{{ $item->id }}">{{ $item->assujeti }}</option>
+                    <option value="{{ $item->id }}">{{ $item->nom }} {{ $item->prenom }}</option>
                 @endforeach
             `;
 

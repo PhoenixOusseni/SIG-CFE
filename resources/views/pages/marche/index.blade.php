@@ -16,8 +16,13 @@
                     <div class="col-auto mt-4">
                         <h1 class="page-header-title">
                             <div class="page-header-icon"><i data-feather="list"></i></div>
-                            Liste des projet
+                            Liste des projets
                         </h1>
+                    </div>
+                    <div class="col-auto mt-4">
+                        <a href="{{ route('gestion_marche.create') }}" class="btn btn-light"><i
+                                data-feather="plus"></i>&thinsp;&thinsp;
+                            Ajouter un projet</a>
                     </div>
                 </div>
             </div>
@@ -32,15 +37,14 @@
                 <!-- Tabbed dashboard card example-->
                 <div class="card mb-4">
                     <div class="card-body">
-                        <div class="col-sm-12 mb-3">
-                            <a href="{{ route('gestion_marche.create') }}" class="btn btn-light"><i
-                                    data-feather="plus"></i>&thinsp;&thinsp;
-                                Ajouter un projet</a>
-                            <a href="{{ route('gestion_marche.index') }}" class="btn btn-light"><i
-                                    data-feather="align-left"></i>&thinsp;&thinsp;
-                                Liste des projets</a>
+                        <div class="d-flex justify-content-between mb-3">
+                            <h2 class="h4 mb-0">Liste des projets</h2>
+                            <div>
+                                <input type="text" placeholder="Rechercher..." class="form-control" id="searchInput"
+                                    onkeyup="searchTable()">
+                            </div>
                         </div>
-                        <table id="datatablesSimple">
+                        <table class="table table-bordered table-hover table-striped">
                             <thead>
                                 <tr>
                                     <th>ID</th>
@@ -61,16 +65,29 @@
                                         <td>{{ $marche->date_debut }}</td>
                                         <td>{{ $marche->date_cloture }}</td>
                                         <td>{{ $marche->contribuable->assujeti }}</td>
-                                        <td class="text-center">
-                                            <a class="text-center"
-                                                href="{{ route('gestion_marche.show', $marche->id) }}">
-                                                <i class="me-2 text-green" data-feather="more-horizontal"></i>
+                                        <td class="d-flex gap-2 justify-content-center">
+                                            <a href="{{ route('gestion_marche.show', $marche->id) }}">
+                                                <i class="me-2 text-green" data-feather="eye"></i>
                                             </a>
+                                            <a href="{{ route('gestion_marche.edit', $marche->id) }}">
+                                                <i class="me-2 text-warning" data-feather="edit"></i>
+                                            </a>
+                                            <form action="{{ route('gestion_marche.destroy', $marche->id) }}" method="POST"
+                                                onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer ce projet ?');">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-link p-0 m-0 align-self-center">
+                                                    <i class="text-red" data-feather="trash-2"></i>
+                                                </button>
+                                            </form>
                                         </td>
                                     </tr>
                                 @endforeach
                             </tbody>
                         </table>
+                        <div class="d-flex justify-content-end">
+                            {{ $marches->links() }}
+                        </div>
                     </div>
                 </div>
             </div>

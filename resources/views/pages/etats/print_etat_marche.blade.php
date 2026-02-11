@@ -3,7 +3,7 @@
 
 <head>
     @include('partials.meta')
-    <title>SIG-FORVISMAZARS | État des marchés</title>
+    <title>SIG-CFE | État des marchés</title>
     @include('partials.style')
     <style>
         body { font-family: Arial, sans-serif; }
