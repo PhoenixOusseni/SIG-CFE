@@ -19,8 +19,8 @@ class PageController extends Controller
 
     public function dashboard()
     {
-        $collection = FactureFournisseur::where('statut', 'en attente')->get();
-        $recettes = Recette::where('statut', 'en attente')->get();
+        $collection = FactureFournisseur::where('statut', 'en attente')->where('users_id', auth()->id())->get();
+        $recettes = Recette::where('statut', 'en attente')->where('users_id', auth()->id())->get();
 
         return view('pages.dashboard.index', compact('collection', 'recettes'));
     }

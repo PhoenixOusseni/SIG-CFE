@@ -117,7 +117,7 @@
                                                     <tbody>
                                                         @foreach ($collection as $item)
                                                             <tr>
-                                                                <td>{{ $item->id }}</td>
+                                                                <td>{{ $item->code }}</td>
                                                                 <td>{{ $item->libelle }}</td>
                                                                 <td>{{ $item->reference }}</td>
                                                                 <td>{{ $item->prix }}</td>
@@ -146,7 +146,7 @@
                                                                                 @method('PUT')
                                                                                 <div class="mb-3">
                                                                                     <label class="small mb-1">Code prestation</label>
-                                                                                    <input class="form-control" name="code" type="text" value="{{ $item->id }}" disabled />
+                                                                                    <input class="form-control" name="code" type="text" value="{{ $item->code }}" required />
                                                                                 </div>
                                                                                 <div class="mb-3">
                                                                                     <label class="small mb-1">Nom de la prestation</label>

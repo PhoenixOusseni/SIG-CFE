@@ -14,15 +14,14 @@
                     @method('PATCH')
                     <div class="card card-default">
                         <div class="card-body">
-                            <fieldset class="w-100 p-3 mb-3"
-                                style="border-radius: 5px; background: rgb(234, 233, 233); border: 1px solid #ddd;">
-                                <legend class="w-auto px-2" style="font-size: 1rem; font-weight: bold;">Informations
-                                    générales</legend>
+                            <fieldset class="w-100 p-2" style="border-radius: 5px; background: rgb(234, 233, 233)">
                                 <div class="row">
+                                    <input class="form-control" name="statut" type="text" value="{{ $recette->statut }}" hidden />
+                                    <input class="form-control" name="users_id" type="text" value="{{ Auth::user()->id }}" hidden />
                                     <div class="col-lg-4 col-md-12">
                                         <div class="mb-3">
-                                            <label class="small mb-1">Client <span class="text-danger">*</span></label>
-                                            <select name="contribuables_id" class="form-select" required>
+                                            <label class="small mb-1">Client</label>
+                                            <select name="contribuables_id" class="form-select">
                                                 <option value="">Sélectionner le client</option>
                                                 @foreach ($contribuables as $contribuable)
                                                     <option value="{{ $contribuable->id }}"
@@ -35,14 +34,13 @@
                                     </div>
                                     <div class="col-lg-3 col-md-12">
                                         <div class="mb-3">
-                                            <label class="small mb-1">Signataire <span
-                                                    class="text-danger">*</span></label>
-                                            <select name="signataires_id" class="form-select" required>
-                                                <option value="">Sélectionner le signataire</option>
-                                                @foreach (App\Models\Signataire::all() as $signataire)
-                                                    <option value="{{ $signataire->id }}"
-                                                        {{ $recette->signataires_id == $signataire->id ? 'selected' : '' }}>
-                                                        {{ $signataire->nom }}
+                                            <label class="small mb-1">Categorie</label>
+                                            <select name="categorie_id" class="form-select">
+                                                <option>Sélectionner la catégorie</option>
+                                                @foreach (App\Models\Categorie::all() as $categorie)
+                                                    <option value="{{ $categorie->id }}"
+                                                        {{ $recette->categorie_id == $categorie->id ? 'selected' : '' }}>
+                                                        {{ $categorie->libelle }}
                                                     </option>
                                                 @endforeach
                                             </select>
@@ -50,41 +48,36 @@
                                     </div>
                                     <div class="col-lg-3 col-md-12">
                                         <div class="mb-3">
-                                            <label class="small mb-1">Service <span class="text-danger">*</span></label>
-                                            <select name="service_id" class="form-select" required>
-                                                <option value="">Sélectionner le service</option>
-                                                @foreach ($services as $service)
-                                                    <option value="{{ $service->id }}"
-                                                        {{ $recette->service_id == $service->id ? 'selected' : '' }}>
-                                                        {{ $service->libelle }}
-                                                    </option>
-                                                @endforeach
-                                            </select>
+                                            <label class="small mb-1">Signataire ({{ Auth::user()->login }})</label>
+                                            <input type="text" name="users_id" class="form-control" value="{{ Auth::user()->id }}" readonly>
                                         </div>
                                     </div>
                                     <div class="col-lg-2 col-md-12">
                                         <div class="mb-3">
-                                            <label class="small mb-1">Échéance</label>
-                                            <input class="form-control" name="echeance" type="date"
-                                                value="{{ $recette->echeance }}" />
+                                            <label class="small mb-1">Echeance de paiement</label>
+                                            <input class="form-control" type="date" name="echeance" value="{{ $recette->echeance }}" />
                                         </div>
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-lg-4 col-md-12">
+                                    <div class="col-lg-2 col-md-12">
                                         <div class="mb-3">
-                                            <label class="small mb-1">Désignation / Objet <span
-                                                    class="text-danger">*</span></label>
-                                            <input class="form-control" name="objet" type="text"
-                                                value="{{ $recette->objet }}" required />
+                                            <label class="small mb-1">Code</label>
+                                            <input class="form-control" name="code" type="text" value="{{ $recette->code }}" />
                                         </div>
                                     </div>
                                     <div class="col-lg-4 col-md-12">
                                         <div class="mb-3">
-                                            <label class="small mb-1">Marché <span class="text-danger">*</span></label>
-                                            <select name="marche_id" class="form-select" required>
-                                                <option value="">Sélectionner le marché</option>
-                                                @foreach (App\Models\Marche::all() as $marche)
+                                            <label class="small mb-1">Référence</label>
+                                            <input class="form-control" name="reference" type="text" value="{{ $recette->reference }}" />
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4 col-md-12">
+                                        <div class="mb-3">
+                                            <label class="small mb-1">Projet</label>
+                                            <select name="marche_id" class="form-select">
+                                                <option value="">Sélectionner le Projet</option>
+                                                @foreach ($marches as $marche)
                                                     <option value="{{ $marche->id }}"
                                                         {{ $recette->marche_id == $marche->id ? 'selected' : '' }}>
                                                         {{ $marche->designation }}
@@ -95,16 +88,8 @@
                                     </div>
                                     <div class="col-lg-2 col-md-12">
                                         <div class="mb-3">
-                                            <label class="small mb-1">Période début</label>
-                                            <input class="form-control" name="periode_debut" type="date"
-                                                value="{{ $recette->periode_debut }}" />
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-2 col-md-12">
-                                        <div class="mb-3">
-                                            <label class="small mb-1">Période fin</label>
-                                            <input class="form-control" name="periode_fin" type="date"
-                                                value="{{ $recette->periode_fin }}" />
+                                            <label class="small mb-1">Date</label>
+                                            <input class="form-control" name="date" type="date" value="{{ $recette->date }}" />
                                         </div>
                                     </div>
                                 </div>
@@ -112,12 +97,12 @@
                                     <div class="col-lg-4 col-md-12">
                                         <div class="mb-3">
                                             <label class="small mb-1">Département</label>
-                                            <select name="categorie_id" class="form-select">
+                                            <select name="service_id" class="form-select" required>
                                                 <option value="">Sélectionner le département</option>
-                                                @foreach (App\Models\Categorie::all() as $departement)
-                                                    <option value="{{ $departement->id }}"
-                                                        {{ $recette->categorie_id == $departement->id ? 'selected' : '' }}>
-                                                        {{ $departement->libelle }}
+                                                @foreach (App\Models\Service::all() as $service)
+                                                    <option value="{{ $service->id }}"
+                                                        {{ $recette->service_id == $service->id ? 'selected' : '' }}>
+                                                        {{ $service->libelle }}
                                                     </option>
                                                 @endforeach
                                             </select>
@@ -126,10 +111,8 @@
                                 </div>
                             </fieldset>
 
-                            <fieldset class="w-100 p-3 mt-3"
-                                style="border-radius: 5px; background: rgb(219, 238, 221); border: 1px solid #ddd;">
-                                <legend class="w-auto px-2" style="font-size: 1rem; font-weight: bold;">Éléments de la
-                                    facture</legend>
+                            <fieldset class="w-100 p-2 mt-3" style="border-radius: 5px; background: rgb(219, 238, 221)">
+                                <h5 class="mb-3 text-success">Éléments de la facture</h5>
                                 <div id="elementsEditContainer">
                                     @if ($elements->count() > 0)
                                         @foreach ($elements as $index => $element)
@@ -137,19 +120,26 @@
                                                 data-element-id="{{ $element->id }}">
                                                 <input type="hidden" name="element_id[]"
                                                     value="{{ $element->id }}">
-                                                <div class="col-lg-4 col-md-12">
+                                                <div class="col-lg-3 col-md-12">
                                                     <div class="mb-3">
-                                                        <label class="small mb-1">Désignation</label>
+                                                        <label class="small mb-1">Compte</label>
                                                         <select class="form-select base-taxable-select"
                                                             name="base_taxables_id[]">
-                                                            <option value="">Sélectionner la désignation</option>
+                                                            <option value="">Sélectionner un compte</option>
                                                             @foreach ($bases as $item)
                                                                 <option value="{{ $item->id }}"
                                                                     {{ $element->base_taxables_id == $item->id ? 'selected' : '' }}>
-                                                                    {{ $item->libelle }}
+                                                                    {{ $item->code }} - {{ $item->libelle }}
                                                                 </option>
                                                             @endforeach
                                                         </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-3 col-md-12">
+                                                    <div class="mb-3">
+                                                        <label class="small mb-1">Designation</label>
+                                                        <input class="form-control" name="designation[]" type="text"
+                                                            value="{{ $element->designation }}" />
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-2 col-md-12">
@@ -159,31 +149,24 @@
                                                             value="{{ $element->quantite }}" />
                                                     </div>
                                                 </div>
-                                                <div class="col-lg-2 col-md-12">
+                                                <div class="col-lg-3 col-md-12">
                                                     <div class="mb-3">
                                                         <label class="small mb-1">Prix unitaire</label>
                                                         <input class="form-control" name="prix_unitaire[]"
                                                             type="number" value="{{ $element->prix_unitaire }}" />
                                                     </div>
                                                 </div>
-                                                <div class="col-lg-2 col-md-12">
-                                                    <div class="mb-3">
-                                                        <label class="small mb-1">Unité</label>
-                                                        <input class="form-control" name="unite[]" type="text"
-                                                            value="{{ $element->unite }}" />
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-2 d-flex align-items-end">
+                                                <div class="col-lg-1 d-flex align-items-end">
                                                     <div class="mb-3">
                                                         @if ($index == 0)
                                                             <button type="button" class="btn btn-success btn-sm me-2"
                                                                 id="addEditRowBtn">
-                                                                <i data-feather="plus"></i>&thinsp; Ajouter
+                                                                <i data-feather="plus"></i>
                                                             </button>
                                                         @else
                                                             <button type="button"
                                                                 class="btn btn-danger btn-sm removeEditRowBtn">
-                                                                <i data-feather="trash-2"></i>&thinsp; Supprimer
+                                                                <i data-feather="trash-2"></i>
                                                             </button>
                                                         @endif
                                                     </div>
@@ -193,17 +176,23 @@
                                     @else
                                         <div class="row mb-3 element-edit-row">
                                             <input type="hidden" name="element_id[]" value="">
-                                            <div class="col-lg-4 col-md-12">
+                                            <div class="col-lg-3 col-md-12">
                                                 <div class="mb-3">
-                                                    <label class="small mb-1">Désignation</label>
+                                                    <label class="small mb-1">Compte</label>
                                                     <select class="form-select base-taxable-select"
                                                         name="base_taxables_id[]">
-                                                        <option value="">Sélectionner la désignation</option>
+                                                        <option value="">Sélectionner un compte</option>
                                                         @foreach ($bases as $item)
-                                                            <option value="{{ $item->id }}">{{ $item->libelle }}
+                                                            <option value="{{ $item->id }}">{{ $item->code }} - {{ $item->libelle }}
                                                             </option>
                                                         @endforeach
                                                     </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3 col-md-12">
+                                                <div class="mb-3">
+                                                    <label class="small mb-1">Designation</label>
+                                                    <input class="form-control" name="designation[]" type="text" />
                                                 </div>
                                             </div>
                                             <div class="col-lg-2 col-md-12">
@@ -212,24 +201,18 @@
                                                     <input class="form-control" name="quantite[]" type="number" />
                                                 </div>
                                             </div>
-                                            <div class="col-lg-2 col-md-12">
+                                            <div class="col-lg-3 col-md-12">
                                                 <div class="mb-3">
                                                     <label class="small mb-1">Prix unitaire</label>
                                                     <input class="form-control" name="prix_unitaire[]"
                                                         type="number" />
                                                 </div>
                                             </div>
-                                            <div class="col-lg-2 col-md-12">
-                                                <div class="mb-3">
-                                                    <label class="small mb-1">Unité</label>
-                                                    <input class="form-control" name="unite[]" type="text" />
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-2 d-flex align-items-end">
+                                            <div class="col-lg-1 d-flex align-items-end">
                                                 <div class="mb-3">
                                                     <button type="button" class="btn btn-success btn-sm me-2"
                                                         id="addEditRowBtn">
-                                                        <i data-feather="plus"></i>&thinsp; Ajouter
+                                                        <i data-feather="plus"></i>
                                                     </button>
                                                 </div>
                                             </div>
@@ -264,9 +247,9 @@
     $(document).ready(function() {
         // Variable pour stocker le HTML des options de base taxable
         let baseOptionsEdit = `
-            <option value="">Sélectionner la désignation</option>
+            <option value="">Sélectionner un compte</option>
             @foreach ($bases as $item)
-                <option value="{{ $item->id }}">{{ $item->libelle }}</option>
+                <option value="{{ $item->id }}">{{ $item->code }} - {{ $item->libelle }}</option>
             @endforeach
         `;
 
@@ -282,12 +265,18 @@
             let newRow = `
                 <div class="row mb-3 element-edit-row">
                     <input type="hidden" name="element_id[]" value="">
-                    <div class="col-lg-4 col-md-12">
+                    <div class="col-lg-3 col-md-12">
                         <div class="mb-3">
-                            <label class="small mb-1">Désignation</label>
+                            <label class="small mb-1">Compte</label>
                             <select class="form-select base-taxable-select" name="base_taxables_id[]">
                                 ${baseOptionsEdit}
                             </select>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-12">
+                        <div class="mb-3">
+                            <label class="small mb-1">Designation</label>
+                            <input class="form-control" name="designation[]" type="text" />
                         </div>
                     </div>
                     <div class="col-lg-2 col-md-12">
@@ -296,22 +285,16 @@
                             <input class="form-control" name="quantite[]" type="number" />
                         </div>
                     </div>
-                    <div class="col-lg-2 col-md-12">
+                    <div class="col-lg-3 col-md-12">
                         <div class="mb-3">
                             <label class="small mb-1">Prix unitaire</label>
                             <input class="form-control" name="prix_unitaire[]" type="number" />
                         </div>
                     </div>
-                    <div class="col-lg-2 col-md-12">
-                        <div class="mb-3">
-                            <label class="small mb-1">Unité</label>
-                            <input class="form-control" name="unite[]" type="text" />
-                        </div>
-                    </div>
-                    <div class="col-lg-2 d-flex align-items-end">
+                    <div class="col-lg-1 d-flex align-items-end">
                         <div class="mb-3">
                             <button type="button" class="btn btn-danger btn-sm removeEditRowBtn">
-                                <i data-feather="trash-2"></i>&thinsp; Supprimer
+                                <i data-feather="trash-2"></i>
                             </button>
                         </div>
                     </div>

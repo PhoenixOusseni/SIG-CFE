@@ -26,7 +26,7 @@ class RecetteController extends Controller
      */
     public function index()
     {
-        $collection = Recette::where('statut', 'en attente')->get();
+        $collection = Recette::where('statut', 'en attente')->where('users_id', auth()->id())->paginate(10);
         $contribuables = Contribuable::all();
         $bases = BaseTaxable::all();
         $marches = Marche::all();
@@ -42,7 +42,7 @@ class RecetteController extends Controller
      */
     public function all_recette()
     {
-        $collection = Recette::all();
+        $collection = Recette::where('users_id', auth()->id())->get();
         $contribuables = Contribuable::all();
         $bases = BaseTaxable::all();
         $marches = Marche::all();
@@ -59,7 +59,7 @@ class RecetteController extends Controller
      */
     public function entente_rectte()
     {
-        $collection = Recette::where('statut', 'en attente')->get();
+        $collection = Recette::where('statut', 'en attente')->where('users_id', auth()->id())->get();
 
         $budgets = Budget::where('type', 'Recette')->get();
         $contribuables = Contribuable::all();
@@ -78,7 +78,7 @@ class RecetteController extends Controller
      */
     public function valide_rectte()
     {
-        $collection = Recette::where('statut', 'valide')->get();
+        $collection = Recette::where('statut', 'valide')->where('users_id', auth()->id())->get();
 
         $budgets = Budget::where('type', 'Recette')->get();
         $contribuables = Contribuable::all();
@@ -97,7 +97,7 @@ class RecetteController extends Controller
      */
     public function reglement_rectte()
     {
-        $collection = Recette::where('statut', 'en reglement')->get();
+        $collection = Recette::where('statut', 'en reglement')->where('users_id', auth()->id())->get();
 
         $budgets = Budget::where('type', 'Recette')->get();
         $contribuables = Contribuable::all();
@@ -116,7 +116,7 @@ class RecetteController extends Controller
      */
     public function regle_recette()
     {
-        $collection = Recette::where('statut', 'reglée')->get();
+        $collection = Recette::where('statut', 'reglée')->where('users_id', auth()->id())->get();
 
         $budgets = Budget::where('type', 'Recette')->get();
         $contribuables = Contribuable::all();
@@ -152,6 +152,7 @@ class RecetteController extends Controller
                 'marche_id' => $request->marche_id,
                 'categorie_id' => $request->categorie_id,
                 'service_id' => $request->service_id,
+                'users_id' => $request->users_id,
             ]);
 
             // Ajouter tous les éléments de la recette
@@ -163,6 +164,7 @@ class RecetteController extends Controller
                             'base_taxables_id' => $baseTaxableId,
                             'quantite' => $request->quantite[$index] ?? 0,
                             'prix_unitaire' => $request->prix_unitaire[$index] ?? 0,
+                            'designation' => $request->designation[$index] ?? 0,
                         ]);
                     }
                 }
@@ -218,9 +220,13 @@ class RecetteController extends Controller
         $contribuables = Contribuable::all();
         $services = Service::all();
 
+        $marches = Marche::all();
+        $categories = Categorie::all();
+
+
         $montant_total = $elements->sum('montant') - $recette->total_retenu;
 
-        return view('pages.recette.show', compact('recette', 'bases', 'elements', 'budgets', 'contribuables', 'services', 'montant_total'));
+        return view('pages.recette.show', compact('recette', 'bases', 'elements', 'budgets', 'contribuables', 'services', 'marches', 'categories', 'montant_total'));
     }
 
     /**
@@ -231,7 +237,7 @@ class RecetteController extends Controller
      */
     public function valider()
     {
-        $collection = Recette::where('statut', 'en attente')->get();
+        $collection = Recette::where('statut', 'en attente')->where('users_id', auth()->id())->get();
 
         return view('pages.recette.validation', compact('collection'));
     }
@@ -244,7 +250,7 @@ class RecetteController extends Controller
      */
     public function en_reglement()
     {
-        $collection = Recette::where('statut', 'valide')->get();
+        $collection = Recette::where('statut', 'valide')->where('users_id', auth()->id())->get();
 
         return view('pages.recette.en_reglement', compact('collection'));
     }
@@ -257,7 +263,7 @@ class RecetteController extends Controller
      */
     public function reglement_recette()
     {
-        $collection = Recette::where('statut', 'en reglement')->get();
+        $collection = Recette::where('statut', 'en reglement')->where('users_id', auth()->id())->get();
 
         return view('pages.recette.reglement', compact('collection'));
     }
@@ -291,8 +297,10 @@ class RecetteController extends Controller
 
         $contribuables = Contribuable::all();
         $services = Service::all();
+        $marches = Marche::all();
+        $categories = Categorie::all();
 
-        return view('pages.recette.edit', compact('recette', 'elements', 'budgets', 'contribuables', 'services'));
+        return view('pages.recette.edit', compact('recette', 'elements', 'budgets', 'contribuables', 'services', 'marches', 'categories'));
     }
 
     /**
@@ -309,7 +317,6 @@ class RecetteController extends Controller
             'reference' => $request->reference,
             'date' => $request->date,
             'code' => $request->code,
-            'budgets_id' => $request->budgets_id,
             'contribuables_id' => $request->contribuables_id,
             'echeance' => $request->echeance,
             'service_id' => $request->service_id,

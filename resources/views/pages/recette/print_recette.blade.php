@@ -14,37 +14,10 @@
 
 <body style="height: 90vh;">
     <div id="layoutSidenav_content">
-        @forelse ($entetes as $item)
-            <div style="border-bottom: 1px solid black; margin: 10px;">
-                <div class="d-flex justify-content-between col-md-12">
-                    <div class="col-2">
-                        <img src="{{ asset('storage') . '/' . $item->logo }}" alt="Logo" class="img-fluid"
-                            style="width: 100px;">
-                    </div>
-                    <div class="col-6">
-                        <h1 class="text-center text-uppercase mt-1" style="font-size: 20px;">
-                            <strong>{{ $item->denomination }}</strong>
-                        </h1>
-                        <h6 class="mt-1 text-center">{{ $item->activite }}</h6>
-                        <h5 class="mt-1 text-center">{{ $item->postale }}</h5>
-                    </div>
-                    <div class="col-4 text-center">
-                        <h3>BURKINA FASO</h3>
-                        <P>--------------------------</P>
-                        <h5>La Patrie ou la Mort, nous Vaincrons</h5>
-                    </div>
-                </div>
-            </div>
-        @empty
-            <p class="text-danger">Veuillez inserer une entete de la société !</p>
-        @endforelse
-
-        <div class="d-flex justify-content-end m-3">
-            <h5>Ouagadougou, le {{ date('d-m-Y') }}</h5>
-        </div>
 
         <div class="text-center mt-3 mb-5">
-            <h2><strong>FACTURE N°{{ $recette->code }}</strong></h2>
+            <h2><strong>NOTE D'HONORAIRES INTERNE N°{{ $recette->code }}</strong></h2>
+            <P>du {{ $recette->created_at->format('d/m/Y') }}</P>
         </div>
 
         <div class="d-flex justify-content-between m-3">
@@ -60,6 +33,7 @@
                 <h5>Département : <strong>{{ $recette->Service->libelle ?? 'N/A' }}</strong></h5>
             </div>
         </div>
+
         <div class="text-start mt-5">
             <h5 class="m-3">Référence : <strong>{{ $recette->reference }}</strong></h5>
         </div>
@@ -68,7 +42,8 @@
             <table class="table table-bordered border-dark">
                 <thead>
                     <tr style="background-color: rgb(193, 198, 203)">
-                        <th>Designation</th>
+                        <th>Compte</th>
+                        <th>Nature de la dépense</th>
                         <th class="text-center">Qte</th>
                         <th class="text-center">P.Unitaire</th>
                         <th class="text-center">Montant</th>
@@ -77,7 +52,8 @@
                 <tbody>
                     @foreach ($elements as $elmnt)
                         <tr>
-                            <td>{{ $elmnt->Base->libelle }}</td>
+                            <td>{{ $elmnt->Base->code }}</td>
+                            <td>{{ $elmnt->designation }}</td>
                             <td class="text-center">{{ $elmnt->quantite }}</td>
                             <td class="text-center">{{ $elmnt->prix_unitaire }}</td>
                             <td class="text-center">{{ $elmnt->montant }}</td>
@@ -106,30 +82,34 @@
                 </div>
             </div>
             <div class="mt-3">
-                <p>Arrêté le présent facture à la somme de :
-                    <strong style="text-transform: uppercase;">{{ conversion($montant_total) }} FRANCS CFA</strong>
+                <p>Arrêté la présente note d'honoraire à la somme de :
+                    <strong style="text-transform: uppercase;">{{ conversion($montant_total_ttc) }} FRANCS CFA</strong>
                 </p>
                 <p>
-                    ({{ number_format($montant_total, 0, ',', ' ') }} FCFA)
+                    ({{ number_format($montant_total_ttc, 0, ',', ' ') }} FCFA)
                 </p>
             </div>
 
-            <div class="mt-5">
-                <h5>Conditions :</h5>
-                <div class="d-flex justify-content-between">
-                    <p>Délais de livraison : disponibilité</p>
-                    <p>Délais de paiement : 100% à la livraison</p>
+            <div class="mt-4">
+                <h5>Conditions : Délais de livraison : disponibilité</h5>
+            </div>
+
+            <div class="mt-4">
+                Division fiscale : DME-CV <br>
+                Régime Normal d’imposition <br>
+                N° IFU : 00019969J <br>
+                Forme juridique : SA <br>
+                Notre Adresse Cadastrale : Parcelle 03, Lot 13, Section 006(AI), Secteur 04 (ZACA)
+            </div>
+
+            <div class="d-flex justify-content-end mt-5">
+                <div></div>
+                <div class="text-center shadowbg-body rounded">
+                    <h4>FORVIS MAZARS</h4>
+                    <h6>{{ $recette->user->nom }} {{ $recette->user->prenom }}</h6>
+                    <p>{{ $recette->user->role }}</p>
                 </div>
             </div>
-        </div>
-
-        {{-- Pied de page --}}
-        <div class="p-3" style="margin-top: 20px; border-top: 1px solid black;">
-            @forelse (App\Models\Entete::all() as $item)
-                <p>{{ $item->pied_page }}</p>
-            @empty
-                <p class="text-danger">Veuillez inserer un pied de page</p>
-            @endforelse
         </div>
     </div>
     <script>

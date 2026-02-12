@@ -83,7 +83,7 @@
                 <div class="card mb-4">
                     <div class="card-header">Factures du jour</div>
                     <div class="card-body">
-                        <table id="datatablesSimple">
+                        <table class="table table-bordered table-hover table-striped">
                             <thead>
                                 <tr>
                                     <th>Code</th>

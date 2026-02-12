@@ -21,21 +21,11 @@ class FactureFournisseurController extends Controller
      */
     public function index()
     {
-        $collection = FactureFournisseur::where('statut', 'en attente')->get();
+        $collection = FactureFournisseur::where('statut', 'en attente')->where('users_id', auth()->id())->paginate(10);
         $prestations = BaseTaxable::all();
         $fournisseurs = Fournisseur::all();
 
         return view('pages.facure_fournisseur.index',compact('collection', 'prestations', 'fournisseurs'));
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
     }
 
     /**
@@ -251,7 +241,7 @@ class FactureFournisseurController extends Controller
      */
     public function valider()
     {
-        $collection = FactureFournisseur::where('statut', 'en attente')->get();
+        $collection = FactureFournisseur::where('statut', 'en attente')->where('users_id', auth()->id())->paginate(10);
 
         return view('pages.facure_fournisseur.validation',compact('collection'));
     }
@@ -264,7 +254,7 @@ class FactureFournisseurController extends Controller
      */
     public function en_reglement()
     {
-        $collection = FactureFournisseur::where('statut', 'valide')->get();
+        $collection = FactureFournisseur::where('statut', 'valide')->where('users_id', auth()->id())->paginate(10);
 
         return view('pages.facure_fournisseur.en_reglement',compact('collection'));
     }
@@ -277,7 +267,7 @@ class FactureFournisseurController extends Controller
      */
     public function reglement_facture()
     {
-        $collection = FactureFournisseur::where('statut', 'en reglement')->get();
+        $collection = FactureFournisseur::where('statut', 'en reglement')->where('users_id', auth()->id())->paginate(10);
 
         return view('pages.facure_fournisseur.reglement',compact('collection'));
     }
@@ -290,7 +280,7 @@ class FactureFournisseurController extends Controller
      */
     public function show_reglement_fact(string $id)
     {
-        $factures = FactureFournisseur::find($id);
+        $factures = FactureFournisseur::where('id', $id)->where('users_id', auth()->id())->firstOrFail();
         $elements = ElementFacture::where('facture_fournisseurs_id', '=', $id)->get();
         $total = $elements->sum('montant_total');
 
@@ -301,17 +291,6 @@ class FactureFournisseurController extends Controller
         $total_ttc = $elements->sum('montant_total') + ($elements->sum('montant_total') * $factures->tva / 100) - $factures->total_retenu;
 
         return view('pages.reglement_facture.reglement',compact('factures', 'elements', 'total', 'total_ttc', 'total_ht'));
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\FactureFournisseur  $factureFournisseur
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(FactureFournisseur $factureFournisseur)
-    {
-        //
     }
 
     /**
@@ -431,7 +410,7 @@ class FactureFournisseurController extends Controller
      */
     public function all_facture()
     {
-        $collection = FactureFournisseur::all();
+        $collection = FactureFournisseur::where('users_id', auth()->id())->paginate(10);
         $budgets = BaseTaxable::all();
         $fournisseurs = Fournisseur::all();
 
@@ -440,7 +419,7 @@ class FactureFournisseurController extends Controller
 
     public function entente_facture()
     {
-        $collection = FactureFournisseur::where('statut', 'en attente')->get();
+        $collection = FactureFournisseur::where('statut', 'en attente')->where('users_id', auth()->id())->paginate(10);
         $budgets = BaseTaxable::all();
         $fournisseurs = Fournisseur::all();
 
@@ -449,7 +428,7 @@ class FactureFournisseurController extends Controller
 
     public function valide_facture()
     {
-        $collection = FactureFournisseur::where('statut', 'valide')->get();
+        $collection = FactureFournisseur::where('statut', 'valide')->where('users_id', auth()->id())->paginate(10);
         $budgets = BaseTaxable::all();
         $fournisseurs = Fournisseur::all();
 
@@ -458,7 +437,7 @@ class FactureFournisseurController extends Controller
 
     public function reglem_fact()
     {
-        $collection = FactureFournisseur::where('statut', 'en reglement')->get();
+        $collection = FactureFournisseur::where('statut', 'en reglement')->where('users_id', auth()->id())->paginate(10);
         $budgets = BaseTaxable::all();
         $fournisseurs = Fournisseur::all();
 
@@ -467,7 +446,7 @@ class FactureFournisseurController extends Controller
 
     public function regle_fact()
     {
-        $collection = FactureFournisseur::where('statut', 'reglée')->get();
+        $collection = FactureFournisseur::where('statut', 'reglée')->where('users_id', auth()->id())->paginate(10);
         $budgets = BaseTaxable::all();
         $fournisseurs = Fournisseur::all();
 
@@ -476,7 +455,7 @@ class FactureFournisseurController extends Controller
 
     public function print_facture(string $id)
     {
-        $factures = FactureFournisseur::find($id);
+        $factures = FactureFournisseur::where('id', $id)->where('users_id', auth()->id())->firstOrFail();
         $entetes = Entete::all();
 
         return view('pages.facure_fournisseur.print_facture', compact('factures', 'entetes'));
@@ -490,7 +469,7 @@ class FactureFournisseurController extends Controller
      */
     public function destroy(string $id)
     {
-        $fact = FactureFournisseur::find($id);
+        $fact = FactureFournisseur::where('id', $id)->where('users_id', auth()->id())->firstOrFail();
         $fact->delete();
 
         smilify('error', 'La facture a été supprimer avec success !');
@@ -499,7 +478,7 @@ class FactureFournisseurController extends Controller
 
     public function destroy_element(string $id)
     {
-        $elem = ElementFacture::find($id);
+        $elem = ElementFacture::where('id', $id)->where('users_id', auth()->id())->firstOrFail();
         $elem->delete();
 
         smilify('error', 'La ligne a été retirée de la facture !');

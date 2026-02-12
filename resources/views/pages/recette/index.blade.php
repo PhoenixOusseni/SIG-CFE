@@ -67,14 +67,8 @@
                                         </div>
                                         <div class="col-lg-3 col-md-12">
                                             <div class="mb-3">
-                                                <label class="small mb-1">Signataire</label>
-                                                <select name="signataires_id" class="form-select">
-                                                    <option>Sélectionner le signataire</option>
-                                                    @foreach (App\Models\Signataire::all() as $signataire)
-                                                        <option value="{{ $signataire->id }}">{{ $signataire->nom }}
-                                                        </option>
-                                                    @endforeach
-                                                </select>
+                                                <label class="small mb-1">Signataire ({{ Auth::user()->login }})</label>
+                                                <input type="text" name="users_id" class="form-control" value="{{ Auth::user()->id }}" readonly>
                                             </div>
                                         </div>
                                         <div class="col-lg-2 col-md-12">
@@ -99,9 +93,9 @@
                                         </div>
                                         <div class="col-lg-4 col-md-12">
                                             <div class="mb-3">
-                                                <label class="small mb-1">Marché</label>
+                                                <label class="small mb-1">Projet</label>
                                                 <select name="marche_id" class="form-select">
-                                                    <option value="">Sélectionner le marché</option>
+                                                    <option value="">Sélectionner le Projet</option>
                                                     @foreach ($marches as $marche)
                                                         <option value="{{ $marche->id }}">
                                                             {{ $marche->designation }}
@@ -138,18 +132,24 @@
                                     <h5 class="mb-3 text-success">Éléments de la facture</h5>
                                     <div id="elementsContainer">
                                         <div class="row mb-3 element-row">
-                                            <div class="col-lg-4 col-md-12">
+                                            <div class="col-lg-3 col-md-12">
                                                 <div class="mb-3">
-                                                    <label class="small mb-1">Designation</label>
+                                                    <label class="small mb-1">Compte</label>
                                                     <select class="form-select base-taxable-select" name="base_taxables_id[]">
-                                                        <option value="">Sélectionner la désignation</option>
+                                                        <option value="">Sélectionner un compte</option>
                                                         @foreach ($bases as $item)
-                                                            <option value="{{ $item->id }}">{{ $item->libelle }}</option>
+                                                            <option value="{{ $item->id }}">{{ $item->code }} - {{ $item->libelle }}</option>
                                                         @endforeach
                                                     </select>
                                                 </div>
                                             </div>
                                             <div class="col-lg-3 col-md-12">
+                                                <div class="mb-3">
+                                                    <label class="small mb-1">Designation</label>
+                                                    <input class="form-control" name="designation[]" type="text" />
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-2 col-md-12">
                                                 <div class="mb-3">
                                                     <label class="small mb-1">Quantité</label>
                                                     <input class="form-control" name="quantite[]" type="number" />
@@ -161,10 +161,10 @@
                                                     <input class="form-control" name="prix_unitaire[]" type="number" />
                                                 </div>
                                             </div>
-                                            <div class="col-lg-2 d-flex align-items-end">
+                                            <div class="col-lg-1 d-flex align-items-end">
                                                 <div class="mb-3">
                                                     <button type="button" class="btn btn-success btn-sm me-2" id="addRowBtn"><i
-                                                        data-feather="plus"></i>&thinsp;&thinsp; Ajouter</button>
+                                                        data-feather="plus"></i></button>
                                                 </div>
                                             </div>
                                         </div>
@@ -195,12 +195,19 @@
                                     <!-- Tabbed dashboard card example-->
                                     <div class="card mb-4">
                                         <div class="card-body">
+                                            <div class="d-flex justify-content-between mb-3">
+                                                <h2 class="h4 mb-0">Liste des factures</h2>
+                                                <div>
+                                                    <input type="text" placeholder="Rechercher..." class="form-control"
+                                                        id="searchInput" onkeyup="searchTable()">
+                                                </div>
+                                            </div>
                                             <div class="sbp-preview-content">
-                                                <table id="datatablesSimple">
+                                                <table class="table table-bordered table-hover table-striped">
                                                     <thead>
                                                         <tr>
                                                             <th>Code</th>
-                                                            <th>Designation</th>
+                                                            <th>Reference</th>
                                                             <th>Client</th>
                                                             <th>Marché</th>
                                                             <th>Echeance</th>
@@ -210,16 +217,14 @@
                                                     <tbody>
                                                         @foreach ($collection as $recette)
                                                             <tr>
-                                                                <td>{{ $recette->id }}</td>
-                                                                <td>{{ $recette->objet }}</td>
+                                                                <td>{{ $recette->code }}</td>
+                                                                <td>{{ $recette->reference }}</td>
                                                                 <td>{{ $recette->Contribuable->assujeti }}</td>
-                                                                <td>{{ $recette->Marche->designation }}</td>
+                                                                <td>{{ $recette->Marche->designation ?? 'N/A' }}</td>
                                                                 <td>{{ $recette->echeance }}</td>
                                                                 <td class="d-flex justify-content-center">
-                                                                    <a
-                                                                        href="{{ route('module_ordre_recette.show', [$recette->id]) }}">
-                                                                        <i class="fa fa-eye text-success"
-                                                                            aria-hidden="true"></i>
+                                                                    <a href="{{ route('module_ordre_recette.show', [$recette->id]) }}">
+                                                                        <i class="fa fa-eye text-success" aria-hidden="true"></i>
                                                                     </a>
                                                                 </td>
                                                             </tr>
@@ -227,6 +232,7 @@
                                                         @endforeach
                                                     </tbody>
                                                 </table>
+                                                {{ $collection->links() }}
                                             </div>
                                         </div>
                                     </div>
@@ -245,9 +251,9 @@
         $(document).ready(function() {
             // Variable pour stocker le HTML des options de base taxable
             let baseOptions = `
-                <option value="">Sélectionner la désignation</option>
+                <option value="">Sélectionner un compte</option>
                 @foreach ($bases as $item)
-                    <option value="{{ $item->id }}">{{ $item->libelle }}</option>
+                    <option value="{{ $item->id }}">{{ $item->code }} - {{ $item->libelle }}</option>
                 @endforeach
             `;
 
@@ -262,12 +268,18 @@
             $(document).on('click', '#addRowBtn', function() {
                 let newRow = `
                     <div class="row mb-3 element-row">
-                        <div class="col-lg-4 col-md-12">
+                        <div class="col-lg-3 col-md-12">
                             <div class="mb-3">
-                                <label class="small mb-1">Designation</label>
+                                <label class="small mb-1">Compte</label>
                                 <select class="form-select base-taxable-select" name="base_taxables_id[]">
                                     ${baseOptions}
                                 </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-12">
+                            <div class="mb-3">
+                                <label class="small mb-1">Designation</label>
+                                <input class="form-control" name="designation[]" type="text" />
                             </div>
                         </div>
                         <div class="col-lg-2 col-md-12">
@@ -276,22 +288,16 @@
                                 <input class="form-control" name="quantite[]" type="number" />
                             </div>
                         </div>
-                        <div class="col-lg-2 col-md-12">
+                        <div class="col-lg-3 col-md-12">
                             <div class="mb-3">
                                 <label class="small mb-1">Prix unitaire</label>
                                 <input class="form-control" name="prix_unitaire[]" type="number" />
                             </div>
                         </div>
-                        <div class="col-lg-2 col-md-12">
-                            <div class="mb-3">
-                                <label class="small mb-1">Unité</label>
-                                <input class="form-control" name="unite[]" type="text" />
-                            </div>
-                        </div>
-                        <div class="col-lg-2 d-flex align-items-end">
+                        <div class="col-lg-1 d-flex align-items-end">
                             <div class="mb-3">
                                 <button type="button" class="btn btn-danger btn-sm removeRowBtn"><i
-                                        data-feather="trash-2"></i>&thinsp;&thinsp; Supprimer</button>
+                                        data-feather="trash-2"></i></button>
                             </div>
                         </div>
                     </div>

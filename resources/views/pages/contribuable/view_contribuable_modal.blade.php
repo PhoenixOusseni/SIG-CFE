@@ -47,6 +47,18 @@
                                 <input class="form-control" name="rccm" value="{{ $contribuable->rccm }}" type="text" />
                             </div>
                         </div>
+                        <div class="col-lg-4 col-md-12">
+                            <div class="mb-3">
+                                <label class="small mb-1">Categorie</label>
+                                <select name="categories_id" id="" class="form-select">
+                                    @foreach ($categories as $categorie)
+                                        <option value="{{ $categorie->id }}"
+                                            {{ $contribuable->categorie_id == $categorie->id ? 'selected' : '' }}>
+                                            {{ $categorie->libelle }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
                     </div>
                     <div class="mt-3">
                         <button class="btn btn-1" type="submit">

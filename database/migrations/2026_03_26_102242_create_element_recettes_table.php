@@ -18,6 +18,7 @@ class CreateElementRecettesTable extends Migration
             $table->float('quantite')->nullable();
             $table->float('prix_unitaire')->nullable();
             $table->float('montant')->nullable();
+            $table->string('designation')->nullable();
 
             // Retenue details
             $table->float('retenu_bic')->nullable();

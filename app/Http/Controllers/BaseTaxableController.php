@@ -31,6 +31,7 @@ class BaseTaxableController extends Controller
     public function store(Request $request)
     {
         BaseTaxable::create([
+            'code' => $request->code,
             'libelle' => $request->libelle,
             'reference' => $request->reference,
             'prix' => $request->prix,
@@ -51,6 +52,7 @@ class BaseTaxableController extends Controller
     {
         $baseTaxable = BaseTaxable::findOrFail($id);
         $baseTaxable->update([
+            'code' => $request->code,
             'libelle' => $request->libelle,
             'reference' => $request->reference,
             'prix' => $request->prix,

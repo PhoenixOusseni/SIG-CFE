@@ -50,7 +50,7 @@
                         <div class="col-auto mt-4">
                             <h1 class="page-header-title">
                                 <div class="page-header-icon"><i data-feather="file-text"></i></div>
-                                Détails de la facture #{{ $recette->id }}
+                                Détails de la facture {{ $recette->code }}
                             </h1>
                         </div>
                     </div>
@@ -221,6 +221,7 @@
                                 <thead class="table-dark">
                                     <tr>
                                         <th>N°</th>
+                                        <th>Compte</th>
                                         <th>Désignation</th>
                                         <th>Quantité</th>
                                         <th>Prix unitaire</th>
@@ -232,8 +233,9 @@
                                         <tr>
                                             <td>{{ $index + 1 }}</td>
                                             <td>
-                                                <strong>{{ $element->Base->libelle ?? 'N/A' }}</strong>
+                                                <strong>{{ $element->Base->code ?? 'N/A' }}</strong>
                                             </td>
+                                            <td>{{ $element->designation }}</td>
                                             <td>{{ number_format($element->quantite, 0, ',', ' ') }}</td>
                                             <td>{{ number_format($element->prix_unitaire, 0, ',', ' ') }} FCFA</td>
                                             <td>
