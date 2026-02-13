@@ -312,20 +312,80 @@ class RecetteController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $recette = Recette::find($id);
-        $recette->update([
-            'reference' => $request->reference,
-            'date' => $request->date,
-            'code' => $request->code,
-            'contribuables_id' => $request->contribuables_id,
-            'echeance' => $request->echeance,
-            'service_id' => $request->service_id,
-            'categorie_id' => $request->categorie_id,
-            'marche_id' => $request->marche_id,
-        ]);
+        try {
+            DB::beginTransaction();
 
-        smilify('success', 'Ordre de recette modifié avec succès !');
-        return redirect()->back();
+            $recette = Recette::findOrFail($id);
+            $recette->update([
+                'reference' => $request->reference,
+                'date' => $request->date,
+                'code' => $request->code,
+                'contribuables_id' => $request->contribuables_id,
+                'echeance' => $request->echeance,
+                'service_id' => $request->service_id,
+                'categorie_id' => $request->categorie_id,
+                'marche_id' => $request->marche_id,
+            ]);
+
+            $elementIds = $request->element_id ?? [];
+            $baseTaxablesIds = $request->base_taxables_id ?? [];
+            $designations = $request->designation ?? [];
+            $quantites = $request->quantite ?? [];
+            $prixUnitaires = $request->prix_unitaire ?? [];
+
+            $elementsConserves = [];
+
+            foreach ($baseTaxablesIds as $index => $baseTaxableId) {
+                $designation = trim((string) ($designations[$index] ?? ''));
+                $quantite = (float) ($quantites[$index] ?? 0);
+                $prixUnitaire = (float) ($prixUnitaires[$index] ?? 0);
+
+                if (empty($baseTaxableId) && $designation === '' && $quantite <= 0 && $prixUnitaire <= 0) {
+                    continue;
+                }
+
+                $dataElement = [
+                    'recettes_id' => $recette->id,
+                    'base_taxables_id' => $baseTaxableId,
+                    'designation' => $designation,
+                    'quantite' => $quantite,
+                    'prix_unitaire' => $prixUnitaire,
+                    'montant' => $quantite * $prixUnitaire,
+                ];
+
+                $elementId = $elementIds[$index] ?? null;
+
+                if (!empty($elementId)) {
+                    $element = ElementRecette::where('id', $elementId)
+                        ->where('recettes_id', $recette->id)
+                        ->first();
+
+                    if ($element) {
+                        $element->update($dataElement);
+                        $elementsConserves[] = $element->id;
+                        continue;
+                    }
+                }
+
+                $nouvelElement = ElementRecette::create($dataElement);
+                $elementsConserves[] = $nouvelElement->id;
+            }
+
+            $query = ElementRecette::where('recettes_id', $recette->id);
+            if (!empty($elementsConserves)) {
+                $query->whereNotIn('id', $elementsConserves);
+            }
+            $query->delete();
+
+            DB::commit();
+
+            smilify('success', 'Ordre de recette et éléments modifiés avec succès !');
+            return redirect()->back();
+        } catch (\Exception $e) {
+            DB::rollBack();
+            smilify('error', 'Erreur lors de la modification de l\'ordre de recette : ' . $e->getMessage());
+            return redirect()->back()->withInput();
+        }
     }
 
     /**
@@ -440,7 +500,7 @@ class RecetteController extends Controller
         $recet->delete();
 
         smilify('error', 'L\'ordre de recette a été supprimer avec success !');
-        return redirect()->back();
+        return redirect()->route('module_ordre_recette.index');
     }
 
     public function destroy_element(string $id)

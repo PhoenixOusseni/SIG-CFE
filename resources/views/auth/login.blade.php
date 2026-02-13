@@ -4,7 +4,7 @@
 <head>
     @include('partials.meta')
     @yield('title')
-    <title>SIG-CFE | Connexion</title>
+    <title>SIG-FORVISMAZARS | Connexion</title>
     @yield('style')
     @include('partials.style')
     @notifyCss
@@ -317,7 +317,7 @@
             <!-- Section Information -->
             <div class="info-section">
                 <div class="info-content">
-                    <h1 class="brand-title">Bienvenue sur SIG-FORVISMAZARS</h1>
+                    <h1 class="brand-title text-light">Bienvenue sur SIG-FORVISMAZARS</h1>
                     <p class="brand-description">
                         Un système de gestion informatisée moderne et efficace pour la facturation et le suivi budgétaire de votre entreprise.
                     </p>

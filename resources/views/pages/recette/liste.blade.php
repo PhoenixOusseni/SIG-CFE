@@ -54,8 +54,15 @@
                                     <!-- Tabbed dashboard card example-->
                                     <div class="card mb-4">
                                         <div class="card-body">
+                                            <div class="d-flex justify-content-between mb-3">
+                                                <h2 class="h4 mb-0">Liste des factures</h2>
+                                                <div>
+                                                    <input type="text" placeholder="Rechercher..." class="form-control"
+                                                        id="searchInput" onkeyup="searchTable()">
+                                                </div>
+                                            </div>
                                             <div class="sbp-preview-content">
-                                                <table id="datatablesSimple">
+                                                <table class="table table-bordered table-hover table-striped">
                                                     <thead>
                                                         <tr>
                                                             <th>Code</th>

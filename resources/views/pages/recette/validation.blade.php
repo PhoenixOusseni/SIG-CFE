@@ -38,7 +38,7 @@
                                     <div class="card mb-4">
                                         <div class="card-body">
                                             <div class="sbp-preview-content">
-                                                <table id="datatablesSimple">
+                                                <table class="table table-bordered table-hover table-striped">
                                                     <thead>
                                                         <tr>
                                                             <th>Code</th>

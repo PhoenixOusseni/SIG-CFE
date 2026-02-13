@@ -72,9 +72,9 @@
                     <a href="{{ url('print_ordre_recette/' . $recette->id) }}" class="btn btn-success" target="_blank">
                         <i data-feather="printer"></i>
                     </a>
-                    <a href="{{ route('print_bon_execution', ['id' => $recette->id]) }}" class="btn btn-secondary" target="_blank">
-                        <i data-feather="printer"></i>
-                    </a>
+                    <!--<a href="{{ route('print_bon_execution', ['id' => $recette->id]) }}" class="btn btn-secondary" target="_blank">-->
+                    <!--    <i data-feather="printer"></i>-->
+                    <!--</a>-->
                     <a href="{{ url('supp_ordre_recette/' . $recette->id) }}" class="btn btn-danger"
                         onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette facture ?')">
                         <i data-feather="trash-2"></i>

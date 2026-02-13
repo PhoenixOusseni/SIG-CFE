@@ -46,7 +46,7 @@
                 <thead>
                     <tr style="background-color: rgb(193, 198, 203)">
                         <th>Compte</th>
-                        <th>Nature de la dépense</th>
+                        <th>Désignation</th>
                         <th class="text-center">Qte</th>
                         <th class="text-center">P.Unitaire</th>
                         <th class="text-center">Montant</th>
