@@ -156,9 +156,9 @@
                     @endif --}}
                 </div>
             </div>
-            <div class="sidenav-footer">
-                <div class="sidenav-footer-content">
-                    <div class="sidenav-footer-subtitle">Utilisateur connecté(e):</div>
+            <div class="sidenav-footer" style="background: #133e9a">
+                <div class="sidenav-footer-content text-center text-light">
+                    <div class="sidenav-footer-subtitle text-light">Utilisateur connecté(e):</div>
                     <div class="sidenav-footer-title">{{ Auth::user()->login }}</div>
                 </div>
             </div>

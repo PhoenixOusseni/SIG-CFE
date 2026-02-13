@@ -90,6 +90,26 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="row">
+                                    <div class="col-lg-4 col-md-12">
+                                        <div class="mb-3">
+                                            <label class="small mb-1">Division fiscale</label>
+                                            <input class="form-control" name="division_fiscal" type="text" />
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4 col-md-12">
+                                        <div class="mb-3">
+                                            <label class="small mb-1">Rgime fiscal</label>
+                                            <input class="form-control" name="regime_fiscal" type="text" />
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4 col-md-12">
+                                        <div class="mb-3">
+                                            <label class="small mb-1">Adresse cadastrale</label>
+                                            <input class="form-control" name="adresse_cadas" type="text" />
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                             <div class="m-3">
                                 <button class="btn btn-1" type="submit">

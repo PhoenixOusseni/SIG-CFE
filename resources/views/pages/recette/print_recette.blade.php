@@ -27,6 +27,9 @@
                 <h5>Téléphone : <strong>{{ $recette->Contribuable->telephone }}</strong></h5>
                 <h5>N° IFU : <strong>{{ $recette->Contribuable->ifu }}</strong></h5>
                 <h5>RCCM : <strong>{{ $recette->Contribuable->rccm }}</strong></h5>
+                <h5>Division fiscal : <strong>{{ $recette->Contribuable->division_fiscal }}</strong></h5>
+                <h5>Regime fiscal : <strong>{{ $recette->Contribuable->regime_fiscal }}</strong></h5>
+                <h5>Adresse cadastrale : <strong>{{ $recette->Contribuable->adresse_cadas }}</strong></h5>
             </div>
             <div class="col-6 text-start" style="margin-left: 50px;">
                 <h5>Date : <strong>{{ $recette->created_at->format('d/m/Y') }}</strong></h5>

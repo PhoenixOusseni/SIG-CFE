@@ -37,6 +37,10 @@ class ContribuableController extends Controller
             'ifu' => $request->ifu,
             'rccm' => $request->rccm,
             'categories_id' => $request->categories_id,
+
+            'division_fiscal' => $request->division_fiscal,
+            'regime_fiscal' => $request->regime_fiscal,
+            'adresse_cadas' => $request->adresse_cadas,
         ]);
 
         smilify('success','Contribuable ajouté avec succès !');
@@ -60,6 +64,10 @@ class ContribuableController extends Controller
             'ifu' => $request->ifu,
             'rccm' => $request->rccm,
             'categories_id' => $request->categories_id,
+
+            'division_fiscal' => $request->division_fiscal,
+            'regime_fiscal' => $request->regime_fiscal,
+            'adresse_cadas' => $request->adresse_cadas,
         ]);
 
         smilify('success','Contribuable mis à jour avec succès !');

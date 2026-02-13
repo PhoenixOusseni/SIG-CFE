@@ -15,11 +15,14 @@ class CreateContribuablesTable extends Migration
     {
         Schema::create('contribuables', function (Blueprint $table) {
             $table->id();
-            $table->string('assujeti');
-            $table->string('adresse');
-            $table->string('telephone');
-            $table->string('ifu');
-            $table->string('rccm');
+            $table->string('assujeti')->nullable();
+            $table->string('adresse')->nullable();
+            $table->string('telephone')->nullable();
+            $table->string('ifu')->nullable();
+            $table->string('rccm')->nullable();
+            $table->string('division_fiscal')->nullable();
+            $table->string('regime_fiscal')->nullable();
+            $table->string('adresse_cadas')->nullable();
 
             $table->foreignId('categories_id')->constrained('categories')->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();

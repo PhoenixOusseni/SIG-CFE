@@ -19,7 +19,7 @@
         }
 
         .btn-1 {
-            background-color: #2f663f;
+            background-color: #133e9a;
             color: white;
         }
 
@@ -47,6 +47,10 @@
         .form-select:focus {
             border-color: #2f663f;
             box-shadow: 0 0 0 0.2rem rgba(47, 102, 63, 0.1);
+        }
+
+        .page-header{
+            background: #133e9a
         }
     </style>
 
