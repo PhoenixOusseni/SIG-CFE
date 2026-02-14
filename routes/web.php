@@ -37,6 +37,13 @@ use App\Http\Controllers\MarcheController;
 |
 */
 
+// For storage link
+Route::get("/link", function () {
+    $targetFolder = storage_path("app/public");
+    $linkFolder = $_SERVER['DOCUMENT_ROOT'] . '/storage';
+    symlink($targetFolder, $linkFolder);
+});
+
 Route::get('/', [PageController::class, 'auth'])->name('login');
 Route::post('authentification', [AuthController::class, 'login'])->name('auth');
 Route::post('deconnexion', [AuthController::class, 'logout'])->name('logout');
