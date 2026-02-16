@@ -6,21 +6,20 @@
                 <h5 class="modal-title" id="addElementModalLabel">
                     <i class="fas fa-plus-circle"></i> Ajouter un élément à la facture N°{{ $factures->id }}
                 </h5>
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                    aria-label="Close"></button>
             </div>
             <form action="{{ route('add_facture_element') }}" method="POST" id="addElementForm">
                 @csrf
                 <div class="modal-body">
-                    <input class="form-control" name="facture_fournisseurs_id" value="{{ $factures->id }}" type="hidden" />
+                    <input class="form-control" name="facture_fournisseurs_id" value="{{ $factures->id }}"
+                        type="hidden" />
 
                     <div class="row">
                         <div class="col-12 mb-3">
                             <label class="form-label">Désignation <span class="text-danger">*</span></label>
-                            <input class="form-control @error('designation') is-invalid @enderror"
-                                   name="designation"
-                                   type="text"
-                                   placeholder="Description de l'élément"
-                                   required />
+                            <input class="form-control @error('designation') is-invalid @enderror" name="designation"
+                                type="text" placeholder="Description de l'élément" required />
                             @error('designation')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
@@ -28,15 +27,9 @@
 
                         <div class="col-md-4 mb-3">
                             <label class="form-label">Quantité <span class="text-danger">*</span></label>
-                            <input class="form-control @error('quantite') is-invalid @enderror"
-                                   name="quantite"
-                                   type="number"
-                                   id="modal_quantite"
-                                   min="1"
-                                   step="1"
-                                   value="1"
-                                   placeholder="1"
-                                   required />
+                            <input class="form-control @error('quantite') is-invalid @enderror" name="quantite"
+                                type="number" id="modal_quantite" min="1" step="1" value="1"
+                                placeholder="1" required />
                             @error('quantite')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
@@ -45,13 +38,8 @@
                         <div class="col-md-4 mb-3">
                             <label class="form-label">Prix unitaire (FCFA) <span class="text-danger">*</span></label>
                             <input class="form-control @error('prix_unitaire') is-invalid @enderror"
-                                   name="prix_unitaire"
-                                   type="number"
-                                   id="modal_prix_unitaire"
-                                   min="0"
-                                   step="0.01"
-                                   placeholder="0"
-                                   required />
+                                name="prix_unitaire" type="number" id="modal_prix_unitaire" min="0"
+                                step="0.01" placeholder="0" required />
                             @error('prix_unitaire')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
@@ -59,11 +47,8 @@
 
                         <div class="col-md-4 mb-3">
                             <label class="form-label">Montant total (FCFA)</label>
-                            <input class="form-control bg-light"
-                                   type="text"
-                                   id="modal_montant_total"
-                                   readonly
-                                   value="0 FCFA" />
+                            <input class="form-control bg-light" type="text" id="modal_montant_total" readonly
+                                value="0 FCFA" />
                         </div>
                     </div>
 
@@ -77,7 +62,7 @@
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
                         <i class="fas fa-times"></i> Annuler
                     </button>
-                    <button type="submit" class="btn btn-success">
+                    <button type="submit" class="btn btn-primary">
                         <i class="fas fa-plus"></i> Ajouter l'élément
                     </button>
                 </div>

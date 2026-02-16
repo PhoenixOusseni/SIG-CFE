@@ -134,7 +134,7 @@
                                     </div>
                                 </fieldset>
 
-                                <fieldset class="w-100 p-2 mt-3" style="border-radius: 5px; background: rgb(219, 238, 221)">
+                                <fieldset class="w-100 p-2 mt-3" style="border-radius: 5px; background: #bdcff25c">
                                     <legend class="small">Éléments de la facture</legend>
                                     <div class="table-responsive">
                                         <table class="table table-bordered" id="elementsTable">
@@ -171,7 +171,7 @@
                                             <tfoot>
                                                 <tr>
                                                     <td colspan="5">
-                                                        <button type="button" class="btn btn-success btn-sm" id="addRowBtn">
+                                                        <button type="button" class="btn btn-primary btn-sm" id="addRowBtn">
                                                             <i data-feather="plus"></i>&thinsp;&thinsp; Ajouter une ligne
                                                         </button>
                                                     </td>

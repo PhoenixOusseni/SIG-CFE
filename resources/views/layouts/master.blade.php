@@ -6,7 +6,7 @@
 
     @yield('title')
 
-    <title>SIG-CFE</title>
+    <title>SIG-FORIVISMAZARS</title>
 
     @yield('style')
 
@@ -32,8 +32,8 @@
         }
 
         .form-control:focus {
-            border-color: #2f663f;
-            box-shadow: 0 0 0 0.2rem rgba(47, 102, 63, 0.1);
+            border-color: #1d3f7f;
+            box-shadow: 0 0 0 0.2rem rgba(29, 63, 127, 0.1);
         }
 
         .form-select {
@@ -45,8 +45,8 @@
         }
 
         .form-select:focus {
-            border-color: #2f663f;
-            box-shadow: 0 0 0 0.2rem rgba(47, 102, 63, 0.1);
+            border-color: #1d3f7f;
+            box-shadow: 0 0 0 0.2rem rgba(29, 63, 127, 0.1);
         }
 
         .page-header{

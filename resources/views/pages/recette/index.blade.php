@@ -128,8 +128,8 @@
                                     </div>
                                 </fieldset>
 
-                                <fieldset class="w-100 p-2 mt-3" style="border-radius: 5px; background: rgb(219, 238, 221)">
-                                    <h5 class="mb-3 text-success">Éléments de la facture</h5>
+                                <fieldset class="w-100 p-2 mt-3" style="border-radius: 5px; background: #bdcff25c">
+                                    <h5 class="mb-3 text-primary">Éléments de la facture</h5>
                                     <div id="elementsContainer">
                                         <div class="row mb-3 element-row">
                                             <div class="col-lg-3 col-md-12">
@@ -163,7 +163,7 @@
                                             </div>
                                             <div class="col-lg-1 d-flex align-items-end">
                                                 <div class="mb-3">
-                                                    <button type="button" class="btn btn-success btn-sm me-2" id="addRowBtn"><i
+                                                    <button type="button" class="btn btn-1 btn-sm me-2" id="addRowBtn"><i
                                                         data-feather="plus"></i></button>
                                                 </div>
                                             </div>

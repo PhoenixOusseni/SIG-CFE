@@ -111,8 +111,8 @@
                                 </div>
                             </fieldset>
 
-                            <fieldset class="w-100 p-2 mt-3" style="border-radius: 5px; background: rgb(219, 238, 221)">
-                                <h5 class="mb-3 text-success">Éléments de la facture</h5>
+                            <fieldset class="w-100 p-2 mt-3" style="border-radius: 5px; background: #bdcff2;">
+                                <h5 class="mb-3 text-primary">Éléments de la facture</h5>
                                 <div id="elementsEditContainer">
                                     @if ($elements->count() > 0)
                                         @foreach ($elements as $index => $element)
@@ -159,7 +159,7 @@
                                                 <div class="col-lg-1 d-flex align-items-end">
                                                     <div class="mb-3">
                                                         @if ($index == 0)
-                                                            <button type="button" class="btn btn-success btn-sm me-2"
+                                                            <button type="button" class="btn btn-1 btn-sm me-2"
                                                                 id="addEditRowBtn">
                                                                 <i data-feather="plus"></i>
                                                             </button>
@@ -210,7 +210,7 @@
                                             </div>
                                             <div class="col-lg-1 d-flex align-items-end">
                                                 <div class="mb-3">
-                                                    <button type="button" class="btn btn-success btn-sm me-2"
+                                                    <button type="button" class="btn btn-primary btn-sm me-2"
                                                         id="addEditRowBtn">
                                                         <i data-feather="plus"></i>
                                                     </button>
@@ -223,7 +223,7 @@
                         </div>
                     </div>
                     <div class="mt-3">
-                        <button class="btn btn-warning" type="submit">
+                        <button class="btn btn-1" type="submit">
                             <i data-feather="save"></i>&thinsp; Enregistrer les modifications
                         </button>
                         <button type="button" class="btn btn-danger" data-bs-dismiss="modal">

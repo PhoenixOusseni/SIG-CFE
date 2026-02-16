@@ -10,12 +10,12 @@
     @notifyCss
     <style>
         :root {
-            --primary-color: #2f663f;
-            --primary-dark: #1e4429;
-            --primary-light: #3d8050;
-            --accent-color: #4ade80;
+            --primary-color: #1d3f7f;
+            --primary-dark: #1d3f7f;
+            --primary-light: #1d3f7f;
+            --accent-color: #1d3f7f;
             --text-dark: #1f2937;
-            --text-light: #6b7280;
+            --text-light: #1d3f7f;
             --bg-overlay: rgba(255, 255, 255, 0.95);
         }
 

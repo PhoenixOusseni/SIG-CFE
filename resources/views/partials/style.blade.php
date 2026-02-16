@@ -24,10 +24,10 @@
 
 <style>
     .header-gradient {
-        background-color: #2f663f;
+        background-color: #1d3f7f;
     }
     .btn-1 {
-        background-color: #2f663f;
+        background-color: #1d3f7f;
         color: white;
     }
 
@@ -36,7 +36,7 @@
     }
 
     table thead {
-        background-color: #548361;
+        background-color: #1d3f7f;
         color: white;
     }
 </style>

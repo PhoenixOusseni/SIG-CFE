@@ -20,7 +20,7 @@
         }
 
         .section-title {
-            border-bottom: 2px solid #28a745;
+            border-bottom: 2px solid #315192fa;
             padding-bottom: 10px;
             margin-bottom: 20px;
         }
@@ -31,7 +31,7 @@
         }
 
         .total-amount {
-            background: #28a745;
+            background: #315192fa;
             color: white;
             padding: 15px;
             border-radius: 5px;
