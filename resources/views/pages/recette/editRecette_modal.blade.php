@@ -96,9 +96,9 @@
                                 <div class="row">
                                     <div class="col-lg-4 col-md-12">
                                         <div class="mb-3">
-                                            <label class="small mb-1">Département</label>
+                                            <label class="small mb-1">Ligne de service</label>
                                             <select name="service_id" class="form-select" required>
-                                                <option value="">Sélectionner le département</option>
+                                                <option value="">Sélectionner la ligne de service</option>
                                                 @foreach (App\Models\Service::all() as $service)
                                                     <option value="{{ $service->id }}"
                                                         {{ $recette->service_id == $service->id ? 'selected' : '' }}>

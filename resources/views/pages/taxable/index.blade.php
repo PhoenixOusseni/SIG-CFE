@@ -64,9 +64,9 @@
                                 <input class="form-control" name="prix" type="number" value="{{ Request::old('prix') }}" required />
                             </div>
                             <div class="col-md-6">
-                                <label class="small mb-1">Département</label>
+                                <label class="small mb-1">Ligne de service</label>
                                 <select name="familles_id" class="form-select" required>
-                                    <option value="">Selectionner un département</option>
+                                    <option value="">Selectionner une ligne de service</option>
                                     @foreach ($familles as $famille)
                                         <option value="{{ $famille->id }}">{{ $famille->libelle }}</option>
                                     @endforeach
@@ -110,7 +110,7 @@
                                                             <th class="text-center">Prestation</th>
                                                             <th class="text-center">Réference</th>
                                                             <th class="text-center">Prix de la prestation</th>
-                                                            <th class="text-center">Département</th>
+                                                            <th class="text-center">Ligne de service</th>
                                                             <th class="text-center">Action</th>
                                                         </tr>
                                                     </thead>

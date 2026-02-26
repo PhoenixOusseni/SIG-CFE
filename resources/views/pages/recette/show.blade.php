@@ -91,13 +91,19 @@
                 </div>
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <div class="info-label">Numéro de facture</div>
                             <div class="info-value">
                                 <strong>{{ $recette->code }}</strong>
                             </div>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-4">
+                            <div class="info-label">Projet</div>
+                            <div class="info-value">
+                                <strong>{{ $recette->Marche->designation ?? 'N/A' }}</strong>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
                             <div class="info-label">Statut</div>
                             <div class="info-value">
                                 @if ($recette->statut == 'en attente')
@@ -121,7 +127,7 @@
                             <div class="info-value">{{ $recette->reference }}</div>
                         </div>
                         <div class="col-md-4">
-                            <div class="info-label">Département</div>
+                            <div class="info-label">Ligne de service</div>
                             <div class="info-value">
                                 @if ($recette->Service)
                                     <strong>{{ $recette->Service->libelle ?? 'N/A' }}</strong>

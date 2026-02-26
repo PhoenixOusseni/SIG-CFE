@@ -42,7 +42,7 @@
                                             <tr>
                                                 <th>N°</th>
                                                 <th>Echeance</th>
-                                                <th>Contribuable</th>
+                                                <th>Client</th>
                                                 <th>Net à payer</th>
                                                 <th>Versement</th>
                                                 <th>Reste à payer</th>

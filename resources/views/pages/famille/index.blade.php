@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('title')
-    <title>SIG - CFE | Departement</title>
+    <title>SIG - CFE | ligne de service</title>
 @endsection
 
 @section('style')
@@ -17,7 +17,7 @@
                         <div class="col-auto mt-4">
                             <h1 class="page-header-title">
                                 <div class="page-header-icon"><i data-feather="filter"></i></div>
-                                Liste des départements
+                                Liste des lignes de service
                             </h1>
                         </div>
                     </div>
@@ -29,7 +29,7 @@
         <div class="container-xl px-4 mt-n10" style="margin-bottom: 8rem;">
             <!-- Account details card-->
             <div class="card mb-4">
-                <div class="card-header">Ajouter un nouveau département</div>
+                <div class="card-header">Ajouter une nouvelle ligne de service</div>
                 <div class="card-body">
                     @if ($errors->any())
                         <div class="alert alert-danger">
@@ -46,7 +46,7 @@
                         <!-- Form Group (username)-->
                         <div class="row gx-3 mb-3">
                             <div class="col-md-3">
-                                <label class="small mb-1">Code département</label>
+                                <label class="small mb-1">Code ligne</label>
                                 <input class="form-control" name="code" type="text" value="{{ Request::old('code') }}"
                                     required />
                             </div>
@@ -56,7 +56,7 @@
                                     required />
                             </div>
                             <div class="col-md-6">
-                                <label class="small mb-1">Nom département</label>
+                                <label class="small mb-1">Nom ligne</label>
                                 <input class="form-control" name="libelle" type="text"
                                     value="{{ Request::old('libelle') }}" required />
                             </div>
@@ -84,7 +84,7 @@
                                     <div class="card mb-4">
                                         <div class="card-body">
                                             <div class="d-flex justify-content-between mb-3">
-                                                <h2 class="h4 mb-0">Liste des departements</h2>
+                                                <h2 class="h4 mb-0">Liste des lignes de service</h2>
                                                 <div>
                                                     <input type="text" placeholder="Rechercher..." class="form-control"
                                                         id="searchInput" onkeyup="searchTable()">
@@ -126,7 +126,7 @@
                                                                 <div class="modal-dialog">
                                                                     <div class="modal-content">
                                                                         <div class="modal-header">
-                                                                            <h5 class="modal-title" id="editFamilleModalLabel{{ $item->id }}">Modifier le département N°{{ $item->id }}</h5>
+                                                                            <h5 class="modal-title" id="editFamilleModalLabel{{ $item->id }}">Modifier la ligne de service N°{{ $item->id }}</h5>
                                                                             <button type="button" class="btn-close text-dark"
                                                                                 data-bs-dismiss="modal" aria-label="Close">X</button>
                                                                         </div>
@@ -135,7 +135,7 @@
                                                                                 @csrf
                                                                                 @method('PUT')
                                                                                 <div class="mb-3">
-                                                                                    <label class="small mb-1">Code département</label>
+                                                                                    <label class="small mb-1">Code ligne</label>
                                                                                     <input class="form-control" name="code" type="text" value="{{ $item->id }}" required />
                                                                                 </div>
                                                                                 <div class="mb-3">
@@ -143,7 +143,7 @@
                                                                                     <input class="form-control" name="taux" type="number" value="{{ $item->taux }}" required />
                                                                                 </div>
                                                                                 <div class="mb-3">
-                                                                                    <label class="small mb-1">Nom département</label>
+                                                                                    <label class="small mb-1">Nom ligne de service</label>
                                                                                     <input class="form-control" name="libelle" type="text" value="{{ $item->libelle }}" required />
                                                                                 </div>
                                                                                 <button type="submit" class="btn btn-1">
@@ -171,8 +171,8 @@
                                                                                 aria-label="Close"></button>
                                                                         </div>
                                                                         <div class="modal-body">
-                                                                            Êtes-vous sûr de vouloir supprimer ce
-                                                                            département ?
+                                                                            Êtes-vous sûr de vouloir supprimer cette
+                                                                            ligne de service ?
                                                                         </div>
                                                                         <div class="m-3">
                                                                             <form

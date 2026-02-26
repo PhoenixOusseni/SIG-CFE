@@ -209,7 +209,7 @@
                                                             <th>Code</th>
                                                             <th>Reference</th>
                                                             <th>Client</th>
-                                                            <th>Marché</th>
+                                                            <th>Projet</th>
                                                             <th>Echeance</th>
                                                             <th>Action</th>
                                                         </tr>
