@@ -63,19 +63,21 @@
             <!-- Boutons d'action -->
             <div class="card mb-4">
                 <div class="card-body">
-                    <a href="{{ route('module_ordre_recette.index') }}" class="btn btn-light">
+                    <a href="{{ route('module_ordre_recette.index') }}" class="btn btn-light btn-sm">
                         <i data-feather="arrow-left"></i>&thinsp;&thinsp; Retour à la liste
                     </a>
-                    <a href="#" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#editModal">
+                    <a href="#" class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#editModal">
                         <i data-feather="edit"></i>
                     </a>
-                    <a href="{{ url('print_ordre_recette/' . $recette->id) }}" class="btn btn-success" target="_blank">
+                    <a href="{{ url('print_ordre_recette/' . $recette->id) }}" class="btn btn-success btn-sm"
+                        target="_blank">
                         <i data-feather="printer"></i>
                     </a>
-                    <!--<a href="{{ route('print_bon_execution', ['id' => $recette->id]) }}" class="btn btn-secondary" target="_blank">-->
-                    <!--    <i data-feather="printer"></i>-->
-                    <!--</a>-->
-                    <a href="{{ url('supp_ordre_recette/' . $recette->id) }}" class="btn btn-danger"
+                    <a href="#" class="btn btn-secondary btn-sm" data-bs-toggle="modal"
+                        data-bs-target="#mailChoiceModal">
+                        <i data-feather="mail"></i>
+                    </a>
+                    <a href="{{ url('supp_ordre_recette/' . $recette->id) }}" class="btn btn-danger btn-sm"
                         onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette facture ?')">
                         <i data-feather="trash-2"></i>
                     </a>
@@ -152,7 +154,8 @@
                         <div class="col-md-4">
                             <div class="info-label">Date de la facture</div>
                             <div class="info-value">
-                                <i data-feather="calendar"></i> {{ \Carbon\Carbon::parse($recette->date)->format('d/m/Y') }}
+                                <i data-feather="calendar"></i>
+                                {{ \Carbon\Carbon::parse($recette->date)->format('d/m/Y') }}
                             </div>
                         </div>
                         <div class="col-md-4">
@@ -296,5 +299,65 @@
         </div>
         @include('pages.recette.add_element_modal')
         @include('pages.recette.editRecette_modal')
+
+        <div class="modal fade" id="mailChoiceModal" tabindex="-1" aria-labelledby="mailChoiceModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="mailChoiceModalLabel">Envoyer par messagerie</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">X</button>
+                    </div>
+                    <div class="modal-body">
+                        <label for="mailRecipient" class="form-label">Choisir le destinataire</label>
+                        <select class="form-select" id="mailRecipient">
+                            <option value="sylvain.zoungrana@forvismazars.com">sylvain.zoungrana@forvismazars.com</option>
+                            <option value="hamade.ouedraogo@forvismazars.com">hamade.ouedraogo@forvismazars.com</option>
+                            <option value="amidou.ouedraogo@forvismazars.com">amidou.ouedraogo@forvismazars.com</option>
+                            <option value="eric.kinda@forvismazars.com">eric.kinda@forvismazars.com</option>
+                        </select>
+                    </div>
+                    <div class="m-3">
+                        <a href="#" id="sendViaDefaultMail" class="btn btn-outline-secondary btn-sm">Application par défaut</a>
+                        <a href="#" id="sendViaGmail" class="btn btn-danger btn-sm" target="_blank" rel="noopener noreferrer">Gmail</a>
+                        <a href="#" id="sendViaOutlook" class="btn btn-primary btn-sm" target="_blank" rel="noopener noreferrer">Outlook</a>
+                    </div>
+                </div>
+            </div>
+        </div>
     </main>
+@endsection
+
+@section('script')
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var recipientSelect = document.getElementById('mailRecipient');
+            var defaultMailLink = document.getElementById('sendViaDefaultMail');
+            var gmailLink = document.getElementById('sendViaGmail');
+            var outlookLink = document.getElementById('sendViaOutlook');
+
+            if (!recipientSelect || !defaultMailLink || !gmailLink || !outlookLink) {
+                return;
+            }
+
+            var subject = 'Facture {{ $recette->code }}';
+            var body = 'Bonjour,\n\nVeuillez trouver les informations de la facture {{ $recette->code }}.\n\nCordialement.';
+
+            function updateMailLinks() {
+                var recipient = recipientSelect.value;
+                var encodedRecipient = encodeURIComponent(recipient);
+                var encodedSubject = encodeURIComponent(subject);
+                var encodedBody = encodeURIComponent(body);
+
+                defaultMailLink.href = 'mailto:' + recipient + '?subject=' + encodedSubject + '&body=' + encodedBody;
+                gmailLink.href = 'https://mail.google.com/mail/?view=cm&fs=1&to=' + encodedRecipient + '&su=' +
+                    encodedSubject + '&body=' + encodedBody;
+                outlookLink.href =
+                    'https://outlook.office.com/mail/deeplink/compose?to=' + encodedRecipient + '&subject=' +
+                    encodedSubject + '&body=' + encodedBody;
+            }
+
+            recipientSelect.addEventListener('change', updateMailLinks);
+            updateMailLinks();
+        });
+    </script>
 @endsection
