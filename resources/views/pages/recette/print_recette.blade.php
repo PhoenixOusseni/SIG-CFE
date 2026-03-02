@@ -21,7 +21,7 @@
         </div>
 
         <div class="text-center">
-            <h5>Département : <strong>{{ $recette->Service->libelle ?? 'N/A' }}</strong></h5>
+            <h5>Ligne de service : <strong>{{ $recette->Service->libelle ?? 'N/A' }}</strong></h5>
         </div>
 
         <div class="d-flex justify-content-between m-3">
