@@ -28,26 +28,17 @@ class CategorieController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
+            'code' => ['required', 'string', 'max:50', 'min:2', 'unique:categories,code'],
             'libelle' => ['required', 'string', 'max:150', 'min:2'],
         ]);
 
         Categorie::create([
+            'code' => $request->code,
             'libelle' => $request->libelle,
         ]);
 
         smilify('success', 'categorie enregistrée avec succès!');
         return redirect()->back();
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
     }
 
     /**
@@ -73,6 +64,7 @@ class CategorieController extends Controller
     public function update(Request $request, $id)
     {
         $validatedData = $request->validate([
+            'code' => ['required', 'string', 'max:50', 'min:2', 'unique:categories,code,' . $id],
             'libelle' => ['required', 'string', 'max:150', 'min:2'],
         ]);
 

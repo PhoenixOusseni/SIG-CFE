@@ -139,7 +139,7 @@
                             </div>
                         </div>
                         <div class="col-md-4">
-                            <div class="info-label">Catégorie</div>
+                            <div class="info-label">Ligne métier</div>
                             <div class="info-value">
                                 @if ($recette->Categorie)
                                     <strong>{{ $recette->Categorie->libelle ?? 'N/A' }}</strong>
@@ -308,18 +308,36 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">X</button>
                     </div>
                     <div class="modal-body">
-                        <label for="mailRecipient" class="form-label">Choisir le destinataire</label>
-                        <select class="form-select" id="mailRecipient">
-                            <option value="sylvain.zoungrana@forvismazars.com">sylvain.zoungrana@forvismazars.com</option>
-                            <option value="hamade.ouedraogo@forvismazars.com">hamade.ouedraogo@forvismazars.com</option>
-                            <option value="amidou.ouedraogo@forvismazars.com">amidou.ouedraogo@forvismazars.com</option>
-                            <option value="eric.kinda@forvismazars.com">eric.kinda@forvismazars.com</option>
-                        </select>
+                        <p class="text-muted mb-3">Sélectionnez un ou plusieurs destinataires :</p>
+                        <div id="mailRecipientList">
+                            <div class="form-check mb-2">
+                                <input class="form-check-input mail-recipient" type="checkbox" value="sylvain.zoungrana@forvismazars.com" id="rec1">
+                                <label class="small" for="rec1">sylvain.zoungrana@forvismazars.com</label>
+                            </div>
+                            <div class="form-check mb-2">
+                                <input class="form-check-input mail-recipient" type="checkbox" value="hamade.ouedraogo@forvismazars.com" id="rec2">
+                                <label class="small" for="rec2">hamade.ouedraogo@forvismazars.com</label>
+                            </div>
+                            <div class="form-check mb-2">
+                                <input class="form-check-input mail-recipient" type="checkbox" value="amidou.ouedraogo@forvismazars.com" id="rec3">
+                                <label class="small" for="rec3">amidou.ouedraogo@forvismazars.com</label>
+                            </div>
+                            <div class="form-check mb-2">
+                                <input class="form-check-input mail-recipient" type="checkbox" value="eric.kinda@forvismazars.com" id="rec4">
+                                <label class="small" for="rec4">eric.kinda@forvismazars.com</label>
+                            </div>
+                        </div>
+                        <div id="mailNoSelection" class="text-danger small mt-2" style="display:none;">
+                            Veuillez sélectionner au moins un destinataire.
+                        </div>
                     </div>
-                    <div class="m-3">
-                        <a href="#" id="sendViaDefaultMail" class="btn btn-outline-secondary btn-sm">Application par défaut</a>
-                        <a href="#" id="sendViaGmail" class="btn btn-danger btn-sm" target="_blank" rel="noopener noreferrer">Gmail</a>
-                        <a href="#" id="sendViaOutlook" class="btn btn-primary btn-sm" target="_blank" rel="noopener noreferrer">Outlook</a>
+                    <div class="modal-footer d-flex justify-content-start gap-2">
+                        <a href="#" id="sendViaGmail" class="btn btn-danger btn-sm" target="_blank" rel="noopener noreferrer">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" class="me-1"><path d="M24 5.457v13.909c0 .904-.732 1.636-1.636 1.636h-3.819V11.73L12 16.64l-6.545-4.91v9.273H1.636A1.636 1.636 0 0 1 0 19.366V5.457c0-2.023 2.309-3.178 3.927-1.964L5.455 4.64 12 9.548l6.545-4.907 1.528-1.148C21.69 2.28 24 3.434 24 5.457z"/></svg> Gmail
+                        </a>
+                        <a href="#" id="sendViaOutlook" class="btn btn-primary btn-sm" target="_blank" rel="noopener noreferrer">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" class="me-1"><path d="M7.88 12.04q0 .45-.11.87-.1.41-.33.74-.22.33-.58.52-.37.2-.87.2t-.85-.2q-.35-.21-.57-.55-.22-.33-.33-.75-.1-.42-.1-.86t.1-.87q.1-.43.34-.76.22-.34.59-.54.36-.2.87-.2t.86.2q.35.21.57.55.22.34.31.77.1.43.1.88zM24 12v9.38q0 .46-.33.8-.33.32-.8.32H7.13q-.46 0-.8-.33-.32-.33-.32-.8V18H1q-.41 0-.7-.3-.3-.29-.3-.7V7q0-.41.3-.7Q.58 6 1 6h6.5V2.55q0-.44.3-.75.3-.3.75-.3h12.9q.44 0 .75.3.3.3.3.75V10.85l1.24.72q.01 0 .01.01.04.02.07.06l-.01-.01q.29.26.29.63zm-22.99-.08 8.42 4.9 3.84-2.24V9.83H1.01v2.09zM8.17 18h5.17l-5.17-3.01V18zm8.22-3.05-5.99 3.49 5.99 3.49V14.95zm5.92-1.97-5.92 3.46v6.98l5.92-3.46V12.98zm-11.84-9-5.84 3.42 5.84 3.42V3.98zM18.1 7.4 12.18 3.98v6.82l5.92-3.4z"/></svg> Outlook
+                        </a>
                     </div>
                 </div>
             </div>
@@ -330,33 +348,74 @@
 @section('script')
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            var recipientSelect = document.getElementById('mailRecipient');
+            var checkboxes     = document.querySelectorAll('.mail-recipient');
             var defaultMailLink = document.getElementById('sendViaDefaultMail');
-            var gmailLink = document.getElementById('sendViaGmail');
-            var outlookLink = document.getElementById('sendViaOutlook');
-
-            if (!recipientSelect || !defaultMailLink || !gmailLink || !outlookLink) {
-                return;
-            }
+            var gmailLink       = document.getElementById('sendViaGmail');
+            var outlookLink     = document.getElementById('sendViaOutlook');
+            var noSelectionMsg  = document.getElementById('mailNoSelection');
 
             var subject = 'Facture {{ $recette->code }}';
-            var body = 'Bonjour,\n\nVeuillez trouver les informations de la facture {{ $recette->code }}.\n\nCordialement.';
+            var body    = 'Bonjour,\n\nVeuillez trouver les informations de la facture {{ $recette->code }}.\n\nCordialement.';
 
-            function updateMailLinks() {
-                var recipient = recipientSelect.value;
-                var encodedRecipient = encodeURIComponent(recipient);
-                var encodedSubject = encodeURIComponent(subject);
-                var encodedBody = encodeURIComponent(body);
+            var encodedSubject = encodeURIComponent(subject);
+            var encodedBody    = encodeURIComponent(body);
 
-                defaultMailLink.href = 'mailto:' + recipient + '?subject=' + encodedSubject + '&body=' + encodedBody;
-                gmailLink.href = 'https://mail.google.com/mail/?view=cm&fs=1&to=' + encodedRecipient + '&su=' +
-                    encodedSubject + '&body=' + encodedBody;
-                outlookLink.href =
-                    'https://outlook.office.com/mail/deeplink/compose?to=' + encodedRecipient + '&subject=' +
-                    encodedSubject + '&body=' + encodedBody;
+            function getSelectedRecipients() {
+                return Array.from(checkboxes)
+                    .filter(function(cb) { return cb.checked; })
+                    .map(function(cb) { return cb.value; });
             }
 
-            recipientSelect.addEventListener('change', updateMailLinks);
+            function updateMailLinks() {
+                var recipients = getSelectedRecipients();
+
+                if (recipients.length === 0) {
+                    noSelectionMsg.style.display = 'block';
+                    defaultMailLink.href = '#';
+                    gmailLink.href       = '#';
+                    outlookLink.href     = '#';
+                    return;
+                }
+
+                noSelectionMsg.style.display = 'none';
+
+                // mailto: accepts semicolon-separated recipients
+                var mailtoRecipients  = recipients.join(';');
+                // Gmail / Outlook accept comma-separated
+                var encodedRecipients = encodeURIComponent(recipients.join(','));
+
+                defaultMailLink.href = 'mailto:' + mailtoRecipients +
+                    '?subject=' + encodedSubject + '&body=' + encodedBody;
+
+                gmailLink.href = 'https://mail.google.com/mail/?view=cm&fs=1&to=' +
+                    encodedRecipients + '&su=' + encodedSubject + '&body=' + encodedBody;
+
+                outlookLink.href = 'https://outlook.office.com/mail/deeplink/compose?to=' +
+                    encodedRecipients + '&subject=' + encodedSubject + '&body=' + encodedBody;
+            }
+
+            // Intercept clicks to block navigation when no recipient is selected
+            [defaultMailLink, gmailLink, outlookLink].forEach(function(btn) {
+                btn.addEventListener('click', function(e) {
+                    if (getSelectedRecipients().length === 0) {
+                        e.preventDefault();
+                        noSelectionMsg.style.display = 'block';
+                    }
+                });
+            });
+
+            // Reset checkboxes when the modal is closed
+            var mailModal = document.getElementById('mailChoiceModal');
+            mailModal.addEventListener('hidden.bs.modal', function() {
+                checkboxes.forEach(function(cb) { cb.checked = false; });
+                noSelectionMsg.style.display = 'none';
+                updateMailLinks();
+            });
+
+            checkboxes.forEach(function(cb) {
+                cb.addEventListener('change', updateMailLinks);
+            });
+
             updateMailLinks();
         });
     </script>

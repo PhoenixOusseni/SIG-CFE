@@ -17,7 +17,7 @@
                         <div class="col-auto mt-4">
                             <h1 class="page-header-title">
                                 <div class="page-header-icon"><i data-feather="filter"></i></div>
-                                Liste des categories
+                                Liste des lignes métiers
                             </h1>
                         </div>
                     </div>
@@ -29,7 +29,7 @@
         <div class="container-xl px-4 mt-n10" style="margin-bottom: 8rem;">
             <!-- Account details card-->
             <div class="card mb-4">
-                <div class="card-header">Ajouter une nouvelle catégorie</div>
+                <div class="card-header">Ajouter une nouvelle ligne métier</div>
                 <div class="card-body">
                     @if ($errors->any())
                         <div class="alert alert-danger">
@@ -46,9 +46,14 @@
                         <!-- Form Group (username)-->
                         <div class="row gx-3 mb-3">
                             <div class="col-md-6">
-                                <label class="small mb-1" for="inputFirstName">Categorie</label>
+                                <label class="small mb-1" for="inputFirstName">Code</label>
+                                <input class="form-control" name="code" id="inputFirstName" type="text"
+                                    placeholder="Code de la ligne métier" value="{{ Request::old('code') }}" required />
+                            </div>
+                            <div class="col-md-6">
+                                <label class="small mb-1" for="inputFirstName">Ligne métier</label>
                                 <input class="form-control" name="libelle" id="inputFirstName" type="text"
-                                    placeholder="Nom de la catégorie" value="{{ Request::old('libelle') }}" required />
+                                    placeholder="Nom de la ligne métier" value="{{ Request::old('libelle') }}" required />
                             </div>
                         </div>
                         <!-- Save changes button-->
@@ -73,7 +78,7 @@
                                     <div class="card mb-4">
                                         <div class="card-body">
                                             <div class="d-flex justify-content-between mb-3">
-                                                <h2 class="h4 mb-0">Liste des catégories</h2>
+                                                <h2 class="h4 mb-0">Liste des lignes métier</h2>
                                                 <div>
                                                     <input type="text" placeholder="Rechercher..." class="form-control"
                                                         id="searchInput" onkeyup="searchTable()">
@@ -91,7 +96,7 @@
                                                     <tbody>
                                                         @foreach ($collection as $item)
                                                             <tr>
-                                                                <td>{{ $item->id }}</td>
+                                                                <td>{{ $item->code }}</td>
                                                                 <td>{{ $item->libelle }}</td>
                                                                 <td class="d-flex align-items-center justify-content-center">
                                                                     <a href="#" data-bs-toggle="modal" data-bs-target="#editCategorieModal{{ $item->id }}">
@@ -108,13 +113,17 @@
                                                                 <div class="modal-dialog modal-dialog-centered">
                                                                     <div class="modal-content">
                                                                         <div class="modal-header header-gradient">
-                                                                            <h5 class="modal-title text-white" id="editModalLabel{{ $item->id }}">Modifier la catégorie</h5>
+                                                                            <h5 class="modal-title text-white" id="editModalLabel{{ $item->id }}">Modifier la ligne métier</h5>
                                                                             <button type="button" class="btn-close text-white" data-bs-dismiss="modal" aria-label="Close">X</button>
                                                                         </div>
                                                                         <div class="modal-body">
                                                                             <form action="{{ route('module_categorie.update', [$item->id]) }}" method="POST">
                                                                                 @csrf
                                                                                 @method('PUT')
+                                                                                <div class="mb-3">
+                                                                                    <label for="code{{ $item->id }}" class="form-label">Code</label>
+                                                                                    <input type="text" class="form-control" id="code{{ $item->id }}" name="code" value="{{ $item->code }}" required>
+                                                                                </div>
                                                                                 <div class="mb-3">
                                                                                     <label for="libelle{{ $item->id }}" class="form-label">Libellé</label>
                                                                                     <input type="text" class="form-control" id="libelle{{ $item->id }}" name="libelle" value="{{ $item->libelle }}" required>

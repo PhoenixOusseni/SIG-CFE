@@ -55,9 +55,9 @@
                                         </div>
                                         <div class="col-lg-3 col-md-12">
                                             <div class="mb-3">
-                                                <label class="small mb-1">Categorie</label>
+                                                <label class="small mb-1">Ligne métier</label>
                                                 <select name="categorie_id" class="form-select">
-                                                    <option>Sélectionner la catégorie</option>
+                                                    <option>Sélectionner la ligne métier</option>
                                                     @foreach (App\Models\Categorie::all() as $categorie)
                                                         <option value="{{ $categorie->id }}">{{ $categorie->libelle }}
                                                         </option>

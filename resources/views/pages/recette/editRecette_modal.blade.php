@@ -34,9 +34,9 @@
                                     </div>
                                     <div class="col-lg-3 col-md-12">
                                         <div class="mb-3">
-                                            <label class="small mb-1">Categorie</label>
+                                            <label class="small mb-1">Ligne métier</label>
                                             <select name="categorie_id" class="form-select">
-                                                <option>Sélectionner la catégorie</option>
+                                                <option>Sélectionner la ligne métier</option>
                                                 @foreach (App\Models\Categorie::all() as $categorie)
                                                     <option value="{{ $categorie->id }}"
                                                         {{ $recette->categorie_id == $categorie->id ? 'selected' : '' }}>
@@ -225,9 +225,6 @@
                     <div class="mt-3">
                         <button class="btn btn-1" type="submit">
                             <i data-feather="save"></i>&thinsp; Enregistrer les modifications
-                        </button>
-                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
-                            <i data-feather="x"></i>&thinsp; Annuler
                         </button>
                     </div>
                 </form>

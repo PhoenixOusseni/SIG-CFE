@@ -41,7 +41,7 @@
 
                                 <a class="nav-link" href="{{ route('module_famille.index') }}">ligne de service</a>
                                 <a class="nav-link" href="{{ route('module_base_taxable.index') }}">prestation</a>
-                                <a class="nav-link" href="{{ route('module_categorie.index') }}">catégories</a>
+                                <a class="nav-link" href="{{ route('module_categorie.index') }}">Ligne métier</a>
                                 <a class="nav-link" href="{{ route('module_contribuable.index') }}">clients</a>
                                 <a class="nav-link" href="{{ route('module_fornisseur.index') }}">fournisseurs</a>
                             </nav>
