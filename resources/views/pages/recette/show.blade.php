@@ -348,11 +348,10 @@
 @section('script')
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            var checkboxes     = document.querySelectorAll('.mail-recipient');
-            var defaultMailLink = document.getElementById('sendViaDefaultMail');
-            var gmailLink       = document.getElementById('sendViaGmail');
-            var outlookLink     = document.getElementById('sendViaOutlook');
-            var noSelectionMsg  = document.getElementById('mailNoSelection');
+            var checkboxes    = document.querySelectorAll('.mail-recipient');
+            var gmailLink     = document.getElementById('sendViaGmail');
+            var outlookLink   = document.getElementById('sendViaOutlook');
+            var noSelectionMsg = document.getElementById('mailNoSelection');
 
             var subject = 'Facture {{ $recette->code }}';
             var body    = 'Bonjour,\n\nVeuillez trouver les informations de la facture {{ $recette->code }}.\n\nCordialement.';
@@ -371,21 +370,15 @@
 
                 if (recipients.length === 0) {
                     noSelectionMsg.style.display = 'block';
-                    defaultMailLink.href = '#';
-                    gmailLink.href       = '#';
-                    outlookLink.href     = '#';
+                    gmailLink.href   = '#';
+                    outlookLink.href = '#';
                     return;
                 }
 
                 noSelectionMsg.style.display = 'none';
 
-                // mailto: accepts semicolon-separated recipients
-                var mailtoRecipients  = recipients.join(';');
                 // Gmail / Outlook accept comma-separated
                 var encodedRecipients = encodeURIComponent(recipients.join(','));
-
-                defaultMailLink.href = 'mailto:' + mailtoRecipients +
-                    '?subject=' + encodedSubject + '&body=' + encodedBody;
 
                 gmailLink.href = 'https://mail.google.com/mail/?view=cm&fs=1&to=' +
                     encodedRecipients + '&su=' + encodedSubject + '&body=' + encodedBody;
@@ -395,7 +388,7 @@
             }
 
             // Intercept clicks to block navigation when no recipient is selected
-            [defaultMailLink, gmailLink, outlookLink].forEach(function(btn) {
+            [gmailLink, outlookLink].forEach(function(btn) {
                 btn.addEventListener('click', function(e) {
                     if (getSelectedRecipients().length === 0) {
                         e.preventDefault();
