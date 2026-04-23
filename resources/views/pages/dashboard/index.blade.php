@@ -53,25 +53,56 @@
                 <div class="col-xxl-8 col-xl-6 mb-4">
                     <div class="card card-header-actions h-100">
                         <div class="card-header">
-                            Facture fournisseur en attente de réglement
+                            Facture client en attente de recouvrement
                         </div>
                         <div class="card-body">
                             <div class="timeline timeline-xs">
                                 <!-- Timeline Item 1-->
-                                @foreach ($collection as $item)
+                                @forelse ($collection as $item)
                                     <div class="timeline-item">
                                         <div class="timeline-item-marker">
-                                            <div class="timeline-item-marker-text">{{ $item->id }}</div>
+                                            <div class="timeline-item-marker-text">{{ $loop->iteration }}</div>
                                             <div class="timeline-item-marker-indicator bg-green"></div>
                                         </div>
-                                        <div class="timeline-item-content">
-                                            {{ $item->Fournisseur->libelle }}
-                                            <a class="fw-bold text-dark" href="#!">#{{ $item->date }}</a>
-                                            {{ $item->BaseTaxable->libelle }}
-                                            <a class="fw-bold text-dark" href="#!">#140.000 FCFA</a>
+                                        <div class="timeline-item-content pt-1 pb-3">
+                                            <div class="d-flex align-items-center justify-content-between">
+                                                <span class="fw-bold text-primary small">
+                                                    <i class="fa fa-file-text-o me-1"></i>
+                                                    {{ $item->reference }}
+                                                </span>
+                                                <span class="badge bg-warning text-dark small">
+                                                    <i class="fa fa-clock-o me-1"></i>
+                                                    En recouvrement
+                                                </span>
+                                            </div>
+                                            <div class="d-flex flex-wrap gap-3 mt-1 text-muted small">
+                                                <span>
+                                                    <i class="fa fa-briefcase me-1 text-secondary"></i>
+                                                    {{ $item->Marche->designation ?? 'N/A' }}
+                                                </span>
+                                                <span>
+                                                    <i class="fa fa-calendar me-1 text-secondary"></i>
+                                                    {{ \Carbon\Carbon::parse($item->echeance)->format('d/m/Y') }}
+                                                </span>
+                                                <span>
+                                                    <i class="fa fa-user me-1 text-secondary"></i>
+                                                    {{ $item->Contribuable->assujeti ?? 'N/A' }}
+                                                </span>
+                                                <span class="fw-semibold text-success">
+                                                    <i class="fa fa-money me-1"></i>
+                                                    {{ number_format($item->ElementRecette->sum('montant'), 0, ',', ' ') }} FCFA
+                                                </span>
+                                            </div>
+                                            <div class="mt-2">
+                                                <a href="{{ route('module_ordre_recette.show', $item->id) }}" class="btn btn-xs btn-outline-primary py-0 px-2" style="font-size:0.75rem">
+                                                    <i class="fa fa-eye me-1"></i> Voir détail
+                                                </a>
+                                            </div>
                                         </div>
                                     </div>
-                                @endforeach
+                                @empty
+                                    <p class="text-muted text-center small mt-3">Aucune facture en attente de recouvrement.</p>
+                                @endforelse
                             </div>
                         </div>
                     </div>

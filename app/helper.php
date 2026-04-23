@@ -76,10 +76,13 @@ function convertirNombreEnLettres($nombre) {
 
         if ($dizaine == 7 || $dizaine == 9) {
             $resultat .= $dizaines[$dizaine - 1];
-            if ($unite == 1) {
-                $resultat .= ' et ' . $exceptions[$unite + 10 - ($dizaine * 10)];
+            if ($unite == 1 && $dizaine == 7) {
+                $resultat .= ' et ' . $exceptions[1];
+            } elseif ($unite <= 6) {
+                $resultat .= '-' . $exceptions[$unite];
             } else {
-                $resultat .= '-' . $exceptions[$unite + 10 - (($dizaine - 1) * 10)];
+                // 77, 78, 79, 97, 98, 99 → dix-sept, dix-huit, dix-neuf
+                $resultat .= '-dix-' . $unites[$unite];
             }
         } elseif ($dizaine == 8) {
             $resultat .= $dizaines[$dizaine];

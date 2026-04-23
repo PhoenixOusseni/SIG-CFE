@@ -30,8 +30,7 @@
 
                     <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse"
                         data-bs-target="#collapsePagesPara" aria-expanded="false" aria-controls="collapsePagesPA">
-                        <div class="nav-link-icon"><i data-feather="settings"></i></div>
-                        Paramètres
+                        <div class="nav-link-icon"><i data-feather="settings"></i></div>Paramètres
                         <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                     </a>
                     <div class="collapse" id="collapsePagesPara" data-bs-parent="#accordionSidenav">
@@ -39,12 +38,11 @@
                             <a class="nav-link" href="{{ route('gestion_service.index') }}">Service</a>
                             <a class="nav-link" href="{{ route('gestion_personnel.index') }}">Personnel</a>
                             <a class="nav-link" href="{{ route('gestion_marche.index') }}">Projet</a>
-
                             <a class="nav-link" href="{{ route('module_famille.index') }}">ligne de service</a>
                             <a class="nav-link" href="{{ route('module_base_taxable.index') }}">prestation</a>
                             <a class="nav-link" href="{{ route('module_categorie.index') }}">Ligne métier</a>
                             <a class="nav-link" href="{{ route('module_contribuable.index') }}">clients</a>
-                            <a class="nav-link" href="{{ route('module_fornisseur.index') }}">fournisseurs</a>
+                            {{-- <a class="nav-link" href="{{ route('module_fornisseur.index') }}">fournisseurs</a> --}}
                         </nav>
                     </div>
 
@@ -59,10 +57,10 @@
                     <div class="collapse" id="collapsePages" data-bs-parent="#accordionSidenav">
                         <nav class="sidenav-menu-nested nav">
                             <a class="nav-link" href="{{ route('module_ordre_recette.index') }}">préparation</a>
-                            <a class="nav-link" href="{{ route('valider') }}">validation</a>
-                            <a class="nav-link" href="{{ route('mise_reglement') }}">mise en règlement</a>
                             <a class="nav-link" href="{{ route('all_recette') }}">liste des factures</a>
                             @if (in_array(Auth::user()->role, ['Administrateur', 'Superviseur']))
+                                <a class="nav-link" href="{{ route('valider') }}">validation</a>
+                                <a class="nav-link" href="{{ route('mise_reglement') }}">mise en règlement</a>
                                 <a class="nav-link" href="{{ route('reglement_recette') }}">règlements</a>
                                 <a class="nav-link" href="{{ route('module_reglement.index') }}">
                                     liste des règlements</a>
@@ -71,7 +69,7 @@
                         </nav>
                     </div>
 
-                    <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse"
+                    {{-- <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse"
                         data-bs-target="#pagesCollapseErrorEB" aria-expanded="false" aria-controls="pagesCollapseError">
                         <div class="nav-link-icon"><i data-feather="users"></i></div>
                         Facture sous-traitant
@@ -81,16 +79,15 @@
                         <nav class="sidenav-menu-nested nav">
                             <a class="nav-link"
                                 href="{{ route('module_facture_fournisseur.index') }}">préparation</a>
-                            <a class="nav-link" href="{{ route('valider_facture') }}">validation</a>
-                            <a class="nav-link" href="{{ route('mise_reglement_facture') }}">mise en
-                                règlement</a>
+                            <a class="nav-link" href="{{ route('all_facture') }}">liste des factures</a>
                             @if (in_array(Auth::user()->role, ['Administrateur', 'Superviseur']))
+                                <a class="nav-link" href="{{ route('valider_facture') }}">validation</a>
+                                <a class="nav-link" href="{{ route('mise_reglement_facture') }}">mise en règlement</a>
                                 <a class="nav-link" href="{{ route('reglement_facture') }}">règlements</a>
                                 <a class="nav-link" href="{{ route('module_reglement_fournisseur.index') }}">liste des règlements</a>
                             @endif
-                            <a class="nav-link" href="{{ route('all_facture') }}">liste des factures</a>
                         </nav>
-                    </div>
+                    </div> --}}
 
                     <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse"
                         data-bs-target="#pagesCollapseErrorEBS" aria-expanded="false"
@@ -102,17 +99,17 @@
                     <div class="collapse" id="pagesCollapseErrorEBS" data-bs-parent="#accordionSidenav">
                         <nav class="sidenav-menu-nested nav">
                             <a class="nav-link" href="{{ route('solde_client') }}">Solde client</a>
-                            <a class="nav-link" href="{{ route('solde_fournisseur') }}">Solde fournisseur</a>
-                            <a class="nav-link" href="">Solde sous-traitant</a>
+                            {{-- <a class="nav-link" href="{{ route('solde_fournisseur') }}">Solde fournisseur</a> --}}
+                            {{-- <a class="nav-link" href="">Solde sous-traitant</a> --}}
                             <a class="nav-link" href="{{ route('marche_global') }}">Etat marchés global</a>
                             <a class="nav-link" href="{{ route('marche_detaille') }}">Détail marchés /
                                 Facture</a>
                             <a class="nav-link" href="{{ route('facture_par_categorie') }}">Etat facture par
-                                catégorie</a>
+                                ligne de metier</a>
                             <a class="nav-link" href="{{ route('facture_par_departement') }}">Etat facture par
-                                département</a>
+                                ligne de service</a>
                         </nav>
-                    </div>
+                    </div> 
 
                     {{-- <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse"
                             data-bs-target="#pagesCollapseErrorEval" aria-expanded="false"

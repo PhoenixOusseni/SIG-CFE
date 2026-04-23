@@ -103,18 +103,20 @@
                                                     <tbody>
                                                         @foreach ($collection as $item)
                                                             <tr>
-                                                                <td>{{ $item->id }}</td>
+                                                                <td>{{ $item->code }}</td>
                                                                 <td>{{ $item->libelle }}</td>
                                                                 <td>{{ $item->taux }}</td>
                                                                 <td
                                                                     class="d-flex align-items-center justify-content-center">
                                                                     <a href="#" data-bs-toggle="modal"
                                                                         data-bs-target="#editFamilleModal{{ $item->id }}">
-                                                                        <i class="fa fa-edit text-warning mx-2" aria-hidden="true"></i>
+                                                                        <i class="fa fa-edit text-warning mx-2"
+                                                                            aria-hidden="true"></i>
                                                                     </a>
                                                                     <a href="#" data-bs-toggle="modal"
                                                                         data-bs-target="#deleteFamilleModal{{ $item->id }}">
-                                                                        <i class="fa fa-trash text-danger mx-2" aria-hidden="true"></i>
+                                                                        <i class="fa fa-trash text-danger mx-2"
+                                                                            aria-hidden="true"></i>
                                                                     </a>
                                                                 </td>
                                                             </tr>
@@ -122,32 +124,52 @@
                                                             <!-- edit modal -->
                                                             <div class="modal fade"
                                                                 id="editFamilleModal{{ $item->id }}" tabindex="-1"
-                                                                aria-labelledby="editFamilleModalLabel{{ $item->id }}" aria-hidden="true">
+                                                                aria-labelledby="editFamilleModalLabel{{ $item->id }}"
+                                                                aria-hidden="true">
                                                                 <div class="modal-dialog">
                                                                     <div class="modal-content">
                                                                         <div class="modal-header">
-                                                                            <h5 class="modal-title" id="editFamilleModalLabel{{ $item->id }}">Modifier la ligne de service N°{{ $item->id }}</h5>
-                                                                            <button type="button" class="btn-close text-dark"
-                                                                                data-bs-dismiss="modal" aria-label="Close">X</button>
+                                                                            <h5 class="modal-title"
+                                                                                id="editFamilleModalLabel{{ $item->id }}">
+                                                                                Modifier la ligne de service N°{{ $item->id }}</h5>
+                                                                            <button type="button"
+                                                                                class="btn-close text-dark"
+                                                                                data-bs-dismiss="modal"
+                                                                                aria-label="Close">X</button>
                                                                         </div>
                                                                         <div class="modal-body">
-                                                                            <form action="{{ route('module_famille.update', $item->id) }}" method="POST">
+                                                                            <form
+                                                                                action="{{ route('module_famille.update', $item->id) }}"
+                                                                                method="POST">
                                                                                 @csrf
                                                                                 @method('PUT')
                                                                                 <div class="mb-3">
                                                                                     <label class="small mb-1">Code ligne</label>
-                                                                                    <input class="form-control" name="code" type="text" value="{{ $item->id }}" required />
+                                                                                    <input class="form-control"
+                                                                                        name="code" type="text"
+                                                                                        value="{{ $item->id }}"
+                                                                                        required />
                                                                                 </div>
                                                                                 <div class="mb-3">
-                                                                                    <label class="small mb-1">Taux (%)</label>
-                                                                                    <input class="form-control" name="taux" type="number" value="{{ $item->taux }}" required />
+                                                                                    <label class="small mb-1">Taux
+                                                                                        (%)
+                                                                                    </label>
+                                                                                    <input class="form-control"
+                                                                                        name="taux" type="number"
+                                                                                        value="{{ $item->taux }}"
+                                                                                        required />
                                                                                 </div>
                                                                                 <div class="mb-3">
-                                                                                    <label class="small mb-1">Nom ligne de service</label>
-                                                                                    <input class="form-control" name="libelle" type="text" value="{{ $item->libelle }}" required />
+                                                                                    <label class="small mb-1">Nom ligne de
+                                                                                        service</label>
+                                                                                    <input class="form-control"
+                                                                                        name="libelle" type="text"
+                                                                                        value="{{ $item->libelle }}"
+                                                                                        required />
                                                                                 </div>
                                                                                 <button type="submit" class="btn btn-1">
-                                                                                    <i class="fas fa-save"></i>&nbsp; Enregistrer la modification
+                                                                                    <i class="fas fa-save"></i>&nbsp;
+                                                                                    Enregistrer la modification
                                                                                 </button>
                                                                             </form>
                                                                         </div>

@@ -44,7 +44,6 @@
             <table class="table table-bordered border-dark">
                 <thead>
                     <tr style="background-color: rgb(193, 198, 203)">
-                        <th>Compte</th>
                         <th>Désignation</th>
                         <th class="text-center">Qte</th>
                         <th class="text-center">P.Unitaire</th>
@@ -54,7 +53,6 @@
                 <tbody>
                     @foreach ($elements as $elmnt)
                         <tr>
-                            <td>{{ $elmnt->Base->code }}</td>
                             <td>{{ $elmnt->designation }}</td>
                             <td class="text-center">{{ $elmnt->quantite }}</td>
                             <td class="text-center">{{ $elmnt->prix_unitaire }}</td>
