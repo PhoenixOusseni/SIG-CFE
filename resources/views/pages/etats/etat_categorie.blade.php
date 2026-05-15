@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('title')
-    <title>SIG - CFE | État des recettes par catégorie</title>
+    <title>SIG - CFE | État facture par ligne de service</title>
 @endsection
 
 @section('style')
@@ -223,9 +223,9 @@
                     <div class="col-auto mt-4">
                         <h1 class="page-header-title">
                             <div class="page-header-icon"><i data-feather="pie-chart"></i></div>
-                            État des recettes par catégorie
+                            État des factures par ligne de service
                         </h1>
-                        <div class="page-header-subtitle">Analysez les recettes par catégorie</div>
+                        <div class="page-header-subtitle">Analysez les factures par ligne de service</div>
                     </div>
                 </div>
             </div>
@@ -246,9 +246,9 @@
                     <div class="row">
                         <!-- Sélection de la catégorie -->
                         <div class="col-md-4 mb-3">
-                            <label for="categorie_id" class="form-label">Sélectionner une catégorie</label>
+                            <label for="categorie_id" class="form-label">Sélectionner une ligne de service</label>
                             <select name="categorie_id" id="categorie_id" class="form-select">
-                                <option value="">-- Toutes les catégories --</option>
+                                <option value="">-- Toutes les lignes de service --</option>
                                 @foreach ($categories as $categorie)
                                     <option value="{{ $categorie->id }}"
                                         {{ request('categorie_id') == $categorie->id ? 'selected' : '' }}>

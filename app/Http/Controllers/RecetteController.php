@@ -149,7 +149,6 @@ class RecetteController extends Controller
                 'echeance' => $request->echeance,
                 'users_id' => $request->users_id,
                 'signataires_id' => $request->signataires_id,
-                'marche_id' => $request->marche_id,
                 'categorie_id' => $request->categorie_id,
                 'service_id' => $request->service_id,
                 'users_id' => $request->users_id,

@@ -38,8 +38,12 @@
                             <div class="card-body">
                                 <fieldset class="w-100 p-2" style="border-radius: 5px; background: rgb(234, 233, 233)">
                                     <div class="row">
-                                        <input class="form-control" name="statut" type="text" value="en attente" hidden />
-                                        <input class="form-control" name="users_id" type="text" value="{{ Auth::user()->id }}" hidden />
+                                        <input class="form-control" name="statut" type="text" value="en attente"
+                                            hidden />
+                                        <input class="form-control" name="users_id" type="text"
+                                            value="{{ Auth::user()->id }}" hidden />
+                                        <input type="text" name="users_id" class="form-control"
+                                            value="{{ Auth::user()->id }}" hidden>
                                         <div class="col-lg-4 col-md-12">
                                             <div class="mb-3">
                                                 <label class="small mb-1">Client</label>
@@ -53,7 +57,7 @@
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="col-lg-3 col-md-12">
+                                        <div class="col-lg-4 col-md-12">
                                             <div class="mb-3">
                                                 <label class="small mb-1">Ligne métier</label>
                                                 <select name="categorie_id" class="form-select">
@@ -65,13 +69,8 @@
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="col-lg-3 col-md-12">
-                                            <div class="mb-3">
-                                                <label class="small mb-1">Signataire ({{ Auth::user()->login }})</label>
-                                                <input type="text" name="users_id" class="form-control" value="{{ Auth::user()->id }}" readonly>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-2 col-md-12">
+
+                                        <div class="col-lg-4 col-md-12">
                                             <div class="mb-3">
                                                 <label class="small mb-1">Echeance de paiement</label>
                                                 <input class="form-control" type="date" name="echeance" />
@@ -93,12 +92,12 @@
                                         </div>
                                         <div class="col-lg-4 col-md-12">
                                             <div class="mb-3">
-                                                <label class="small mb-1">Projet</label>
-                                                <select name="marche_id" class="form-select">
-                                                    <option value="">Sélectionner le Projet</option>
-                                                    @foreach ($marches as $marche)
-                                                        <option value="{{ $marche->id }}">
-                                                            {{ $marche->designation }}
+                                                <label class="small mb-1">Ligne de service</label>
+                                                <select name="service_id" class="form-select" required>
+                                                    <option value="">Sélectionner la ligne de service</option>
+                                                    @foreach (App\Models\Service::all() as $service)
+                                                        <option value="{{ $service->id }}">
+                                                            {{ $service->libelle }}
                                                         </option>
                                                     @endforeach
                                                 </select>
@@ -111,21 +110,6 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="row">
-                                        <div class="col-lg-4 col-md-12">
-                                            <div class="mb-3">
-                                                <label class="small mb-1">Ligne de service</label>
-                                                <select name="service_id" class="form-select" required>
-                                                    <option value="">Sélectionner la ligne de service</option>
-                                                    @foreach (App\Models\Service::all() as $service)
-                                                        <option value="{{ $service->id }}">
-                                                            {{ $service->libelle }}
-                                                        </option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
                                 </fieldset>
 
                                 <fieldset class="w-100 p-2 mt-3" style="border-radius: 5px; background: #bdcff25c">
@@ -134,11 +118,12 @@
                                         <div class="row mb-3 element-row">
                                             <div class="col-lg-3 col-md-12">
                                                 <div class="mb-3">
-                                                    <label class="small mb-1">Compte</label>
-                                                    <select class="form-select base-taxable-select" name="base_taxables_id[]">
-                                                        <option value="">Sélectionner un compte</option>
+                                                    <label class="small mb-1">Référence</label>
+                                                    <select class="form-select base-taxable-select"
+                                                        name="base_taxables_id[]">
+                                                        <option value="">Sélectionner une référence</option>
                                                         @foreach ($bases as $item)
-                                                            <option value="{{ $item->id }}">{{ $item->code }} - {{ $item->libelle }}</option>
+                                                            <option value="{{ $item->id }}">{{ $item->libelle }}</option>
                                                         @endforeach
                                                     </select>
                                                 </div>
@@ -163,8 +148,8 @@
                                             </div>
                                             <div class="col-lg-1 d-flex align-items-end">
                                                 <div class="mb-3">
-                                                    <button type="button" class="btn btn-1 btn-sm me-2" id="addRowBtn"><i
-                                                        data-feather="plus"></i></button>
+                                                    <button type="button" class="btn btn-1 btn-sm me-2"
+                                                        id="addRowBtn"><i data-feather="plus"></i></button>
                                                 </div>
                                             </div>
                                         </div>
@@ -198,8 +183,8 @@
                                             <div class="d-flex justify-content-between mb-3">
                                                 <h2 class="h4 mb-0">Liste des factures</h2>
                                                 <div>
-                                                    <input type="text" placeholder="Rechercher..." class="form-control"
-                                                        id="searchInput" onkeyup="searchTable()">
+                                                    <input type="text" placeholder="Rechercher..."
+                                                        class="form-control" id="searchInput" onkeyup="searchTable()">
                                                 </div>
                                             </div>
                                             <div class="sbp-preview-content">
@@ -209,7 +194,6 @@
                                                             <th>Code</th>
                                                             <th>Reference</th>
                                                             <th>Client</th>
-                                                            <th>Projet</th>
                                                             <th>Echeance</th>
                                                             <th>Action</th>
                                                         </tr>
@@ -220,11 +204,12 @@
                                                                 <td>{{ $recette->code }}</td>
                                                                 <td>{{ $recette->reference }}</td>
                                                                 <td>{{ $recette->Contribuable->assujeti }}</td>
-                                                                <td>{{ $recette->Marche->designation ?? 'N/A' }}</td>
                                                                 <td>{{ $recette->echeance }}</td>
                                                                 <td class="d-flex justify-content-center">
-                                                                    <a href="{{ route('module_ordre_recette.show', [$recette->id]) }}">
-                                                                        <i class="fa fa-eye text-success" aria-hidden="true"></i>
+                                                                    <a
+                                                                        href="{{ route('module_ordre_recette.show', [$recette->id]) }}">
+                                                                        <i class="fa fa-eye text-success"
+                                                                            aria-hidden="true"></i>
                                                                     </a>
                                                                 </td>
                                                             </tr>

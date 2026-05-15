@@ -67,6 +67,7 @@
     @include('partials.script')
     @notifyJs
     @yield('script')
+    @stack('scripts')
 </body>
 
 </html>

@@ -37,9 +37,9 @@
                         <nav class="sidenav-menu-nested nav">
                             <a class="nav-link" href="{{ route('gestion_service.index') }}">Service</a>
                             <a class="nav-link" href="{{ route('gestion_personnel.index') }}">Personnel</a>
-                            <a class="nav-link" href="{{ route('gestion_marche.index') }}">Projet</a>
+                            {{-- <a class="nav-link" href="{{ route('gestion_marche.index') }}">Projet</a> --}}
                             <a class="nav-link" href="{{ route('module_famille.index') }}">ligne de service</a>
-                            <a class="nav-link" href="{{ route('module_base_taxable.index') }}">prestation</a>
+                            {{-- <a class="nav-link" href="{{ route('module_base_taxable.index') }}">prestation</a> --}}
                             <a class="nav-link" href="{{ route('module_categorie.index') }}">Ligne métier</a>
                             <a class="nav-link" href="{{ route('module_contribuable.index') }}">clients</a>
                             {{-- <a class="nav-link" href="{{ route('module_fornisseur.index') }}">fournisseurs</a> --}}
@@ -101,15 +101,15 @@
                             <a class="nav-link" href="{{ route('solde_client') }}">Solde client</a>
                             {{-- <a class="nav-link" href="{{ route('solde_fournisseur') }}">Solde fournisseur</a> --}}
                             {{-- <a class="nav-link" href="">Solde sous-traitant</a> --}}
-                            <a class="nav-link" href="{{ route('marche_global') }}">Etat marchés global</a>
+                            {{-- <a class="nav-link" href="{{ route('marche_global') }}">Etat marchés global</a>
                             <a class="nav-link" href="{{ route('marche_detaille') }}">Détail marchés /
-                                Facture</a>
+                                Facture</a> --}}
                             <a class="nav-link" href="{{ route('facture_par_categorie') }}">Etat facture par
                                 ligne de metier</a>
                             <a class="nav-link" href="{{ route('facture_par_departement') }}">Etat facture par
                                 ligne de service</a>
                         </nav>
-                    </div> 
+                    </div>
 
                     {{-- <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse"
                             data-bs-target="#pagesCollapseErrorEval" aria-expanded="false"

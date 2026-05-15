@@ -17,9 +17,51 @@ use App\Models\Diligence;
 use App\Models\Categorie;
 use App\Models\Service;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
 
 class EtatController extends Controller
 {
+    private function applyRecetteDateFilters($query, Request $request, bool $useTablePrefix = false)
+    {
+        $createdAtColumn = $useTablePrefix ? 'recettes.created_at' : 'created_at';
+        static $hasPeriodeDebut = null;
+        static $hasPeriodeFin = null;
+
+        if ($hasPeriodeDebut === null) {
+            $hasPeriodeDebut = Schema::hasColumn('recettes', 'periode_debut');
+        }
+
+        if ($hasPeriodeFin === null) {
+            $hasPeriodeFin = Schema::hasColumn('recettes', 'periode_fin');
+        }
+
+        if ($request->filled('date_debut')) {
+            if ($hasPeriodeDebut) {
+                $periodeDebutColumn = $useTablePrefix ? 'recettes.periode_debut' : 'periode_debut';
+                $query->where(function ($q) use ($periodeDebutColumn, $createdAtColumn, $request) {
+                    $q->where($periodeDebutColumn, '>=', $request->date_debut)
+                        ->orWhereDate($createdAtColumn, '>=', $request->date_debut);
+                });
+            } else {
+                $query->whereDate($createdAtColumn, '>=', $request->date_debut);
+            }
+        }
+
+        if ($request->filled('date_fin')) {
+            if ($hasPeriodeFin) {
+                $periodeFinColumn = $useTablePrefix ? 'recettes.periode_fin' : 'periode_fin';
+                $query->where(function ($q) use ($periodeFinColumn, $createdAtColumn, $request) {
+                    $q->where($periodeFinColumn, '<=', $request->date_fin)
+                        ->orWhereDate($createdAtColumn, '<=', $request->date_fin);
+                });
+            } else {
+                $query->whereDate($createdAtColumn, '<=', $request->date_fin);
+            }
+        }
+
+        return $query;
+    }
+
     // etat solde clients
     public function solde_client(Request $request)
     {
@@ -41,21 +83,7 @@ class EtatController extends Controller
                 $query->where('recettes.contribuables_id', $request->contribuable_id);
             }
 
-            // Filtrer par date de début (période_debut ou created_at)
-            if ($request->filled('date_debut')) {
-                $query->where(function($q) use ($request) {
-                    $q->where('recettes.periode_debut', '>=', $request->date_debut)
-                      ->orWhere('recettes.created_at', '>=', $request->date_debut);
-                });
-            }
-
-            // Filtrer par date de fin (période_fin ou created_at)
-            if ($request->filled('date_fin')) {
-                $query->where(function($q) use ($request) {
-                    $q->where('recettes.periode_fin', '<=', $request->date_fin)
-                      ->orWhere('recettes.created_at', '<=', $request->date_fin);
-                });
-            }
+            $this->applyRecetteDateFilters($query, $request, true);
 
             $query->groupBy('recettes.contribuables_id');
 
@@ -69,19 +97,7 @@ class EtatController extends Controller
                 $reglementQuery = ReglementFacture::whereHas('recette', function($q) use ($recette, $request) {
                     $q->where('contribuables_id', $recette->contribuables_id);
 
-                    if ($request->filled('date_debut')) {
-                        $q->where(function($query) use ($request) {
-                            $query->where('periode_debut', '>=', $request->date_debut)
-                                  ->orWhere('created_at', '>=', $request->date_debut);
-                        });
-                    }
-
-                    if ($request->filled('date_fin')) {
-                        $q->where(function($query) use ($request) {
-                            $query->where('periode_fin', '<=', $request->date_fin)
-                                  ->orWhere('created_at', '<=', $request->date_fin);
-                        });
-                    }
+                    $this->applyRecetteDateFilters($q, $request);
                 });
 
                 $totalRegle = $reglementQuery->sum('versement');
@@ -265,19 +281,7 @@ class EtatController extends Controller
                 $recettesQuery = Recette::where('marche_id', $marche->id);
 
                 // Appliquer les filtres de date sur les recettes si nécessaire
-                if ($request->filled('date_debut')) {
-                    $recettesQuery->where(function($q) use ($request) {
-                        $q->where('periode_debut', '>=', $request->date_debut)
-                          ->orWhere('created_at', '>=', $request->date_debut);
-                    });
-                }
-
-                if ($request->filled('date_fin')) {
-                    $recettesQuery->where(function($q) use ($request) {
-                        $q->where('periode_fin', '<=', $request->date_fin)
-                          ->orWhere('created_at', '<=', $request->date_fin);
-                    });
-                }
+                $this->applyRecetteDateFilters($recettesQuery, $request);
 
                 $recettes = $recettesQuery->get();
 
@@ -363,19 +367,7 @@ class EtatController extends Controller
                     ->where('categorie_id', $categorie->id);
 
                 // Appliquer les filtres de date sur les recettes
-                if ($request->filled('date_debut')) {
-                    $recettesQuery->where(function($q) use ($request) {
-                        $q->where('periode_debut', '>=', $request->date_debut)
-                          ->orWhere('created_at', '>=', $request->date_debut);
-                    });
-                }
-
-                if ($request->filled('date_fin')) {
-                    $recettesQuery->where(function($q) use ($request) {
-                        $q->where('periode_fin', '<=', $request->date_fin)
-                          ->orWhere('created_at', '<=', $request->date_fin);
-                    });
-                }
+                $this->applyRecetteDateFilters($recettesQuery, $request);
 
                 $recettes = $recettesQuery->orderBy('created_at', 'desc')->get();
 
@@ -438,19 +430,7 @@ class EtatController extends Controller
                     ->where('service_id', $service->id);
 
                 // Appliquer les filtres de date sur les recettes
-                if ($request->filled('date_debut')) {
-                    $recettesQuery->where(function($q) use ($request) {
-                        $q->where('periode_debut', '>=', $request->date_debut)
-                          ->orWhere('created_at', '>=', $request->date_debut);
-                    });
-                }
-
-                if ($request->filled('date_fin')) {
-                    $recettesQuery->where(function($q) use ($request) {
-                        $q->where('periode_fin', '<=', $request->date_fin)
-                          ->orWhere('created_at', '<=', $request->date_fin);
-                    });
-                }
+                $this->applyRecetteDateFilters($recettesQuery, $request);
 
                 $recettes = $recettesQuery->orderBy('created_at', 'desc')->get();
 
@@ -501,19 +481,7 @@ class EtatController extends Controller
                 $query->where('recettes.contribuables_id', $request->contribuable_id);
             }
 
-            if ($request->filled('date_debut')) {
-                $query->where(function($q) use ($request) {
-                    $q->where('recettes.periode_debut', '>=', $request->date_debut)
-                      ->orWhere('recettes.created_at', '>=', $request->date_debut);
-                });
-            }
-
-            if ($request->filled('date_fin')) {
-                $query->where(function($q) use ($request) {
-                    $q->where('recettes.periode_fin', '<=', $request->date_fin)
-                      ->orWhere('recettes.created_at', '<=', $request->date_fin);
-                });
-            }
+            $this->applyRecetteDateFilters($query, $request, true);
 
             $query->groupBy('recettes.contribuables_id');
             $recettes = $query->get();
@@ -522,18 +490,7 @@ class EtatController extends Controller
                 $contribuable = Contribuable::find($recette->contribuables_id);
                 $reglementQuery = ReglementFacture::whereHas('recette', function($q) use ($recette, $request) {
                     $q->where('contribuables_id', $recette->contribuables_id);
-                    if ($request->filled('date_debut')) {
-                        $q->where(function($query) use ($request) {
-                            $query->where('periode_debut', '>=', $request->date_debut)
-                                  ->orWhere('created_at', '>=', $request->date_debut);
-                        });
-                    }
-                    if ($request->filled('date_fin')) {
-                        $q->where(function($query) use ($request) {
-                            $query->where('periode_fin', '<=', $request->date_fin)
-                                  ->orWhere('created_at', '<=', $request->date_fin);
-                        });
-                    }
+                    $this->applyRecetteDateFilters($q, $request);
                 });
 
                 $totalRegle = $reglementQuery->sum('versement');
@@ -679,19 +636,7 @@ class EtatController extends Controller
             foreach ($marchesData as $marche) {
                 $recettesQuery = Recette::where('marche_id', $marche->id);
 
-                if ($request->filled('date_debut')) {
-                    $recettesQuery->where(function($q) use ($request) {
-                        $q->where('periode_debut', '>=', $request->date_debut)
-                          ->orWhere('created_at', '>=', $request->date_debut);
-                    });
-                }
-
-                if ($request->filled('date_fin')) {
-                    $recettesQuery->where(function($q) use ($request) {
-                        $q->where('periode_fin', '<=', $request->date_fin)
-                          ->orWhere('created_at', '<=', $request->date_fin);
-                    });
-                }
+                $this->applyRecetteDateFilters($recettesQuery, $request);
 
                 $recettes = $recettesQuery->get();
 
@@ -760,19 +705,7 @@ class EtatController extends Controller
                 $recettesQuery = Recette::with(['Contribuable', 'ElementRecette', 'Reglement'])
                     ->where('categorie_id', $categorie->id);
 
-                if ($request->filled('date_debut')) {
-                    $recettesQuery->where(function($q) use ($request) {
-                        $q->where('periode_debut', '>=', $request->date_debut)
-                          ->orWhere('created_at', '>=', $request->date_debut);
-                    });
-                }
-
-                if ($request->filled('date_fin')) {
-                    $recettesQuery->where(function($q) use ($request) {
-                        $q->where('periode_fin', '<=', $request->date_fin)
-                          ->orWhere('created_at', '<=', $request->date_fin);
-                    });
-                }
+                $this->applyRecetteDateFilters($recettesQuery, $request);
 
                 $recettes = $recettesQuery->orderBy('created_at', 'desc')->get();
 
@@ -821,19 +754,7 @@ class EtatController extends Controller
                 $recettesQuery = Recette::with(['Contribuable', 'Categorie', 'ElementRecette', 'Reglement'])
                     ->where('service_id', $service->id);
 
-                if ($request->filled('date_debut')) {
-                    $recettesQuery->where(function($q) use ($request) {
-                        $q->where('periode_debut', '>=', $request->date_debut)
-                          ->orWhere('created_at', '>=', $request->date_debut);
-                    });
-                }
-
-                if ($request->filled('date_fin')) {
-                    $recettesQuery->where(function($q) use ($request) {
-                        $q->where('periode_fin', '<=', $request->date_fin)
-                          ->orWhere('created_at', '<=', $request->date_fin);
-                    });
-                }
+                $this->applyRecetteDateFilters($recettesQuery, $request);
 
                 $recettes = $recettesQuery->orderBy('created_at', 'desc')->get();
 

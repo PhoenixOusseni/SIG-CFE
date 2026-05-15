@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('title')
-    <title>SIG - CFE | État des recettes par département</title>
+    <title>SIG - CFE | État des factures par ligne de service</title>
 @endsection
 
 @section('style')
@@ -229,9 +229,9 @@
                     <div class="col-auto mt-4">
                         <h1 class="page-header-title">
                             <div class="page-header-icon"><i data-feather="briefcase"></i></div>
-                            État des recettes par département
+                            des factures par ligne de service
                         </h1>
-                        <div class="page-header-subtitle">Analysez les recettes par service/département</div>
+                        <div class="page-header-subtitle">Analysez les factures par ligne de service</div>
                     </div>
                 </div>
             </div>
